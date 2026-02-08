@@ -309,8 +309,51 @@ class ZigzagRunner {
     }
 
     changeDirection() {
-        this.direction = this.direction === 0 ? 1 : 0;
+        const newDir = this.direction === 0 ? 1 : 0;
+        this.direction = newDir;
         if (window.sfx) window.sfx.click();
+
+        // Early turn forgiveness: if ball is visually close to next tile
+        // and new direction matches the UPCOMING path segment, snap forward
+        if (this.state === 'playing' && this.moveProgress >= 0.5) {
+            const cur = this.tiles[this.currentTileIndex];
+            const next = this.tiles[this.currentTileIndex + 1];
+            const nextNext = this.tiles[this.currentTileIndex + 2];
+            if (cur && next && nextNext) {
+                const curPathDir = next.x > cur.x ? 0 : 1;
+                const nextPathDir = nextNext.x > next.x ? 0 : 1;
+                if (newDir !== curPathDir && newDir === nextPathDir) {
+                    this.advanceTile();
+                }
+            }
+        }
+    }
+
+    advanceTile() {
+        const next = this.tiles[this.currentTileIndex + 1];
+        if (!next) return;
+        const iso = this.toIso(next.x, next.y);
+        this.ballX = iso.x;
+        this.ballY = iso.y;
+        this.currentTileIndex++;
+        this.moveProgress = 0;
+        this.score++;
+
+        if (this.coinTiles.has(this.currentTileIndex)) {
+            this.coins++;
+            this.totalCoins++;
+            this.score += 5;
+            this.coinTiles.delete(this.currentTileIndex);
+            if (window.sfx) window.sfx.coin();
+            this.spawnParticles(this.ballX, this.ballY - 12, this.getTheme().coinColor, 8);
+        }
+        if (this.score % 20 === 0) {
+            this.ballSpeed = Math.min(0.12, this.ballSpeed + 0.003);
+        }
+        if (this.currentTileIndex > this.tiles.length - 25) {
+            this.extendPath(30);
+        }
+        this.updateHUD();
     }
 
     update(dt) {
