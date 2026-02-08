@@ -19,7 +19,7 @@ class ZigzagRunner {
         // ball
         this.ballX = 0;
         this.ballY = 0;
-        this.ballRadius = 10;
+        this.ballRadius = 16;
         this.ballSpeed = 0.035;
         this.moveProgress = 0;
 
