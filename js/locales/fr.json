@@ -1,0 +1,66 @@
+{
+  "app": {
+    "title": "Zigzag Runner - Jeu d'Arcade de Changement de Direction",
+    "description": "Un seul geste pour changer de direction! Collecte des pièces en courant sur des chemins en zigzag sans fin. Le jeu d'arcade à un seul geste le plus addictif."
+  },
+  "menu": {
+    "title": "Zigzag Runner",
+    "subtitle": "👶 Débutant",
+    "bestScore": "Meilleur 0 points",
+    "play": "🎮 Jouer",
+    "theme": "🎨 Thèmes",
+    "skin": "🎱 Skins",
+    "stats": "📊 Statistiques"
+  },
+  "game": {
+    "tapToStart": "Tape pour commencer",
+    "score": "Score",
+    "coins": "Pièces"
+  },
+  "gameover": {
+    "label": "FIN DE PARTIE",
+    "score": "Score",
+    "coins": "Pièces",
+    "best": "Meilleur 0 points",
+    "revive": "🎬 Regarde une Annonce & Revivifie",
+    "replay": "🔄 Réessayer",
+    "share": "📤 Partager",
+    "home": "🏠 Accueil"
+  },
+  "recommendations": {
+    "title": "Essaie aussi",
+    "skyRunner": "Sky Runner",
+    "skyRunnerDesc": "Jeu d'arcade de vol spatial!",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "Empile des blocs avec un timing parfait!",
+    "emojiMerge": "Emoji Merge",
+    "emojiMergeDesc": "Fusionne les emojis pour les faire évoluer!",
+    "pastLife": "Test du Travail de la Vie Passée",
+    "pastLifeDesc": "Quel était ton travail dans une vie passée?"
+  },
+  "screens": {
+    "theme": "🎨 Thèmes",
+    "skin": "🎱 Skins",
+    "stats": "📊 Statistiques",
+    "back": "←"
+  },
+  "skins": {
+    "inUse": "Utilisé",
+    "select": "Sélectionner",
+    "purchased": "Acheté",
+    "notOwned": "Non possédé",
+    "unlockAtScore": "Déverrouiller aux points"
+  },
+  "stats": {
+    "bestScore": "Meilleur Score",
+    "currentTitle": "Titre Actuel",
+    "totalGames": "Jeux Totaux",
+    "totalDistance": "Distance Totale",
+    "totalCoins": "Pièces Totales",
+    "unlockedThemes": "Thèmes Déverrouillés",
+    "unlockedSkins": "Skins Déverrouillés"
+  },
+  "ad": {
+    "label": "Chargement de l'annonce..."
+  }
+}

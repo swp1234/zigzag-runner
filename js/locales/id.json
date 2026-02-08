@@ -1,0 +1,66 @@
+{
+  "app": {
+    "title": "Zigzag Runner - Permainan Arcade Perubahan Arah",
+    "description": "Satu ketukan untuk mengubah arah! Kumpulkan koin sambil berlari di jalan zigzag yang tak terbatas. Permainan arcade satu ketukan paling adiktif."
+  },
+  "menu": {
+    "title": "Zigzag Runner",
+    "subtitle": "👶 Pemula",
+    "bestScore": "Terbaik 0 poin",
+    "play": "🎮 Mainkan Game",
+    "theme": "🎨 Tema",
+    "skin": "🎱 Kulit",
+    "stats": "📊 Statistik"
+  },
+  "game": {
+    "tapToStart": "Ketuk untuk memulai",
+    "score": "Skor",
+    "coins": "Koin"
+  },
+  "gameover": {
+    "label": "GAME OVER",
+    "score": "Skor",
+    "coins": "Koin",
+    "best": "Terbaik 0 poin",
+    "revive": "🎬 Tonton Iklan & Hidup Kembali",
+    "replay": "🔄 Coba Lagi",
+    "share": "📤 Bagikan",
+    "home": "🏠 Beranda"
+  },
+  "recommendations": {
+    "title": "Coba Juga",
+    "skyRunner": "Sky Runner",
+    "skyRunnerDesc": "Permainan arcade penerbangan luar angkasa!",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "Tumpuk blok dengan timing sempurna!",
+    "emojiMerge": "Emoji Merge",
+    "emojiMergeDesc": "Gabungkan emoji untuk berkembang!",
+    "pastLife": "Tes Pekerjaan Kehidupan Sebelumnya",
+    "pastLifeDesc": "Apa profesi Anda di kehidupan sebelumnya?"
+  },
+  "screens": {
+    "theme": "🎨 Tema",
+    "skin": "🎱 Kulit",
+    "stats": "📊 Statistik",
+    "back": "←"
+  },
+  "skins": {
+    "inUse": "Sedang digunakan",
+    "select": "Pilih",
+    "purchased": "Dibeli",
+    "notOwned": "Tidak dimiliki",
+    "unlockAtScore": "Buka di poin"
+  },
+  "stats": {
+    "bestScore": "Skor Terbaik",
+    "currentTitle": "Judul Saat Ini",
+    "totalGames": "Total Permainan",
+    "totalDistance": "Total Jarak",
+    "totalCoins": "Total Koin",
+    "unlockedThemes": "Tema Terbuka",
+    "unlockedSkins": "Kulit Terbuka"
+  },
+  "ad": {
+    "label": "Memuat iklan..."
+  }
+}

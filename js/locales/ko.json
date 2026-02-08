@@ -28,13 +28,37 @@
     "home": "🏠 홈"
   },
   "recommendations": {
-    "title": "이것도 해보세요"
+    "title": "이것도 해보세요",
+    "skyRunner": "Sky Runner",
+    "skyRunnerDesc": "우주 비행 아케이드 게임!",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "타이밍에 맞춰 블록을 쌓아라!",
+    "emojiMerge": "이모지 머지",
+    "emojiMergeDesc": "이모지 합쳐 진화시키기!",
+    "pastLife": "전생 직업 테스트",
+    "pastLifeDesc": "나의 전생은 어떤 직업?"
   },
   "screens": {
     "theme": "🎨 테마",
     "skin": "🎱 스킨",
     "stats": "📊 통계",
     "back": "←"
+  },
+  "skins": {
+    "inUse": "사용 중",
+    "select": "선택",
+    "purchased": "구매됨",
+    "notOwned": "미보유",
+    "unlockAtScore": "점 달성 시 해금"
+  },
+  "stats": {
+    "bestScore": "최고 점수",
+    "currentTitle": "현재 칭호",
+    "totalGames": "총 게임 수",
+    "totalDistance": "총 이동 거리",
+    "totalCoins": "총 코인",
+    "unlockedThemes": "해금 테마",
+    "unlockedSkins": "해금 스킨"
   },
   "ad": {
     "label": "광고 로딩 중..."

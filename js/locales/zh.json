@@ -28,13 +28,37 @@
     "home": "🏠 首页"
   },
   "recommendations": {
-    "title": "也试试这些"
+    "title": "也试试这些",
+    "skyRunner": "Sky Runner",
+    "skyRunnerDesc": "太空飞行街机游戏!",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "完美的时机堆积方块!",
+    "emojiMerge": "表情符号合并",
+    "emojiMergeDesc": "合并表情符号进化!",
+    "pastLife": "前世职业测试",
+    "pastLifeDesc": "你前世的职业是什么?"
   },
   "screens": {
     "theme": "🎨 主题",
     "skin": "🎱 皮肤",
     "stats": "📊 统计",
     "back": "←"
+  },
+  "skins": {
+    "inUse": "使用中",
+    "select": "选择",
+    "purchased": "已购买",
+    "notOwned": "未购买",
+    "unlockAtScore": "达到分数时解锁"
+  },
+  "stats": {
+    "bestScore": "最高分数",
+    "currentTitle": "当前称号",
+    "totalGames": "总游戏数",
+    "totalDistance": "总移动距离",
+    "totalCoins": "总硬币数",
+    "unlockedThemes": "解锁的主题",
+    "unlockedSkins": "解锁的皮肤"
   },
   "ad": {
     "label": "正在加载广告..."

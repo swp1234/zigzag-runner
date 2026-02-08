@@ -1,0 +1,66 @@
+{
+  "app": {
+    "title": "Zigzag Runner - Richtungswechsel Arcade Spiel",
+    "description": "Ein Tap zum Richtungswechsel! Sammle Münzen während du auf endlosen Zickzack-Pfaden läufst. Das süchtig machendste Ein-Tap-Arcade-Spiel."
+  },
+  "menu": {
+    "title": "Zigzag Runner",
+    "subtitle": "👶 Anfänger",
+    "bestScore": "Beste 0 Punkte",
+    "play": "🎮 Spiel spielen",
+    "theme": "🎨 Designs",
+    "skin": "🎱 Designs",
+    "stats": "📊 Statistik"
+  },
+  "game": {
+    "tapToStart": "Tippe zum Starten",
+    "score": "Punktzahl",
+    "coins": "Münzen"
+  },
+  "gameover": {
+    "label": "SPIEL VORBEI",
+    "score": "Punktzahl",
+    "coins": "Münzen",
+    "best": "Beste 0 Punkte",
+    "revive": "🎬 Anzeige ansehen & Wiederbelebung",
+    "replay": "🔄 Nochmal versuchen",
+    "share": "📤 Teilen",
+    "home": "🏠 Startseite"
+  },
+  "recommendations": {
+    "title": "Probiere auch diese",
+    "skyRunner": "Sky Runner",
+    "skyRunnerDesc": "Weltraumflug-Arcade-Spiel!",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "Stapel Blöcke mit perfektem Timing!",
+    "emojiMerge": "Emoji Merge",
+    "emojiMergeDesc": "Verschmelze Emojis und lass sie sich weiterentwickeln!",
+    "pastLife": "Beruf aus früheren Leben Test",
+    "pastLifeDesc": "Was war dein Beruf in einem früheren Leben?"
+  },
+  "screens": {
+    "theme": "🎨 Designs",
+    "skin": "🎱 Designs",
+    "stats": "📊 Statistik",
+    "back": "←"
+  },
+  "skins": {
+    "inUse": "In Verwendung",
+    "select": "Wählen",
+    "purchased": "Gekauft",
+    "notOwned": "Nicht im Besitz",
+    "unlockAtScore": "Bei Punkten freischalten"
+  },
+  "stats": {
+    "bestScore": "Beste Punktzahl",
+    "currentTitle": "Aktueller Titel",
+    "totalGames": "Gesamtspiele",
+    "totalDistance": "Gesamtstrecke",
+    "totalCoins": "Gesamtmünzen",
+    "unlockedThemes": "Entsperrte Designs",
+    "unlockedSkins": "Entsperrte Designs"
+  },
+  "ad": {
+    "label": "Anzeige wird geladen..."
+  }
+}

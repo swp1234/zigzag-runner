@@ -28,13 +28,37 @@
     "home": "🏠 Home"
   },
   "recommendations": {
-    "title": "Try These Too"
+    "title": "Try These Too",
+    "skyRunner": "Sky Runner",
+    "skyRunnerDesc": "Space flight arcade game!",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "Stack blocks with perfect timing!",
+    "emojiMerge": "Emoji Merge",
+    "emojiMergeDesc": "Merge emojis to evolve!",
+    "pastLife": "Past Life Job Test",
+    "pastLifeDesc": "What was your job in a past life?"
   },
   "screens": {
     "theme": "🎨 Themes",
     "skin": "🎱 Skins",
     "stats": "📊 Stats",
     "back": "←"
+  },
+  "skins": {
+    "inUse": "In Use",
+    "select": "Select",
+    "purchased": "Purchased",
+    "notOwned": "Not Owned",
+    "unlockAtScore": "Unlock at points"
+  },
+  "stats": {
+    "bestScore": "Best Score",
+    "currentTitle": "Current Title",
+    "totalGames": "Total Games",
+    "totalDistance": "Total Distance",
+    "totalCoins": "Total Coins",
+    "unlockedThemes": "Unlocked Themes",
+    "unlockedSkins": "Unlocked Skins"
   },
   "ad": {
     "label": "Loading ad..."

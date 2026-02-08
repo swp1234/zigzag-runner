@@ -1,0 +1,66 @@
+{
+  "app": {
+    "title": "ジグザグランナー - 方向転換アーケードゲーム",
+    "description": "ワンタップで方向転換！無限のジグザグパスを走りながらコインを集める。最も中毒性のあるワンタップアーケードゲーム。"
+  },
+  "menu": {
+    "title": "ジグザグランナー",
+    "subtitle": "👶 初級",
+    "bestScore": "ベスト 0ポイント",
+    "play": "🎮 ゲームプレイ",
+    "theme": "🎨 テーマ",
+    "skin": "🎱 スキン",
+    "stats": "📊 統計"
+  },
+  "game": {
+    "tapToStart": "タップで開始",
+    "score": "スコア",
+    "coins": "コイン"
+  },
+  "gameover": {
+    "label": "ゲームオーバー",
+    "score": "スコア",
+    "coins": "コイン",
+    "best": "ベスト 0ポイント",
+    "revive": "🎬 広告を見て復活",
+    "replay": "🔄 もう一度試す",
+    "share": "📤 シェアする",
+    "home": "🏠 ホーム"
+  },
+  "recommendations": {
+    "title": "こちらも試してみてください",
+    "skyRunner": "Sky Runner",
+    "skyRunnerDesc": "スペースフライトアーケードゲーム!",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "完璧なタイミングでブロックを積み上げましょう!",
+    "emojiMerge": "絵文字マージ",
+    "emojiMergeDesc": "絵文字をマージして進化させましょう!",
+    "pastLife": "前世職業テスト",
+    "pastLifeDesc": "あなたの前世の職業は何ですか?"
+  },
+  "screens": {
+    "theme": "🎨 テーマ",
+    "skin": "🎱 スキン",
+    "stats": "📊 統計",
+    "back": "←"
+  },
+  "skins": {
+    "inUse": "使用中",
+    "select": "選択",
+    "purchased": "購入済み",
+    "notOwned": "未購入",
+    "unlockAtScore": "点達成で解放"
+  },
+  "stats": {
+    "bestScore": "ベストスコア",
+    "currentTitle": "現在のタイトル",
+    "totalGames": "総ゲーム数",
+    "totalDistance": "総移動距離",
+    "totalCoins": "総コイン",
+    "unlockedThemes": "解放テーマ",
+    "unlockedSkins": "解放スキン"
+  },
+  "ad": {
+    "label": "広告を読み込み中..."
+  }
+}

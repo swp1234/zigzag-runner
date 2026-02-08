@@ -1,0 +1,66 @@
+{
+  "app": {
+    "title": "Zigzag Runner - Yön Değişikliği Arcade Oyunu",
+    "description": "Bir dokunuşta yön değiştir! Sınırsız zigzag yollarında koşarken paraları topla. En bağımlayıcı tek-dokunuş arcade oyunu."
+  },
+  "menu": {
+    "title": "Zigzag Runner",
+    "subtitle": "👶 Başlangıç",
+    "bestScore": "En İyi 0 puan",
+    "play": "🎮 Oyunu Oyna",
+    "theme": "🎨 Temalar",
+    "skin": "🎱 Kozmetik",
+    "stats": "📊 İstatistikler"
+  },
+  "game": {
+    "tapToStart": "Başlamak için tap et",
+    "score": "Puan",
+    "coins": "Paralar"
+  },
+  "gameover": {
+    "label": "OYUN BİTTİ",
+    "score": "Puan",
+    "coins": "Paralar",
+    "best": "En İyi 0 puan",
+    "revive": "🎬 Reklam İzle & Dirilt",
+    "replay": "🔄 Tekrar Dene",
+    "share": "📤 Paylaş",
+    "home": "🏠 Ana Sayfa"
+  },
+  "recommendations": {
+    "title": "Bunları da Dene",
+    "skyRunner": "Sky Runner",
+    "skyRunnerDesc": "Uzay uçuşu arcade oyunu!",
+    "stackTower": "Stack Tower",
+    "stackTowerDesc": "Mükemmel zamanlama ile blokları yığın!",
+    "emojiMerge": "Emoji Merge",
+    "emojiMergeDesc": "Emojileri birleştirerek evrim ver!",
+    "pastLife": "Eski Yaşam Meslek Testi",
+    "pastLifeDesc": "Geçmiş yaşamında mesleğin neydi?"
+  },
+  "screens": {
+    "theme": "🎨 Temalar",
+    "skin": "🎱 Kozmetik",
+    "stats": "📊 İstatistikler",
+    "back": "←"
+  },
+  "skins": {
+    "inUse": "Kullanımda",
+    "select": "Seç",
+    "purchased": "Satın alındı",
+    "notOwned": "Sahip değil",
+    "unlockAtScore": "Puanlara kilidini aç"
+  },
+  "stats": {
+    "bestScore": "En İyi Puan",
+    "currentTitle": "Mevcut Başlık",
+    "totalGames": "Toplam Oyun",
+    "totalDistance": "Toplam Mesafe",
+    "totalCoins": "Toplam Para",
+    "unlockedThemes": "Kilidini Açılmış Temalar",
+    "unlockedSkins": "Kilidini Açılmış Kozmetikler"
+  },
+  "ad": {
+    "label": "Reklam yükleniyor..."
+  }
+}

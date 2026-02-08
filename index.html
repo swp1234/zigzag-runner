@@ -58,6 +58,9 @@
     <script src="js/i18n.js"></script>
 </head>
 <body>
+    <!-- Sound Toggle -->
+    <button class="sound-toggle" id="sound-toggle" onclick="if(window.sfx)window.sfx.init();const enabled=window.sfx?window.sfx.toggle():false;this.textContent=enabled?'🔊':'🔇';" title="Toggle Sound">🔊</button>
+
     <!-- Language Selector -->
     <div class="language-selector">
         <button class="lang-btn" id="langBtn" title="Change Language">🌐</button>
@@ -78,29 +81,29 @@
                 <div class="hud-item hud-coins">🪙 <span id="hudCoins">0</span></div>
             </div>
 
-            <div id="tapHint" style="display:none">탭하여 시작</div>
+            <div id="tapHint" style="display:none" data-i18n="game.tapToStart">탭하여 시작</div>
 
             <!-- Main Screen -->
             <div class="screen active" id="screen-main">
                 <div class="main-icon">🏃</div>
                 <div class="main-title">Zigzag Runner</div>
-                <div id="mainTitle">👶 초보 걸음마</div>
-                <div id="mainBest">최고 0점</div>
+                <div id="mainTitle" data-i18n="menu.subtitle">👶 초보 걸음마</div>
+                <div id="mainBest" data-i18n="menu.bestScore">최고 0점</div>
                 <div class="btn-group">
-                    <button class="btn btn-primary" id="btnPlay">🎮 게임 시작</button>
+                    <button class="btn btn-primary" id="btnPlay" data-i18n="menu.play">🎮 게임 시작</button>
                     <div class="btn-row">
-                        <button class="btn btn-secondary" id="btnTheme">🎨 테마</button>
-                        <button class="btn btn-secondary" id="btnSkin">🎱 스킨</button>
+                        <button class="btn btn-secondary" id="btnTheme" data-i18n="menu.theme">🎨 테마</button>
+                        <button class="btn btn-secondary" id="btnSkin" data-i18n="menu.skin">🎱 스킨</button>
                     </div>
-                    <button class="btn btn-secondary" id="btnStats">📊 통계</button>
+                    <button class="btn btn-secondary" id="btnStats" data-i18n="menu.stats">📊 통계</button>
                 </div>
             </div>
 
             <!-- Theme Screen -->
             <div class="screen" id="screen-theme">
                 <div class="screen-header">
-                    <button class="btn-icon" id="btnBack">←</button>
-                    <h2>🎨 테마</h2>
+                    <button class="btn-icon" id="btnBack" data-i18n="screens.back">←</button>
+                    <h2 data-i18n="screens.theme">🎨 테마</h2>
                 </div>
                 <div class="item-list" id="themeList"></div>
             </div>
@@ -108,8 +111,8 @@
             <!-- Skin Screen -->
             <div class="screen" id="screen-skin">
                 <div class="screen-header">
-                    <button class="btn-icon" id="btnBackSkin">←</button>
-                    <h2>🎱 스킨</h2>
+                    <button class="btn-icon" id="btnBackSkin" data-i18n="screens.back">←</button>
+                    <h2 data-i18n="screens.skin">🎱 스킨</h2>
                 </div>
                 <div class="item-list" id="skinList"></div>
             </div>
@@ -117,65 +120,65 @@
             <!-- Stats Screen -->
             <div class="screen" id="screen-stats">
                 <div class="screen-header">
-                    <button class="btn-icon" id="btnBackStats">←</button>
-                    <h2>📊 통계</h2>
+                    <button class="btn-icon" id="btnBackStats" data-i18n="screens.back">←</button>
+                    <h2 data-i18n="screens.stats">📊 통계</h2>
                 </div>
                 <div id="statsContent"></div>
             </div>
 
             <!-- Game Over -->
             <div class="screen" id="screen-gameover">
-                <div class="go-label">GAME OVER</div>
+                <div class="go-label" data-i18n="gameover.label">GAME OVER</div>
                 <div id="goTitle"></div>
                 <div class="go-stats">
                     <div class="go-stat">
                         <div class="go-stat-value" id="goScore">0</div>
-                        <div class="go-stat-label">점수</div>
+                        <div class="go-stat-label" data-i18n="gameover.score">점수</div>
                     </div>
                     <div class="go-stat">
                         <div class="go-stat-value" id="goCoins">0</div>
-                        <div class="go-stat-label">코인</div>
+                        <div class="go-stat-label" data-i18n="gameover.coins">코인</div>
                     </div>
                 </div>
-                <div id="goBest">최고 0점</div>
+                <div id="goBest" data-i18n="gameover.best">최고 0점</div>
                 <div class="go-buttons">
-                    <button class="btn btn-revive" id="btnRevive">🎬 광고 보고 부활</button>
-                    <button class="btn btn-primary" id="btnReplay">🔄 다시 하기</button>
+                    <button class="btn btn-revive" id="btnRevive" data-i18n="gameover.revive">🎬 광고 보고 부활</button>
+                    <button class="btn btn-primary" id="btnReplay" data-i18n="gameover.replay">🔄 다시 하기</button>
                     <div class="go-row">
-                        <button class="btn btn-share" id="btnShare">📤 공유</button>
-                        <button class="btn btn-secondary" id="btnHome">🏠 홈</button>
+                        <button class="btn btn-share" id="btnShare" data-i18n="gameover.share">📤 공유</button>
+                        <button class="btn btn-secondary" id="btnHome" data-i18n="gameover.home">🏠 홈</button>
                     </div>
                 </div>
 
                 <div class="recommendations-section">
-                    <div class="rec-title">이것도 해보세요</div>
+                    <div class="rec-title" data-i18n="recommendations.title">이것도 해보세요</div>
                     <div class="rec-grid">
                         <a href="https://dopabrain.com/sky-runner/" class="rec-card" target="_blank">
                             <span class="rec-icon">🚀</span>
                             <span class="rec-info">
-                                <span class="rec-name">Sky Runner</span>
-                                <span class="rec-desc">우주 비행 아케이드 게임!</span>
+                                <span class="rec-name" data-i18n="recommendations.skyRunner">Sky Runner</span>
+                                <span class="rec-desc" data-i18n="recommendations.skyRunnerDesc">우주 비행 아케이드 게임!</span>
                             </span>
                         </a>
                         <a href="https://dopabrain.com/stack-tower/" class="rec-card" target="_blank">
                             <span class="rec-icon">🏗️</span>
                             <span class="rec-info">
-                                <span class="rec-name">Stack Tower</span>
-                                <span class="rec-desc">타이밍에 맞춰 블록을 쌓아라!</span>
+                                <span class="rec-name" data-i18n="recommendations.stackTower">Stack Tower</span>
+                                <span class="rec-desc" data-i18n="recommendations.stackTowerDesc">타이밍에 맞춰 블록을 쌓아라!</span>
                             </span>
                         </a>
                         <a href="https://dopabrain.com/emoji-merge/" class="rec-card" target="_blank">
                             <span class="rec-icon">🧬</span>
                             <span class="rec-info">
-                                <span class="rec-name">이모지 머지</span>
-                                <span class="rec-desc">이모지 합쳐 진화시키기!</span>
+                                <span class="rec-name" data-i18n="recommendations.emojiMerge">이모지 머지</span>
+                                <span class="rec-desc" data-i18n="recommendations.emojiMergeDesc">이모지 합쳐 진화시키기!</span>
                             </span>
                         </a>
                         <a href="https://dopabrain.com/past-life/" class="rec-card" target="_blank">
                             <span class="rec-icon">🗡️</span>
                             <span class="rec-info">
-                                <span class="rec-name">전생 직업 테스트</span>
-                                <span class="rec-desc">나의 전생은 어떤 직업?</span>
+                                <span class="rec-name" data-i18n="recommendations.pastLife">전생 직업 테스트</span>
+                                <span class="rec-desc" data-i18n="recommendations.pastLifeDesc">나의 전생은 어떤 직업?</span>
                             </span>
                         </a>
                     </div>
@@ -188,12 +191,13 @@
 
         <!-- Ad Overlay -->
         <div class="ad-overlay" id="adOverlay">
-            <p>광고 로딩 중...</p>
+            <p data-i18n="ad.label">광고 로딩 중...</p>
             <div class="ad-countdown" id="adCountdown">5</div>
         </div>
     </div>
 
     <script src="js/data.js"></script>
+    <script src="js/sound-engine.js"></script>
     <script src="js/app.js"></script>
 
     <script>
@@ -201,5 +205,29 @@
             navigator.serviceWorker.register('sw.js').catch(() => {});
         }
     </script>
+
+    <style>
+        .sound-toggle {
+            position: fixed;
+            top: 12px;
+            right: 52px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .sound-toggle:hover { background: rgba(255,255,255,0.2); }
+        .sound-toggle:active { transform: scale(0.95); }
+    </style>
 </body>
 </html>

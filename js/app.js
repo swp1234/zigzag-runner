@@ -454,7 +454,11 @@ class ZigzagRunner {
         const title = this.getTitle(this.score);
         document.getElementById('goScore').textContent = this.score;
         document.getElementById('goCoins').textContent = this.coins;
-        document.getElementById('goBest').textContent = this.stats.maxScore;
+        const goBestEl = document.getElementById('goBest');
+        if (goBestEl) {
+            const format = i18n.t('gameover.best');
+            goBestEl.textContent = format.includes('0') ? format.replace('0', this.stats.maxScore) : `${this.stats.maxScore} ${format}`;
+        }
         document.getElementById('goTitle').textContent = `${title.emoji} ${title.name}`;
 
         const reviveBtn = document.getElementById('btnRevive');
@@ -967,7 +971,10 @@ class ZigzagRunner {
     updateMainUI() {
         const title = this.getTitle(this.stats.maxScore);
         const bestEl = document.getElementById('mainBest');
-        if (bestEl) bestEl.textContent = `최고 ${this.stats.maxScore}점`;
+        if (bestEl) {
+            const format = i18n.t('menu.bestScore');
+            bestEl.textContent = format.includes('0') ? format.replace('0', this.stats.maxScore) : `${this.stats.maxScore} ${format}`;
+        }
         const titleEl = document.getElementById('mainTitle');
         if (titleEl) titleEl.textContent = `${title.emoji} ${title.name}`;
     }
@@ -982,10 +989,11 @@ class ZigzagRunner {
             const active = this.currentTheme === t.id;
             const div = document.createElement('div');
             div.className = `item-card ${active ? 'active' : ''} ${unlocked ? '' : 'locked'}`;
+            const statusText = unlocked ? (active ? i18n.t('skins.inUse') : i18n.t('skins.select')) : t.description;
             div.innerHTML = `
                 <span class="item-emoji">${t.emoji}</span>
                 <span class="item-name">${t.name}</span>
-                <span class="item-desc">${unlocked ? (active ? '사용 중' : '선택') : t.description}</span>
+                <span class="item-desc">${statusText}</span>
             `;
             if (unlocked) {
                 div.addEventListener('click', () => {
@@ -1007,8 +1015,8 @@ class ZigzagRunner {
             const unlocked = this.unlockedSkins.includes(s.id);
             const active = this.currentSkin === s.id;
             const desc = unlocked
-                ? (active ? '사용 중' : '선택')
-                : `${s.unlockValue}점 달성 시 해금`;
+                ? (active ? i18n.t('skins.inUse') : i18n.t('skins.select'))
+                : `${s.unlockValue}${i18n.t('skins.unlockAtScore')}`;
             const div = document.createElement('div');
             div.className = `item-card ${active ? 'active' : ''} ${unlocked ? '' : 'locked'}`;
             div.innerHTML = `
@@ -1032,13 +1040,13 @@ class ZigzagRunner {
         if (!el) return;
         const title = this.getTitle(this.stats.maxScore);
         el.innerHTML = `
-            <div class="stat-row"><span>최고 점수</span><span>${this.stats.maxScore}</span></div>
-            <div class="stat-row"><span>현재 칭호</span><span>${title.emoji} ${title.name}</span></div>
-            <div class="stat-row"><span>총 게임 수</span><span>${this.stats.totalGames}</span></div>
-            <div class="stat-row"><span>총 이동 거리</span><span>${this.stats.totalDistance}</span></div>
-            <div class="stat-row"><span>총 코인</span><span>${this.stats.totalCoins}</span></div>
-            <div class="stat-row"><span>해금 테마</span><span>${this.unlockedThemes.length}/${THEMES_DATA.length}</span></div>
-            <div class="stat-row"><span>해금 스킨</span><span>${this.unlockedSkins.length}/${SKINS_DATA.length}</span></div>
+            <div class="stat-row"><span data-i18n="stats.bestScore">${i18n.t('stats.bestScore')}</span><span>${this.stats.maxScore}</span></div>
+            <div class="stat-row"><span data-i18n="stats.currentTitle">${i18n.t('stats.currentTitle')}</span><span>${title.emoji} ${title.name}</span></div>
+            <div class="stat-row"><span data-i18n="stats.totalGames">${i18n.t('stats.totalGames')}</span><span>${this.stats.totalGames}</span></div>
+            <div class="stat-row"><span data-i18n="stats.totalDistance">${i18n.t('stats.totalDistance')}</span><span>${this.stats.totalDistance}</span></div>
+            <div class="stat-row"><span data-i18n="stats.totalCoins">${i18n.t('stats.totalCoins')}</span><span>${this.stats.totalCoins}</span></div>
+            <div class="stat-row"><span data-i18n="stats.unlockedThemes">${i18n.t('stats.unlockedThemes')}</span><span>${this.unlockedThemes.length}/${THEMES_DATA.length}</span></div>
+            <div class="stat-row"><span data-i18n="stats.unlockedSkins">${i18n.t('stats.unlockedSkins')}</span><span>${this.unlockedSkins.length}/${SKINS_DATA.length}</span></div>
         `;
     }
 
