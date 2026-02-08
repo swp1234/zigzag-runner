@@ -43,10 +43,12 @@ class ZigzagRunner {
 
         // particles
         this.particles = [];
+        this.bgParticles = [];
 
         // visual
         this.trailPoints = [];
         this.screenShake = 0;
+        this.screenFlash = 0;
 
         // stats & progression
         this.stats = {
@@ -269,9 +271,11 @@ class ZigzagRunner {
         this.trailPoints = [];
         this.reviveUsed = false;
         this.screenShake = 0;
+        this.screenFlash = 0;
         this.fallVelX = 0;
         this.fallVelY = 0;
         this.fallRotation = 0;
+        this.initBgParticles();
         this.generatePath();
 
         const start = this.toIso(0, 0);
@@ -300,6 +304,9 @@ class ZigzagRunner {
     update(dt) {
         if (this.screen !== 'game') return;
 
+        // background particles update
+        this.updateBgParticles();
+
         // particles update
         this.particles = this.particles.filter(p => {
             p.x += p.vx;
@@ -320,6 +327,7 @@ class ZigzagRunner {
         });
 
         if (this.screenShake > 0) this.screenShake *= 0.9;
+        if (this.screenFlash > 0) this.screenFlash *= 0.85;
 
         if (this.state === 'playing') {
             this.moveProgress += this.ballSpeed * (dt / 16);
@@ -410,8 +418,10 @@ class ZigzagRunner {
         this.state = 'falling';
         this.fallVelX = this.direction === 0 ? 2 : -2;
         this.fallVelY = -3;
-        this.screenShake = 10;
-        this.spawnParticles(this.ballX, this.ballY, '#ff4444', 12);
+        this.screenShake = 15;
+        this.spawnParticles(this.ballX, this.ballY, '#ff4444', 20);
+        // Brief screen flash for death effect
+        this.screenFlash = 0.3;
     }
 
     triggerGameOver() {
@@ -503,6 +513,48 @@ class ZigzagRunner {
         }
     }
 
+    initBgParticles() {
+        const theme = this.getTheme();
+        if (!theme.particles) return;
+
+        this.bgParticles = [];
+        const p = theme.particles;
+        for (let i = 0; i < p.count; i++) {
+            const color = Array.isArray(p.colors)
+                ? p.colors[Math.floor(Math.random() * p.colors.length)]
+                : p.color;
+            this.bgParticles.push({
+                x: Math.random() * this.W,
+                y: Math.random() * this.H,
+                vx: (Math.random() - 0.5) * p.speed,
+                vy: (Math.random() - 0.5) * p.speed,
+                color: color,
+                size: p.sizeMin + Math.random() * (p.sizeMax - p.sizeMin),
+                type: p.type,
+                rotation: Math.random() * Math.PI * 2
+            });
+        }
+    }
+
+    updateBgParticles() {
+        const theme = this.getTheme();
+        if (!theme.particles) return;
+
+        const p = theme.particles;
+        for (let i = 0; i < this.bgParticles.length; i++) {
+            const particle = this.bgParticles[i];
+            particle.x += particle.vx;
+            particle.y += particle.vy;
+            particle.rotation += 0.02;
+
+            // Wrap around screen
+            if (particle.x < -10) particle.x = this.W + 10;
+            if (particle.x > this.W + 10) particle.x = -10;
+            if (particle.y < -10) particle.y = this.H + 10;
+            if (particle.y > this.H + 10) particle.y = -10;
+        }
+    }
+
     // --- Rendering ---
     render() {
         const ctx = this.ctx;
@@ -514,12 +566,53 @@ class ZigzagRunner {
         ctx.translate(this.offsetX, this.offsetY);
         ctx.scale(this.scale, this.scale);
 
-        // background
+        // background with score-based color progression
+        let bgColor0 = theme.bgGradient[0];
+        let bgColor1 = theme.bgGradient[1];
+
+        // Interpolate colors based on score for visual progression
+        if (this.score > 0 && this.currentTheme !== 'gold') {
+            const scoreProgress = Math.min(1, (this.score % 100) / 100);
+            const nextThemeIndex = (THEMES_DATA.findIndex(t => t.id === this.currentTheme) + 1) % THEMES_DATA.length;
+            const nextTheme = THEMES_DATA[nextThemeIndex];
+            if (scoreProgress > 0.8 && nextTheme) {
+                const blend = (scoreProgress - 0.8) * 5;
+                bgColor0 = this.lerpColor(theme.bgGradient[0], nextTheme.bgGradient[0], blend);
+                bgColor1 = this.lerpColor(theme.bgGradient[1], nextTheme.bgGradient[1], blend);
+            }
+        }
+
         const bg = ctx.createLinearGradient(0, 0, 0, this.H);
-        bg.addColorStop(0, theme.bgGradient[0]);
-        bg.addColorStop(1, theme.bgGradient[1]);
+        bg.addColorStop(0, bgColor0);
+        bg.addColorStop(1, bgColor1);
         ctx.fillStyle = bg;
         ctx.fillRect(0, 0, this.W, this.H);
+
+        // Draw background particles
+        for (const p of this.bgParticles) {
+            ctx.globalAlpha = 0.6;
+            ctx.fillStyle = p.color;
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rotation);
+
+            if (p.type === 'star') {
+                this.drawStar(ctx, 0, 0, 5, p.size, p.size * 0.5);
+            } else if (p.type === 'spark') {
+                ctx.fillRect(-p.size * 0.5, -p.size * 0.5, p.size, p.size);
+            } else if (p.type === 'ember' || p.type === 'snowflake') {
+                ctx.beginPath();
+                ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            } else {
+                ctx.beginPath();
+                ctx.arc(0, 0, p.size * 0.75, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            ctx.restore();
+        }
+        ctx.globalAlpha = 1;
 
         if (this.screen !== 'game') return;
 
@@ -573,7 +666,47 @@ class ZigzagRunner {
         }
         ctx.globalAlpha = 1;
 
+        // screen flash effect on death
+        if (this.screenFlash > 0) {
+            ctx.globalAlpha = this.screenFlash;
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(-this.cameraX, -this.cameraY, this.W, this.H);
+            ctx.globalAlpha = 1;
+        }
+
         ctx.restore();
+    }
+
+    drawStar(ctx, cx, cy, spikes, outerRadius, innerRadius) {
+        let step = Math.PI / spikes;
+        let x = cx;
+        let y = cy - outerRadius;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        for (let i = 0; i < spikes * 2; i++) {
+            let r = (i & 1) === 0 ? outerRadius : innerRadius;
+            x = cx + r * Math.sin(i * step);
+            y = cy - r * Math.cos(i * step);
+            ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.fill();
+    }
+
+    lerpColor(color1, color2, t) {
+        // Simple linear interpolation between two hex colors
+        const c1 = parseInt(color1.substring(1), 16);
+        const c2 = parseInt(color2.substring(1), 16);
+        const r1 = (c1 >> 16) & 255;
+        const g1 = (c1 >> 8) & 255;
+        const b1 = c1 & 255;
+        const r2 = (c2 >> 16) & 255;
+        const g2 = (c2 >> 8) & 255;
+        const b2 = c2 & 255;
+        const r = Math.round(r1 + (r2 - r1) * t);
+        const g = Math.round(g1 + (g2 - g1) * t);
+        const b = Math.round(b1 + (b2 - b1) * t);
+        return `rgb(${r},${g},${b})`;
     }
 
     drawTile(ctx, x, y, theme, passed) {
@@ -582,8 +715,11 @@ class ZigzagRunner {
 
         ctx.globalAlpha = passed ? 0.35 : 1;
 
-        // top face
-        ctx.fillStyle = theme.tileHighlight;
+        // top face with gradient
+        const grad = ctx.createLinearGradient(x - tw / 2, y - th / 2, x + tw / 2, y + th / 2);
+        grad.addColorStop(0, theme.tileHighlight);
+        grad.addColorStop(1, theme.tileColor);
+        ctx.fillStyle = grad;
         ctx.beginPath();
         ctx.moveTo(x, y - th / 2);
         ctx.lineTo(x + tw / 2, y);
@@ -591,6 +727,28 @@ class ZigzagRunner {
         ctx.lineTo(x - tw / 2, y);
         ctx.closePath();
         ctx.fill();
+
+        // subtle grid pattern on top face
+        ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+        ctx.lineWidth = 0.5;
+        const gridCount = 3;
+        for (let i = 1; i < gridCount; i++) {
+            const ratio = i / gridCount;
+            ctx.beginPath();
+            const p1x = x - tw / 2 + (x + tw / 2 - (x - tw / 2)) * ratio;
+            const p1y = y - th / 2 + (y + th / 2 - (y - th / 2)) * ratio;
+            ctx.moveTo(p1x, y - th / 2);
+            ctx.lineTo(p1x, y + th / 2);
+            ctx.stroke();
+        }
+
+        // highlight line along top edge
+        ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(x - tw / 4, y - th / 4);
+        ctx.lineTo(x + tw / 4, y - th / 4);
+        ctx.stroke();
 
         // left face
         ctx.fillStyle = theme.tileShadow;
@@ -618,17 +776,48 @@ class ZigzagRunner {
     drawCoin(ctx, x, y, theme) {
         const t = Date.now() / 500;
         const bounce = Math.sin(t) * 3;
+        const rotation = Date.now() / 1000;
+
+        ctx.save();
+        ctx.translate(x, y + bounce);
+        ctx.rotate(rotation);
+
         ctx.fillStyle = theme.coinColor;
         ctx.shadowColor = theme.coinColor;
-        ctx.shadowBlur = 10;
+        ctx.shadowBlur = 12;
         ctx.beginPath();
-        ctx.arc(x, y + bounce, 7, 0, Math.PI * 2);
+        ctx.arc(0, 0, 7, 0, Math.PI * 2);
         ctx.fill();
-        ctx.fillStyle = 'rgba(255,255,255,0.5)';
+
+        // Coin rotation: scale x-axis to create spinning effect
+        const scaleX = Math.cos(rotation * 0.5);
+        ctx.save();
+        ctx.scale(Math.abs(scaleX), 1);
+        ctx.fillStyle = 'rgba(255,255,255,0.4)';
         ctx.beginPath();
-        ctx.arc(x - 2, y + bounce - 2, 2.5, 0, Math.PI * 2);
+        ctx.arc(0, 0, 5, 0, Math.PI * 2);
         ctx.fill();
+        ctx.restore();
+
+        ctx.fillStyle = 'rgba(255,255,255,0.6)';
+        ctx.beginPath();
+        ctx.arc(-2, -2, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+
         ctx.shadowBlur = 0;
+        ctx.restore();
+
+        // Sparkle particles around coin occasionally
+        if (Math.sin(t * 2) > 0.8) {
+            const sparkX = x + Math.cos(t * 3) * 12;
+            const sparkY = y + bounce + Math.sin(t * 4) * 12;
+            ctx.globalAlpha = 0.8;
+            ctx.fillStyle = theme.coinColor;
+            ctx.beginPath();
+            ctx.arc(sparkX, sparkY, 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+        }
     }
 
     drawBall(ctx, x, y, theme, skin) {
@@ -644,6 +833,12 @@ class ZigzagRunner {
             ctx.rotate(this.fallRotation);
             ctx.translate(-x, -y);
         }
+
+        // soft glow effect
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 15;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
 
         // shadow
         ctx.fillStyle = 'rgba(0,0,0,0.3)';
@@ -661,6 +856,7 @@ class ZigzagRunner {
         ctx.fill();
 
         // highlight
+        ctx.shadowBlur = 0;
         ctx.fillStyle = 'rgba(255,255,255,0.45)';
         ctx.beginPath();
         ctx.arc(x - r * 0.25, y - r * 0.25, r * 0.35, 0, Math.PI * 2);
@@ -818,6 +1014,42 @@ class ZigzagRunner {
 }
 
 // Start
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
+    // Initialize language support
+    await i18n.loadTranslations(i18n.currentLang);
+    i18n.updateUI();
+
+    const langBtn = document.getElementById('langBtn');
+    const langMenu = document.getElementById('langMenu');
+
+    if (langBtn && langMenu) {
+        // Populate language options
+        langMenu.innerHTML = '';
+        i18n.supportedLanguages.forEach(lang => {
+            const btn = document.createElement('button');
+            btn.className = `lang-option ${lang === i18n.currentLang ? 'active' : ''}`;
+            btn.textContent = i18n.getLanguageName(lang);
+            btn.addEventListener('click', async () => {
+                await i18n.setLanguage(lang);
+                document.querySelectorAll('.lang-option').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                langMenu.classList.add('hidden');
+            });
+            langMenu.appendChild(btn);
+        });
+
+        // Toggle menu
+        langBtn.addEventListener('click', () => {
+            langMenu.classList.toggle('hidden');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.language-selector')) {
+                langMenu.classList.add('hidden');
+            }
+        });
+    }
+
     new ZigzagRunner();
 });

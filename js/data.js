@@ -11,7 +11,8 @@ const THEMES_DATA = [
         ballColor: '#ff6348',
         coinColor: '#ffd700',
         unlockCondition: 'default',
-        description: '기본 테마'
+        description: '기본 테마',
+        particles: { type: 'star', count: 30, speed: 0.5, color: '#ffffff', sizeMin: 1, sizeMax: 3 }
     },
     {
         id: 'neon',
@@ -25,7 +26,8 @@ const THEMES_DATA = [
         coinColor: '#ff00ff',
         unlockCondition: 'score',
         unlockValue: 500,
-        description: '500점 달성 시 해금'
+        description: '500점 달성 시 해금',
+        particles: { type: 'spark', count: 25, speed: 0.6, colors: ['#ff00ff', '#00ffff'], sizeMin: 1.5, sizeMax: 3.5 }
     },
     {
         id: 'sunset',
@@ -39,7 +41,8 @@ const THEMES_DATA = [
         coinColor: '#e67e22',
         unlockCondition: 'score',
         unlockValue: 1500,
-        description: '1500점 달성 시 해금'
+        description: '1500점 달성 시 해금',
+        particles: { type: 'ember', count: 20, speed: 0.4, color: '#ff8c00', sizeMin: 2, sizeMax: 4 }
     },
     {
         id: 'arctic',
@@ -53,7 +56,8 @@ const THEMES_DATA = [
         coinColor: '#00d2ff',
         unlockCondition: 'score',
         unlockValue: 3000,
-        description: '3000점 달성 시 해금'
+        description: '3000점 달성 시 해금',
+        particles: { type: 'snowflake', count: 35, speed: 0.3, color: '#a8d8ff', sizeMin: 1, sizeMax: 2.5 }
     },
     {
         id: 'gold',
@@ -67,7 +71,8 @@ const THEMES_DATA = [
         coinColor: '#ffeaa7',
         unlockCondition: 'score',
         unlockValue: 5000,
-        description: '5000점 달성 시 해금'
+        description: '5000점 달성 시 해금',
+        particles: { type: 'sparkle', count: 25, speed: 0.5, color: '#ffd700', sizeMin: 1.5, sizeMax: 3 }
     }
 ];
 

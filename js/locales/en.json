@@ -1,0 +1,42 @@
+{
+  "app": {
+    "title": "Zigzag Runner - Direction Change Arcade Game",
+    "description": "One tap to change direction! Collect coins while running on endless zigzag paths. The most addictive one-tap arcade game."
+  },
+  "menu": {
+    "title": "Zigzag Runner",
+    "subtitle": "👶 Beginner",
+    "bestScore": "Best 0 points",
+    "play": "🎮 Play Game",
+    "theme": "🎨 Themes",
+    "skin": "🎱 Skins",
+    "stats": "📊 Stats"
+  },
+  "game": {
+    "tapToStart": "Tap to start",
+    "score": "Score",
+    "coins": "Coins"
+  },
+  "gameover": {
+    "label": "GAME OVER",
+    "score": "Score",
+    "coins": "Coins",
+    "best": "Best 0 points",
+    "revive": "🎬 Watch Ad & Revive",
+    "replay": "🔄 Try Again",
+    "share": "📤 Share",
+    "home": "🏠 Home"
+  },
+  "recommendations": {
+    "title": "Try These Too"
+  },
+  "screens": {
+    "theme": "🎨 Themes",
+    "skin": "🎱 Skins",
+    "stats": "📊 Stats",
+    "back": "←"
+  },
+  "ad": {
+    "label": "Loading ad..."
+  }
+}
