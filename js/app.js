@@ -5,8 +5,8 @@ class ZigzagRunner {
         this.ctx = this.canvas.getContext('2d');
         this.W = 400;
         this.H = 700;
-        this.tileW = 50;
-        this.tileH = 25;
+        this.tileW = 65;
+        this.tileH = 32;
 
         // game state
         this.screen = 'main';
@@ -19,12 +19,8 @@ class ZigzagRunner {
         // ball
         this.ballX = 0;
         this.ballY = 0;
-        this.ballGridX = 0;
-        this.ballGridY = 0;
-        this.ballTargetX = 0;
-        this.ballTargetY = 0;
-        this.ballRadius = 8;
-        this.ballSpeed = 2.5;
+        this.ballRadius = 10;
+        this.ballSpeed = 0.05;
         this.moveProgress = 0;
 
         // direction: 0 = +x (right), 1 = +y (forward)
@@ -35,7 +31,7 @@ class ZigzagRunner {
 
         // path
         this.tiles = [];
-        this.coinTiles = [];
+        this.coinTiles = new Set();
         this.currentTileIndex = 0;
         this.pathLength = 60;
 
@@ -57,8 +53,7 @@ class ZigzagRunner {
             maxScore: 0,
             totalGames: 0,
             totalCoins: 0,
-            totalDistance: 0,
-            bestStreak: 0
+            totalDistance: 0
         };
         this.currentTheme = 'classic';
         this.currentSkin = 'default';
@@ -156,14 +151,21 @@ class ZigzagRunner {
         let x = 0, y = 0;
         this.tiles.push({ x, y });
 
-        for (let i = 1; i < this.pathLength; i++) {
+        // first 3 tiles go right (safe start)
+        for (let i = 1; i <= 3; i++) {
+            x++;
+            this.tiles.push({ x, y });
+        }
+
+        // rest is random
+        for (let i = 4; i < this.pathLength; i++) {
             if (Math.random() < 0.5) {
                 x++;
             } else {
                 y++;
             }
             this.tiles.push({ x, y });
-            if (Math.random() < 0.3 && i > 2) {
+            if (Math.random() < 0.3 && i > 5) {
                 this.coinTiles.add(i);
             }
         }
@@ -189,7 +191,7 @@ class ZigzagRunner {
     toIso(gx, gy) {
         const sx = (gx - gy) * (this.tileW / 2);
         const sy = (gx + gy) * (this.tileH / 2);
-        return { x: this.W / 2 + sx, y: 200 + sy };
+        return { x: this.W / 2 + sx, y: 180 + sy };
     }
 
     // --- Events ---
@@ -262,7 +264,7 @@ class ZigzagRunner {
         this.currentTileIndex = 0;
         this.direction = 0;
         this.moveProgress = 0;
-        this.ballSpeed = 2.5;
+        this.ballSpeed = 0.05;
         this.particles = [];
         this.trailPoints = [];
         this.reviveUsed = false;
@@ -275,8 +277,6 @@ class ZigzagRunner {
         const start = this.toIso(0, 0);
         this.ballX = start.x;
         this.ballY = start.y;
-        this.ballGridX = 0;
-        this.ballGridY = 0;
         this.targetCamX = start.x - this.W / 2;
         this.targetCamY = start.y - 300;
         this.cameraX = this.targetCamX;
@@ -300,7 +300,7 @@ class ZigzagRunner {
     update(dt) {
         if (this.screen !== 'game') return;
 
-        // particles
+        // particles update
         this.particles = this.particles.filter(p => {
             p.x += p.vx;
             p.y += p.vy;
@@ -324,82 +324,65 @@ class ZigzagRunner {
         if (this.state === 'playing') {
             this.moveProgress += this.ballSpeed * (dt / 16);
 
-            if (this.moveProgress >= 1) {
-                this.moveProgress = 0;
-                this.currentTileIndex++;
+            // clamp so we never skip the direction check
+            if (this.moveProgress > 1) this.moveProgress = 1;
 
-                // check coins
-                if (this.coinTiles.has(this.currentTileIndex)) {
-                    this.coins++;
-                    this.totalCoins++;
-                    this.score += 5;
-                    this.coinTiles.delete(this.currentTileIndex);
-                    this.spawnParticles(this.ballX, this.ballY - 10, this.getTheme().coinColor, 6);
-                }
+            const cur = this.tiles[this.currentTileIndex];
+            const next = this.tiles[this.currentTileIndex + 1];
 
-                this.score++;
+            if (!cur || !next) {
+                this.triggerFall();
+                return;
+            }
 
-                // speed up
-                if (this.score % 20 === 0) {
-                    this.ballSpeed = Math.min(5.5, this.ballSpeed + 0.15);
-                }
+            // which direction does the PATH go?
+            const pathDir = next.x > cur.x ? 0 : 1;
+            const isoC = this.toIso(cur.x, cur.y);
 
-                // extend path
-                if (this.currentTileIndex > this.tiles.length - 25) {
-                    this.extendPath(30);
-                }
+            if (this.direction === pathDir) {
+                // correct direction - interpolate toward next tile
+                const isoN = this.toIso(next.x, next.y);
+                this.ballX = isoC.x + (isoN.x - isoC.x) * this.moveProgress;
+                this.ballY = isoC.y + (isoN.y - isoC.y) * this.moveProgress;
 
-                // check next tile
-                const cur = this.tiles[this.currentTileIndex];
-                if (!cur) {
-                    this.triggerFall();
-                    return;
-                }
+                // reached next tile
+                if (this.moveProgress >= 1) {
+                    this.moveProgress = 0;
+                    this.currentTileIndex++;
+                    this.score++;
 
-                this.ballGridX = cur.x;
-                this.ballGridY = cur.y;
-
-                // auto-align direction to path for smooth gameplay
-                const next = this.tiles[this.currentTileIndex + 1];
-                if (!next) {
-                    this.triggerFall();
-                    return;
-                }
-
-                const iso = this.toIso(cur.x, cur.y);
-                this.ballX = iso.x;
-                this.ballY = iso.y;
-
-                this.updateHUD();
-            } else {
-                // interpolate position
-                const cur = this.tiles[this.currentTileIndex];
-                const next = this.tiles[this.currentTileIndex + 1];
-                if (cur && next) {
-                    // check if player direction matches the path direction
-                    const pathDir = next.x > cur.x ? 0 : 1;
-                    const isoC = this.toIso(cur.x, cur.y);
-                    const isoN = this.toIso(next.x, next.y);
-
-                    if (this.direction === pathDir) {
-                        // correct direction
-                        this.ballX = isoC.x + (isoN.x - isoC.x) * this.moveProgress;
-                        this.ballY = isoC.y + (isoN.y - isoC.y) * this.moveProgress;
-                    } else {
-                        // wrong direction - ball goes off path
-                        const wrongNext = this.direction === 0
-                            ? { x: cur.x + 1, y: cur.y }
-                            : { x: cur.x, y: cur.y + 1 };
-                        const isoW = this.toIso(wrongNext.x, wrongNext.y);
-                        this.ballX = isoC.x + (isoW.x - isoC.x) * this.moveProgress;
-                        this.ballY = isoC.y + (isoW.y - isoC.y) * this.moveProgress;
-
-                        if (this.moveProgress > 0.45) {
-                            this.triggerFall();
-                            return;
-                        }
+                    // collect coins
+                    if (this.coinTiles.has(this.currentTileIndex)) {
+                        this.coins++;
+                        this.totalCoins++;
+                        this.score += 5;
+                        this.coinTiles.delete(this.currentTileIndex);
+                        this.spawnParticles(this.ballX, this.ballY - 12, this.getTheme().coinColor, 8);
                     }
-                } else if (cur) {
+
+                    // speed up every 15 points
+                    if (this.score % 15 === 0) {
+                        this.ballSpeed = Math.min(0.14, this.ballSpeed + 0.004);
+                    }
+
+                    // extend path
+                    if (this.currentTileIndex > this.tiles.length - 25) {
+                        this.extendPath(30);
+                    }
+
+                    this.updateHUD();
+                }
+            } else {
+                // wrong direction - ball goes off the path
+                const wrongNext = this.direction === 0
+                    ? { x: cur.x + 1, y: cur.y }
+                    : { x: cur.x, y: cur.y + 1 };
+                const isoW = this.toIso(wrongNext.x, wrongNext.y);
+                this.ballX = isoC.x + (isoW.x - isoC.x) * this.moveProgress;
+                this.ballY = isoC.y + (isoW.y - isoC.y) * this.moveProgress;
+
+                // fall off after going too far in wrong direction
+                if (this.moveProgress >= 0.55) {
                     this.triggerFall();
                     return;
                 }
@@ -436,17 +419,14 @@ class ZigzagRunner {
         this.gameCount++;
         document.getElementById('hud').style.display = 'none';
 
-        // update stats
         if (this.score > this.stats.maxScore) this.stats.maxScore = this.score;
         this.stats.totalGames++;
         this.stats.totalCoins += this.coins;
         this.stats.totalDistance += this.score;
 
-        // check unlocks
         this.checkUnlocks();
         this.saveData();
 
-        // show game over
         const title = this.getTitle(this.score);
         document.getElementById('goScore').textContent = this.score;
         document.getElementById('goCoins').textContent = this.coins;
@@ -456,7 +436,6 @@ class ZigzagRunner {
         const reviveBtn = document.getElementById('btnRevive');
         if (reviveBtn) reviveBtn.style.display = this.reviveUsed ? 'none' : 'flex';
 
-        // show interstitial every 3 games
         if (this.gameCount % 3 === 0) {
             this.showInterstitialAd(() => {
                 document.getElementById('screen-gameover').classList.add('active');
@@ -476,8 +455,11 @@ class ZigzagRunner {
             this.fallVelY = 0;
             this.fallRotation = 0;
 
+            // align direction to path
             const cur = this.tiles[this.currentTileIndex];
-            if (cur) {
+            const next = this.tiles[this.currentTileIndex + 1];
+            if (cur && next) {
+                this.direction = next.x > cur.x ? 0 : 1;
                 const iso = this.toIso(cur.x, cur.y);
                 this.ballX = iso.x;
                 this.ballY = iso.y;
@@ -491,12 +473,10 @@ class ZigzagRunner {
     }
 
     checkUnlocks() {
-        let newUnlock = false;
         for (const t of THEMES_DATA) {
             if (!this.unlockedThemes.includes(t.id)) {
                 if (t.unlockCondition === 'score' && this.stats.maxScore >= t.unlockValue) {
                     this.unlockedThemes.push(t.id);
-                    newUnlock = true;
                 }
             }
         }
@@ -504,11 +484,9 @@ class ZigzagRunner {
             if (!this.unlockedSkins.includes(s.id)) {
                 if (s.unlockCondition === 'score' && this.stats.maxScore >= s.unlockValue) {
                     this.unlockedSkins.push(s.id);
-                    newUnlock = true;
                 }
             }
         }
-        return newUnlock;
     }
 
     spawnParticles(x, y, color, count) {
@@ -551,13 +529,13 @@ class ZigzagRunner {
         ctx.translate(-this.cameraX + shakeX, -this.cameraY + shakeY);
 
         // draw tiles
-        const startIdx = Math.max(0, this.currentTileIndex - 5);
-        const endIdx = Math.min(this.tiles.length, this.currentTileIndex + 40);
+        const startIdx = Math.max(0, this.currentTileIndex - 3);
+        const endIdx = Math.min(this.tiles.length, this.currentTileIndex + 30);
 
         for (let i = startIdx; i < endIdx; i++) {
             const tile = this.tiles[i];
             const iso = this.toIso(tile.x, tile.y);
-            this.drawTile(ctx, iso.x, iso.y, theme, i <= this.currentTileIndex);
+            this.drawTile(ctx, iso.x, iso.y, theme, i < this.currentTileIndex);
         }
 
         // draw coins
@@ -565,7 +543,7 @@ class ZigzagRunner {
             if (this.coinTiles.has(i)) {
                 const tile = this.tiles[i];
                 const iso = this.toIso(tile.x, tile.y);
-                this.drawCoin(ctx, iso.x, iso.y - 15, theme);
+                this.drawCoin(ctx, iso.x, iso.y - 18, theme);
             }
         }
 
@@ -577,13 +555,13 @@ class ZigzagRunner {
             ctx.globalAlpha = t.life * 0.3;
             ctx.fillStyle = ballColor;
             ctx.beginPath();
-            ctx.arc(t.x, t.y - 10, this.ballRadius * t.life * 0.6, 0, Math.PI * 2);
+            ctx.arc(t.x, t.y - 12, this.ballRadius * t.life * 0.5, 0, Math.PI * 2);
             ctx.fill();
         }
         ctx.globalAlpha = 1;
 
         // draw ball
-        this.drawBall(ctx, this.ballX, this.ballY - 10, theme, skin);
+        this.drawBall(ctx, this.ballX, this.ballY - 12, theme, skin);
 
         // draw particles
         for (const p of this.particles) {
@@ -601,9 +579,8 @@ class ZigzagRunner {
     drawTile(ctx, x, y, theme, passed) {
         const tw = this.tileW;
         const th = this.tileH;
-        const alpha = passed ? 0.5 : 1;
 
-        ctx.globalAlpha = alpha;
+        ctx.globalAlpha = passed ? 0.35 : 1;
 
         // top face
         ctx.fillStyle = theme.tileHighlight;
@@ -620,8 +597,8 @@ class ZigzagRunner {
         ctx.beginPath();
         ctx.moveTo(x - tw / 2, y);
         ctx.lineTo(x, y + th / 2);
-        ctx.lineTo(x, y + th / 2 + 8);
-        ctx.lineTo(x - tw / 2, y + 8);
+        ctx.lineTo(x, y + th / 2 + 10);
+        ctx.lineTo(x - tw / 2, y + 10);
         ctx.closePath();
         ctx.fill();
 
@@ -630,8 +607,8 @@ class ZigzagRunner {
         ctx.beginPath();
         ctx.moveTo(x + tw / 2, y);
         ctx.lineTo(x, y + th / 2);
-        ctx.lineTo(x, y + th / 2 + 8);
-        ctx.lineTo(x + tw / 2, y + 8);
+        ctx.lineTo(x, y + th / 2 + 10);
+        ctx.lineTo(x + tw / 2, y + 10);
         ctx.closePath();
         ctx.fill();
 
@@ -643,13 +620,13 @@ class ZigzagRunner {
         const bounce = Math.sin(t) * 3;
         ctx.fillStyle = theme.coinColor;
         ctx.shadowColor = theme.coinColor;
-        ctx.shadowBlur = 8;
+        ctx.shadowBlur = 10;
         ctx.beginPath();
-        ctx.arc(x, y + bounce, 6, 0, Math.PI * 2);
+        ctx.arc(x, y + bounce, 7, 0, Math.PI * 2);
         ctx.fill();
         ctx.fillStyle = 'rgba(255,255,255,0.5)';
         ctx.beginPath();
-        ctx.arc(x - 2, y + bounce - 2, 2, 0, Math.PI * 2);
+        ctx.arc(x - 2, y + bounce - 2, 2.5, 0, Math.PI * 2);
         ctx.fill();
         ctx.shadowBlur = 0;
     }
@@ -671,12 +648,12 @@ class ZigzagRunner {
         // shadow
         ctx.fillStyle = 'rgba(0,0,0,0.3)';
         ctx.beginPath();
-        ctx.ellipse(x, y + r + 5, r * 0.8, r * 0.3, 0, 0, Math.PI * 2);
+        ctx.ellipse(x, y + r + 6, r * 0.8, r * 0.3, 0, 0, Math.PI * 2);
         ctx.fill();
 
-        // ball
+        // ball body
         const grad = ctx.createRadialGradient(x - r * 0.3, y - r * 0.3, 0, x, y, r);
-        grad.addColorStop(0, this.lightenColor(color, 40));
+        grad.addColorStop(0, this.lightenColor(color, 50));
         grad.addColorStop(1, color);
         ctx.fillStyle = grad;
         ctx.beginPath();
@@ -684,7 +661,7 @@ class ZigzagRunner {
         ctx.fill();
 
         // highlight
-        ctx.fillStyle = 'rgba(255,255,255,0.4)';
+        ctx.fillStyle = 'rgba(255,255,255,0.45)';
         ctx.beginPath();
         ctx.arc(x - r * 0.25, y - r * 0.25, r * 0.35, 0, Math.PI * 2);
         ctx.fill();
@@ -715,7 +692,6 @@ class ZigzagRunner {
 
     updateMainUI() {
         const title = this.getTitle(this.stats.maxScore);
-        document.getElementById('mainBest')?.setAttribute('data-score', this.stats.maxScore);
         const bestEl = document.getElementById('mainBest');
         if (bestEl) bestEl.textContent = `최고 ${this.stats.maxScore}점`;
         const titleEl = document.getElementById('mainTitle');
