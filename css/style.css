@@ -166,6 +166,19 @@ body {
     max-width: 260px;
 }
 
+.home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 18px;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s;
+}
+.home-link:hover { color: rgba(255,255,255,0.7); }
+.home-link svg { flex-shrink: 0; }
+
 .btn {
     padding: 14px 24px;
     border: none;
