@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e55039"/>
+      <stop offset="100%" style="stop-color:#ff6348"/>
+    </linearGradient>
+  </defs>
+  <rect width="192" height="192" rx="40" fill="url(#bg)"/>
+  <!-- Zigzag path -->
+  <polyline points="50,140 80,120 50,100 80,80 50,60" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="112,140 142,120 112,100 142,80 112,60" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Ball -->
+  <circle cx="96" cy="80" r="18" fill="rgba(255,255,255,0.95)"/>
+  <circle cx="90" cy="74" r="5" fill="rgba(255,255,255,0.4)"/>
+  <!-- Motion lines -->
+  <line x1="96" y1="110" x2="96" y2="130" stroke="rgba(255,255,255,0.4)" stroke-width="3" stroke-linecap="round"/>
+  <line x1="82" y1="105" x2="78" y2="120" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="110" y1="105" x2="114" y2="120" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"/>
+</svg>

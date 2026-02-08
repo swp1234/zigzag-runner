@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Zigzag Runner - 지그재그 러너 | 방향 전환 아케이드 게임</title>
+    <meta name="description" content="탭 한 번으로 방향 전환! 끝없는 지그재그 길 위에서 코인을 모으며 달리세요. 중독성 최고의 원탭 아케이드 게임.">
+    <meta name="keywords" content="지그재그,러너,게임,아케이드,캐주얼,모바일게임,원탭게임,zigzag,runner">
+    <meta name="theme-color" content="#0f0c29">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Zigzag Runner - 지그재그 러너">
+    <meta property="og:description" content="탭 한 번으로 방향 전환! 끝없는 지그재그 길 위에서 최고 점수에 도전하세요.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://swp1234.github.io/zigzag-runner/">
+    <meta property="og:image" content="https://swp1234.github.io/zigzag-runner/icon-512.svg">
+    <meta property="og:locale" content="ko_KR">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Zigzag Runner - 지그재그 러너">
+    <meta name="twitter:description" content="탭 한 번으로 방향 전환! 중독성 최고의 원탭 아케이드 게임.">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoGame",
+        "name": "Zigzag Runner - 지그재그 러너",
+        "description": "탭 한 번으로 방향 전환! 끝없는 지그재그 길 위에서 코인을 모으며 달리세요.",
+        "url": "https://swp1234.github.io/zigzag-runner/",
+        "genre": "Arcade",
+        "gamePlatform": "Web Browser",
+        "applicationCategory": "Game",
+        "operatingSystem": "Any",
+        "inLanguage": "ko",
+        "playMode": "SinglePlayer"
+    }
+    </script>
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon-192.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="icon-192.svg">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-J8GSWM40TV');
+    </script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Ad Top -->
+        <div class="ad-banner" id="adTop">AD</div>
+
+        <!-- Game Canvas -->
+        <div class="game-canvas-wrap">
+            <canvas id="gameCanvas"></canvas>
+
+            <!-- HUD -->
+            <div id="hud" style="display:none">
+                <div class="hud-item" id="hudScore">0</div>
+                <div class="hud-item hud-coins">🪙 <span id="hudCoins">0</span></div>
+            </div>
+
+            <div id="tapHint" style="display:none">탭하여 시작</div>
+
+            <!-- Main Screen -->
+            <div class="screen active" id="screen-main">
+                <div class="main-icon">🏃</div>
+                <div class="main-title">Zigzag Runner</div>
+                <div id="mainTitle">👶 초보 걸음마</div>
+                <div id="mainBest">최고 0점</div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="btnPlay">🎮 게임 시작</button>
+                    <div class="btn-row">
+                        <button class="btn btn-secondary" id="btnTheme">🎨 테마</button>
+                        <button class="btn btn-secondary" id="btnSkin">🎱 스킨</button>
+                    </div>
+                    <button class="btn btn-secondary" id="btnStats">📊 통계</button>
+                </div>
+            </div>
+
+            <!-- Theme Screen -->
+            <div class="screen" id="screen-theme">
+                <div class="screen-header">
+                    <button class="btn-icon" id="btnBack">←</button>
+                    <h2>🎨 테마</h2>
+                </div>
+                <div class="item-list" id="themeList"></div>
+            </div>
+
+            <!-- Skin Screen -->
+            <div class="screen" id="screen-skin">
+                <div class="screen-header">
+                    <button class="btn-icon" id="btnBackSkin">←</button>
+                    <h2>🎱 스킨</h2>
+                </div>
+                <div class="item-list" id="skinList"></div>
+            </div>
+
+            <!-- Stats Screen -->
+            <div class="screen" id="screen-stats">
+                <div class="screen-header">
+                    <button class="btn-icon" id="btnBackStats">←</button>
+                    <h2>📊 통계</h2>
+                </div>
+                <div id="statsContent"></div>
+            </div>
+
+            <!-- Game Over -->
+            <div class="screen" id="screen-gameover">
+                <div class="go-label">GAME OVER</div>
+                <div id="goTitle"></div>
+                <div class="go-stats">
+                    <div class="go-stat">
+                        <div class="go-stat-value" id="goScore">0</div>
+                        <div class="go-stat-label">점수</div>
+                    </div>
+                    <div class="go-stat">
+                        <div class="go-stat-value" id="goCoins">0</div>
+                        <div class="go-stat-label">코인</div>
+                    </div>
+                </div>
+                <div id="goBest">최고 0점</div>
+                <div class="go-buttons">
+                    <button class="btn btn-revive" id="btnRevive">🎬 광고 보고 부활</button>
+                    <button class="btn btn-primary" id="btnReplay">🔄 다시 하기</button>
+                    <div class="go-row">
+                        <button class="btn btn-share" id="btnShare">📤 공유</button>
+                        <button class="btn btn-secondary" id="btnHome">🏠 홈</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ad Bottom -->
+        <div class="ad-banner" id="adBottom">AD</div>
+
+        <!-- Ad Overlay -->
+        <div class="ad-overlay" id="adOverlay">
+            <p>광고 로딩 중...</p>
+            <div class="ad-countdown" id="adCountdown">5</div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        }
+    </script>
+</body>
+</html>
