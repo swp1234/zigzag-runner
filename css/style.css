@@ -387,6 +387,17 @@ body {
 }
 
 /* Reduced motion */
+/* === RECOMMENDATIONS === */
+.recommendations-section { margin: 24px 16px 0; }
+.rec-title { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.5); margin-bottom: 12px; text-align: center; letter-spacing: 0.5px; }
+.rec-grid { display: flex; flex-direction: column; gap: 10px; }
+.rec-card { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; text-decoration: none; color: #fff; transition: all 0.3s ease; }
+.rec-card:hover, .rec-card:active { background: rgba(255,255,255,0.1); border-color: var(--primary); transform: translateY(-1px); }
+.rec-icon { font-size: 28px; flex-shrink: 0; width: 40px; text-align: center; }
+.rec-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.rec-name { font-size: 14px; font-weight: 600; }
+.rec-desc { font-size: 12px; color: rgba(255,255,255,0.5); }
+
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation-duration: 0.01ms !important;
