@@ -772,7 +772,7 @@ class ZigzagRunner {
     shareResult() {
         const title = this.getTitle(this.score);
         const text = `${title.emoji} Zigzag Runner\n점수: ${this.score} | 코인: ${this.coins}\n칭호: ${title.name}\n\n나의 지그재그 실력을 확인해보세요!`;
-        const url = 'https://swp1234.github.io/zigzag-runner/';
+        const url = 'https://dopabrain.com/zigzag-runner/';
 
         if (navigator.share) {
             navigator.share({ title: 'Zigzag Runner', text, url }).catch(() => {});
