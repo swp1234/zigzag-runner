@@ -347,9 +347,6 @@ class ZigzagRunner {
             if (window.sfx) window.sfx.coin();
             this.spawnParticles(this.ballX, this.ballY - 12, this.getTheme().coinColor, 8);
         }
-        if (this.score % 20 === 0) {
-            this.ballSpeed = Math.min(0.12, this.ballSpeed + 0.003);
-        }
         if (this.currentTileIndex > this.tiles.length - 25) {
             this.extendPath(30);
         }
@@ -385,6 +382,10 @@ class ZigzagRunner {
         if (this.screenFlash > 0) this.screenFlash *= 0.85;
 
         if (this.state === 'playing') {
+            // Continuous gradual speed increase based on score
+            // Starts at 0.035, very slowly ramps up, caps at 0.09
+            // Uses sqrt curve so early increase is faster, then plateaus
+            this.ballSpeed = 0.035 + 0.055 * Math.min(1, Math.sqrt(this.score / 500));
             this.moveProgress += this.ballSpeed * (dt / 16);
 
             // clamp so we never skip the direction check
@@ -422,11 +423,6 @@ class ZigzagRunner {
                         this.coinTiles.delete(this.currentTileIndex);
                         if (window.sfx) window.sfx.coin();
                         this.spawnParticles(this.ballX, this.ballY - 12, this.getTheme().coinColor, 8);
-                    }
-
-                    // speed up every 20 points (gradual difficulty)
-                    if (this.score % 20 === 0) {
-                        this.ballSpeed = Math.min(0.12, this.ballSpeed + 0.003);
                     }
 
                     // extend path
