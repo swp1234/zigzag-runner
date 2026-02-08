@@ -20,7 +20,7 @@ class ZigzagRunner {
         this.ballX = 0;
         this.ballY = 0;
         this.ballRadius = 10;
-        this.ballSpeed = 0.05;
+        this.ballSpeed = 0.035;
         this.moveProgress = 0;
 
         // direction: 0 = +x (right), 1 = +y (forward)
@@ -151,23 +151,34 @@ class ZigzagRunner {
         this.tiles = [];
         this.coinTiles = new Set();
         let x = 0, y = 0;
+        let lastDir = 0; // track last direction for consecutive limit
         this.tiles.push({ x, y });
 
-        // first 3 tiles go right (safe start)
-        for (let i = 1; i <= 3; i++) {
+        // first 5 tiles go right (safe start - gives player time to understand)
+        for (let i = 1; i <= 5; i++) {
             x++;
             this.tiles.push({ x, y });
         }
 
-        // rest is random
-        for (let i = 4; i < this.pathLength; i++) {
-            if (Math.random() < 0.5) {
+        // rest is random, but early tiles have less zigzag
+        for (let i = 6; i < this.pathLength; i++) {
+            // Early game: bias toward keeping same direction (fewer turns)
+            // Later: pure random (50/50)
+            const turnChance = i < 20 ? 0.3 : 0.5;
+            let dir;
+            if (Math.random() < turnChance) {
+                dir = 1 - lastDir; // switch direction
+            } else {
+                dir = lastDir; // keep same direction
+            }
+            if (dir === 0) {
                 x++;
             } else {
                 y++;
             }
+            lastDir = dir;
             this.tiles.push({ x, y });
-            if (Math.random() < 0.3 && i > 5) {
+            if (Math.random() < 0.3 && i > 8) {
                 this.coinTiles.add(i);
             }
         }
@@ -266,7 +277,7 @@ class ZigzagRunner {
         this.currentTileIndex = 0;
         this.direction = 0;
         this.moveProgress = 0;
-        this.ballSpeed = 0.05;
+        this.ballSpeed = 0.035;
         this.particles = [];
         this.trailPoints = [];
         this.reviveUsed = false;
@@ -299,6 +310,7 @@ class ZigzagRunner {
 
     changeDirection() {
         this.direction = this.direction === 0 ? 1 : 0;
+        if (window.sfx) window.sfx.click();
     }
 
     update(dt) {
@@ -365,12 +377,13 @@ class ZigzagRunner {
                         this.totalCoins++;
                         this.score += 5;
                         this.coinTiles.delete(this.currentTileIndex);
+                        if (window.sfx) window.sfx.coin();
                         this.spawnParticles(this.ballX, this.ballY - 12, this.getTheme().coinColor, 8);
                     }
 
-                    // speed up every 15 points
-                    if (this.score % 15 === 0) {
-                        this.ballSpeed = Math.min(0.14, this.ballSpeed + 0.004);
+                    // speed up every 20 points (gradual difficulty)
+                    if (this.score % 20 === 0) {
+                        this.ballSpeed = Math.min(0.12, this.ballSpeed + 0.003);
                     }
 
                     // extend path
@@ -390,7 +403,7 @@ class ZigzagRunner {
                 this.ballY = isoC.y + (isoW.y - isoC.y) * this.moveProgress;
 
                 // fall off after going too far in wrong direction
-                if (this.moveProgress >= 0.55) {
+                if (this.moveProgress >= 0.80) {
                     this.triggerFall();
                     return;
                 }
@@ -419,6 +432,7 @@ class ZigzagRunner {
         this.fallVelX = this.direction === 0 ? 2 : -2;
         this.fallVelY = -3;
         this.screenShake = 15;
+        if (window.sfx) window.sfx.explosion();
         this.spawnParticles(this.ballX, this.ballY, '#ff4444', 20);
         // Brief screen flash for death effect
         this.screenFlash = 0.3;
@@ -640,20 +654,20 @@ class ZigzagRunner {
             }
         }
 
-        // draw trail
+        // draw trail (footprint-style afterimage)
         for (const t of this.trailPoints) {
-            const ballColor = skin.color === 'rainbow'
+            const trailColor = skin.color === 'rainbow'
                 ? `hsl(${Date.now() / 10 % 360}, 80%, 60%)`
                 : (skin.color || theme.ballColor);
-            ctx.globalAlpha = t.life * 0.3;
-            ctx.fillStyle = ballColor;
+            ctx.globalAlpha = t.life * 0.15;
+            ctx.fillStyle = trailColor;
             ctx.beginPath();
-            ctx.arc(t.x, t.y - 12, this.ballRadius * t.life * 0.5, 0, Math.PI * 2);
+            ctx.arc(t.x, t.y - 12, 3 * t.life, 0, Math.PI * 2);
             ctx.fill();
         }
         ctx.globalAlpha = 1;
 
-        // draw ball
+        // draw runner
         this.drawBall(ctx, this.ballX, this.ballY - 12, theme, skin);
 
         // draw particles
@@ -834,32 +848,96 @@ class ZigzagRunner {
             ctx.translate(-x, -y);
         }
 
-        // soft glow effect
-        ctx.shadowColor = color;
-        ctx.shadowBlur = 15;
-        ctx.shadowOffsetX = 0;
-        ctx.shadowOffsetY = 0;
+        const s = r * 2; // total size
 
-        // shadow
-        ctx.fillStyle = 'rgba(0,0,0,0.3)';
+        // Drop shadow on ground
+        ctx.fillStyle = 'rgba(0,0,0,0.25)';
         ctx.beginPath();
-        ctx.ellipse(x, y + r + 6, r * 0.8, r * 0.3, 0, 0, Math.PI * 2);
+        ctx.ellipse(x, y + r + 4, r * 0.6, r * 0.2, 0, 0, Math.PI * 2);
         ctx.fill();
 
-        // ball body
-        const grad = ctx.createRadialGradient(x - r * 0.3, y - r * 0.3, 0, x, y, r);
-        grad.addColorStop(0, this.lightenColor(color, 50));
-        grad.addColorStop(1, color);
-        ctx.fillStyle = grad;
+        // --- Runner character ---
+        const headR = s * 0.22;
+        const bodyTop = y - s * 0.15;
+        const bodyBot = y + s * 0.25;
+
+        // Legs (animated running motion)
+        const runCycle = Date.now() * 0.012;
+        const legSwing = Math.sin(runCycle) * 0.4;
+        const legLen = s * 0.32;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2.5;
+        ctx.lineCap = 'round';
+        // Left leg
         ctx.beginPath();
-        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.moveTo(x - 1, bodyBot);
+        ctx.lineTo(x - 3 + Math.sin(legSwing) * 4, bodyBot + legLen);
+        ctx.stroke();
+        // Right leg
+        ctx.beginPath();
+        ctx.moveTo(x + 1, bodyBot);
+        ctx.lineTo(x + 3 + Math.sin(legSwing + Math.PI) * 4, bodyBot + legLen);
+        ctx.stroke();
+
+        // Body
+        const bodyGrad = ctx.createLinearGradient(x, bodyTop, x, bodyBot);
+        bodyGrad.addColorStop(0, this.lightenColor(color, 30));
+        bodyGrad.addColorStop(1, color);
+        ctx.fillStyle = bodyGrad;
+        const bw = s * 0.32, bh = bodyBot - bodyTop, bx = x - s * 0.16, br = 3;
+        ctx.beginPath();
+        ctx.moveTo(bx + br, bodyTop);
+        ctx.lineTo(bx + bw - br, bodyTop);
+        ctx.quadraticCurveTo(bx + bw, bodyTop, bx + bw, bodyTop + br);
+        ctx.lineTo(bx + bw, bodyTop + bh - br);
+        ctx.quadraticCurveTo(bx + bw, bodyTop + bh, bx + bw - br, bodyTop + bh);
+        ctx.lineTo(bx + br, bodyTop + bh);
+        ctx.quadraticCurveTo(bx, bodyTop + bh, bx, bodyTop + bh - br);
+        ctx.lineTo(bx, bodyTop + br);
+        ctx.quadraticCurveTo(bx, bodyTop, bx + br, bodyTop);
+        ctx.closePath();
         ctx.fill();
 
-        // highlight
-        ctx.shadowBlur = 0;
-        ctx.fillStyle = 'rgba(255,255,255,0.45)';
+        // Arms (animated swing)
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        const armSwing = Math.sin(runCycle + Math.PI) * 0.35;
+        // Left arm
         ctx.beginPath();
-        ctx.arc(x - r * 0.25, y - r * 0.25, r * 0.35, 0, Math.PI * 2);
+        ctx.moveTo(x - s * 0.14, bodyTop + s * 0.08);
+        ctx.lineTo(x - s * 0.28 + Math.sin(armSwing) * 3, bodyTop + s * 0.28);
+        ctx.stroke();
+        // Right arm
+        ctx.beginPath();
+        ctx.moveTo(x + s * 0.14, bodyTop + s * 0.08);
+        ctx.lineTo(x + s * 0.28 + Math.sin(armSwing + Math.PI) * 3, bodyTop + s * 0.28);
+        ctx.stroke();
+
+        // Head
+        const headGrad = ctx.createRadialGradient(x - headR * 0.2, y - s * 0.32, 0, x, y - s * 0.28, headR);
+        headGrad.addColorStop(0, this.lightenColor(color, 50));
+        headGrad.addColorStop(1, color);
+        ctx.fillStyle = headGrad;
+        ctx.beginPath();
+        ctx.arc(x, y - s * 0.28, headR, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Eyes (looking forward in direction)
+        const eyeOffX = this.direction === 0 ? 2 : -2;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(x + eyeOffX - 2, y - s * 0.3, 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x + eyeOffX + 2, y - s * 0.3, 2, 0, Math.PI * 2);
+        ctx.fill();
+        // Pupils
+        ctx.fillStyle = '#1a1a2e';
+        ctx.beginPath();
+        ctx.arc(x + eyeOffX - 1.5, y - s * 0.3, 1, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x + eyeOffX + 2.5, y - s * 0.3, 1, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.restore();
