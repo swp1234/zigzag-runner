@@ -1,21 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#e55039"/>
-      <stop offset="100%" style="stop-color:#ff6348"/>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3498db;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2979af;stop-opacity:1" />
     </linearGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.3"/>
+    </filter>
   </defs>
-  <rect width="512" height="512" rx="100" fill="url(#bg)"/>
-  <!-- Zigzag paths -->
-  <polyline points="120,380 180,340 120,300 180,260 120,220 180,180" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
-  <polyline points="332,380 392,340 332,300 392,260 332,220 392,180" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- Ball -->
-  <circle cx="256" cy="210" r="48" fill="rgba(255,255,255,0.95)"/>
-  <circle cx="242" cy="196" r="14" fill="rgba(255,255,255,0.4)"/>
-  <!-- Motion lines -->
-  <line x1="256" y1="280" x2="256" y2="340" stroke="rgba(255,255,255,0.4)" stroke-width="8" stroke-linecap="round"/>
-  <line x1="226" y1="272" x2="216" y2="320" stroke="rgba(255,255,255,0.3)" stroke-width="5" stroke-linecap="round"/>
-  <line x1="286" y1="272" x2="296" y2="320" stroke="rgba(255,255,255,0.3)" stroke-width="5" stroke-linecap="round"/>
-  <!-- Text -->
-  <text x="256" y="440" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="sans-serif" font-weight="900" font-size="42">ZIGZAG</text>
+  <rect width="512" height="512" fill="url(#grad1)"/>
+  <g transform="translate(256, 256)" filter="url(#shadow)">
+    <circle cx="0" cy="0" r="200" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+    <text x="0" y="0" font-size="180" text-anchor="middle" dominant-baseline="central" fill="white" font-family="system-ui, -apple-system, sans-serif" font-weight="bold" opacity="0.95">⚡</text>
+  </g>
+  <g transform="translate(256, 256)">
+    <circle cx="0" cy="0" r="220" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+  </g>
 </svg>
