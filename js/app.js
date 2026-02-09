@@ -443,7 +443,7 @@ class ZigzagRunner {
             // Stage 1 (0-100): 0.035
             // Stage 2 (100-300): 0.035 → 0.055 (20% increase)
             // Stage 3 (300-600): 0.055 → 0.075 (40% increase)
-            // Stage 4 (600+): 0.075 → 0.10+ (continuous increase, no cap)
+            // Stage 4 (600+): 0.075 → 0.15 (capped, was uncapped)
             let speed = 0.035;
             if (this.score < 100) {
                 speed = 0.035;
@@ -452,7 +452,7 @@ class ZigzagRunner {
             } else if (this.score < 600) {
                 speed = 0.055 + (0.020) * ((this.score - 300) / 300);
             } else {
-                speed = 0.075 + (0.00005) * (this.score - 600);
+                speed = Math.min(0.15, 0.075 + (0.00005) * (this.score - 600));  // IMPROVED: Cap at 0.15
             }
             this.ballSpeed = speed;
             this.moveProgress += this.ballSpeed * (dt / 16);
