@@ -868,5 +868,36 @@ button,a[href],input[type="button"],input[type="submit"],[role="button"]{min-wid
 .skip-link{position:absolute;top:-40px;left:0;background:#667eea;color:white;padding:8px;text-decoration:none;z-index:100;}
 .skip-link:focus{top:0;}
 [role="dialog"]{z-index:1000;}
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark, var(--bg-primary, var(--background, #0f0f23)));
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2196f3;
+    border-radius: 5px;
+    border: 2px solid var(--bg-dark, var(--bg-primary, var(--background, #0f0f23)));
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4dabf5;
+    opacity: 0.8;
+}
+
+/* Selection Color */
+::selection {
+    background: #2196f3;
+    color: white;
+}
+
+::-moz-selection {
+    background: #2196f3;
+    color: white;
+}
+
 @media (prefers-contrast: more){button{border:2px solid #667eea;}}
 .rec-card:focus-visible{outline:3px solid #667eea;outline-offset:4px;}
