@@ -37,7 +37,9 @@
     "emojiMerge": "이모지 머지",
     "emojiMergeDesc": "이모지 합쳐 진화시키기!",
     "pastLife": "전생 직업 테스트",
-    "pastLifeDesc": "나의 전생은 어떤 직업?"
+    "pastLifeDesc": "나의 전생은 어떤 직업?",
+    "colorMemory": "색상 기억력",
+    "colorMemoryDesc": "기억력 도전 게임"
   },
   "screens": {
     "theme": "🎨 테마",
