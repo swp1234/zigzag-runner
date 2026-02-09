@@ -53,6 +53,9 @@ class ZigzagRunner {
         // dopamine enhancements
         this.currentCombo = 0;
         this.lastCoinScore = 0;
+        this.consecutiveTiles = 0; // Track consecutive tiles for combo bonus
+        this.currentStage = 1;
+        this.lastStageShowTime = 0;
 
         // stats & progression
         this.stats = {
@@ -291,6 +294,9 @@ class ZigzagRunner {
         this.fallVelY = 0;
         this.fallRotation = 0;
         this.currentCombo = 0; // Reset combo at game start
+        this.consecutiveTiles = 0; // Reset consecutive tiles
+        this.currentStage = 1;
+        this.lastStageShowTime = 0;
         this.initBgParticles();
         this.generatePath();
 
@@ -342,14 +348,18 @@ class ZigzagRunner {
         this.ballY = iso.y;
         this.currentTileIndex++;
         this.moveProgress = 0;
-        this.score++;
+
+        // IMPROVED: Tile passing now gives +3 points (was +1)
+        this.score += 3;
+        this.consecutiveTiles++;
 
         if (this.coinTiles.has(this.currentTileIndex)) {
             this.coins++;
             this.totalCoins++;
-            this.score += 5;
+            // IMPROVED: Coin collection now gives +15 points (was +5)
+            this.score += 15;
             this.currentCombo++;
-            this.lastCoinScore = 5;
+            this.lastCoinScore = 15;
             this.coinTiles.delete(this.currentTileIndex);
             if (window.sfx) window.sfx.coin();
             this.spawnParticles(this.ballX, this.ballY - 12, this.getTheme().coinColor, 8);
@@ -357,12 +367,30 @@ class ZigzagRunner {
             // Dopamine effects on coin
             this.spawnCoinPopup(this.ballX, this.ballY);
 
-            // Combo bonus every 5 coins
+            // NEW: 5-tile consecutive bonus
+            if (this.consecutiveTiles === 5) {
+                this.score += 30;
+                this.triggerScreenShake(200);
+                this.spawnConfetti(this.ballX, this.ballY, 10);
+                this.showComboIndicator(this.ballX, this.ballY, '5타일 보너스 +30');
+                this.consecutiveTiles = 0;
+            }
+
+            // NEW: 10-tile consecutive bonus
+            if (this.consecutiveTiles === 10) {
+                this.score += 80;
+                this.triggerScreenShake(300);
+                this.spawnConfetti(this.ballX, this.ballY, 16);
+                this.showComboIndicator(this.ballX, this.ballY, '10타일 보너스 +80');
+                this.consecutiveTiles = 0;
+            }
+
+            // Combo bonus every 5 coins (unchanged)
             if (this.currentCombo % 5 === 0 && this.currentCombo > 0) {
                 this.score += this.currentCombo;
                 this.triggerScreenShake(250);
                 this.spawnConfetti(this.ballX, this.ballY, 12);
-                this.showComboIndicator(this.ballX, this.ballY, this.currentCombo);
+                this.showComboIndicator(this.ballX, this.ballY, `코인 x${this.currentCombo} 보너스 +${this.currentCombo}`);
             }
 
             // Milestone every 20 coins
@@ -372,6 +400,10 @@ class ZigzagRunner {
                 this.triggerScreenFlash('flash-success', 150);
             }
         }
+
+        // NEW: Stage progression
+        this.updateStage();
+
         if (this.currentTileIndex > this.tiles.length - 25) {
             this.extendPath(30);
         }
@@ -407,10 +439,22 @@ class ZigzagRunner {
         if (this.screenFlash > 0) this.screenFlash *= 0.85;
 
         if (this.state === 'playing') {
-            // Continuous gradual speed increase based on score
-            // Starts at 0.035, very slowly ramps up, caps at 0.09
-            // Uses sqrt curve so early increase is faster, then plateaus
-            this.ballSpeed = 0.035 + 0.055 * Math.min(1, Math.sqrt(this.score / 500));
+            // IMPROVED: Continuous gradual speed increase based on score
+            // Stage 1 (0-100): 0.035
+            // Stage 2 (100-300): 0.035 → 0.055 (20% increase)
+            // Stage 3 (300-600): 0.055 → 0.075 (40% increase)
+            // Stage 4 (600+): 0.075 → 0.10+ (continuous increase, no cap)
+            let speed = 0.035;
+            if (this.score < 100) {
+                speed = 0.035;
+            } else if (this.score < 300) {
+                speed = 0.035 + (0.020) * ((this.score - 100) / 200);
+            } else if (this.score < 600) {
+                speed = 0.055 + (0.020) * ((this.score - 300) / 300);
+            } else {
+                speed = 0.075 + (0.00005) * (this.score - 600);
+            }
+            this.ballSpeed = speed;
             this.moveProgress += this.ballSpeed * (dt / 16);
 
             // clamp so we never skip the direction check
@@ -438,17 +482,34 @@ class ZigzagRunner {
                 if (this.moveProgress >= 1) {
                     this.moveProgress = 0;
                     this.currentTileIndex++;
-                    this.score++;
+                    // IMPROVED: Tile passing now gives +3 points (was +1)
+                    this.score += 3;
+                    this.consecutiveTiles++;
 
                     // collect coins
                     if (this.coinTiles.has(this.currentTileIndex)) {
                         this.coins++;
                         this.totalCoins++;
-                        this.score += 5;
+                        // IMPROVED: Coin collection now gives +15 points (was +5)
+                        this.score += 15;
                         this.coinTiles.delete(this.currentTileIndex);
                         if (window.sfx) window.sfx.coin();
                         this.spawnParticles(this.ballX, this.ballY - 12, this.getTheme().coinColor, 8);
+
+                        // NEW: 5-tile consecutive bonus (in update path)
+                        if (this.consecutiveTiles === 5) {
+                            this.score += 30;
+                            this.consecutiveTiles = 0;
+                        }
+                        // NEW: 10-tile consecutive bonus (in update path)
+                        if (this.consecutiveTiles === 10) {
+                            this.score += 80;
+                            this.consecutiveTiles = 0;
+                        }
                     }
+
+                    // NEW: Stage progression
+                    this.updateStage();
 
                     // extend path
                     if (this.currentTileIndex > this.tiles.length - 25) {
@@ -1035,6 +1096,27 @@ class ZigzagRunner {
         if (el) el.textContent = this.score;
         const ce = document.getElementById('hudCoins');
         if (ce) ce.textContent = this.coins;
+
+        // NEW: Update Stage display
+        const stageEl = document.getElementById('hudStage');
+        if (stageEl) {
+            stageEl.textContent = `Stage ${this.currentStage}`;
+            const progressEl = document.getElementById('stageProgress');
+            if (progressEl) {
+                let progress = 0;
+                if (this.currentStage === 1) {
+                    progress = (this.score / 100) * 100;
+                } else if (this.currentStage === 2) {
+                    progress = ((this.score - 100) / 200) * 100;
+                } else if (this.currentStage === 3) {
+                    progress = ((this.score - 300) / 300) * 100;
+                } else {
+                    progress = 100;
+                }
+                progress = Math.min(100, progress);
+                progressEl.style.width = progress + '%';
+            }
+        }
     }
 
     updateMainUI() {
@@ -1119,6 +1201,34 @@ class ZigzagRunner {
         `;
     }
 
+    // NEW: Stage progression system
+    updateStage() {
+        let newStage = 1;
+        if (this.score >= 600) {
+            newStage = 4;
+        } else if (this.score >= 300) {
+            newStage = 3;
+        } else if (this.score >= 100) {
+            newStage = 2;
+        }
+
+        if (newStage !== this.currentStage) {
+            this.currentStage = newStage;
+            this.lastStageShowTime = Date.now();
+            this.triggerScreenShake(300);
+            this.triggerScreenFlash('flash-success', 200);
+            this.showStageBanner(`Stage ${newStage}!`);
+        }
+    }
+
+    showStageBanner(text) {
+        const banner = document.createElement('div');
+        banner.className = 'stage-banner';
+        banner.textContent = text;
+        document.body.appendChild(banner);
+        setTimeout(() => banner.remove(), 1500);
+    }
+
     // === DOPAMINE EFFECT FUNCTIONS ===
     triggerScreenShake(duration = 300) {
         const wrap = document.querySelector('.game-canvas-wrap');
@@ -1153,7 +1263,12 @@ class ZigzagRunner {
 
         const text = document.createElement('div');
         text.className = 'combo-text';
-        text.textContent = `COMBO x${comboCount}!`;
+        // Support both numeric combo counts and custom text strings
+        if (typeof comboCount === 'string') {
+            text.textContent = comboCount;
+        } else {
+            text.textContent = `COMBO x${comboCount}!`;
+        }
         indicator.appendChild(text);
 
         const wrap = document.querySelector('.game-canvas-wrap');
