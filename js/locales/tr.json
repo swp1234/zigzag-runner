@@ -63,5 +63,19 @@
   },
   "ad": {
     "label": "Reklam yükleniyor..."
+  },
+  "boss": {
+    "warning": "⚠️ BOSS!",
+    "tier1": "Seviye 1 (1.3x)",
+    "tier2": "Seviye 2 (1.5x)",
+    "tier3": "Seviye 3 (1.7x)",
+    "tier4": "Seviye 4 (2.0x)",
+    "defeated": "BOSS YENİLDİ!",
+    "points": "puan",
+    "maxDefeated": "Maksimum Boss Yenildi",
+    "coinBonus": "Para Bonusu",
+    "coins": "Paralar",
+    "tileBonus5": "5 Karo Bonusu +30",
+    "tileBonus10": "10 Karo Bonusu +80"
   }
 }

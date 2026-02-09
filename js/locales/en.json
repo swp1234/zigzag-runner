@@ -63,5 +63,19 @@
   },
   "ad": {
     "label": "Loading ad..."
+  },
+  "boss": {
+    "warning": "⚠️ BOSS!",
+    "tier1": "Tier 1 (1.3x)",
+    "tier2": "Tier 2 (1.5x)",
+    "tier3": "Tier 3 (1.7x)",
+    "tier4": "Tier 4 (2.0x)",
+    "defeated": "BOSS DEFEATED!",
+    "points": "pts",
+    "maxDefeated": "Max Bosses Defeated",
+    "coinBonus": "Coin Bonus",
+    "coins": "Coins",
+    "tileBonus5": "5 Tile Bonus +30",
+    "tileBonus10": "10 Tile Bonus +80"
   }
 }

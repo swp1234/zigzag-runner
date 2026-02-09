@@ -722,9 +722,133 @@ body {
     animation: stageBannerIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), stageBannerOut 0.4s ease-in 1.1s forwards;
 }
 
+/* Boss Warning Banner */
+@keyframes bossWarningPulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1) rotateZ(0deg);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05) rotateZ(-2deg);
+    }
+}
+
+@keyframes bossWarningOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.9) translateY(-30px);
+    }
+}
+
+.boss-warning-banner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #d32f2f 0%, #ff6f00 100%);
+    color: white;
+    padding: 24px 48px;
+    border-radius: 50px;
+    font-size: 28px;
+    font-weight: 900;
+    text-align: center;
+    pointer-events: none;
+    z-index: 150;
+    box-shadow: 0 20px 60px rgba(211, 47, 47, 0.7);
+    border: 3px solid #ff1744;
+    animation: bossWarningPulse 0.3s ease-in-out 3, bossWarningOut 0.4s ease-in 1.1s forwards;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.boss-warning-banner .icon {
+    font-size: 48px;
+    animation: pulse 0.3s infinite;
+}
+
+.boss-warning-banner .tier {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Boss Defeated Banner */
+@keyframes bossDefeatedBurst {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotateZ(180deg);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.15);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotateZ(0deg);
+    }
+}
+
+@keyframes bossDefeatedOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8) translateY(-40px);
+    }
+}
+
+.boss-defeated-banner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+    color: #1a1a2e;
+    padding: 28px 52px;
+    border-radius: 50px;
+    font-size: 36px;
+    font-weight: 900;
+    text-align: center;
+    pointer-events: none;
+    z-index: 150;
+    box-shadow: 0 30px 80px rgba(255, 215, 0, 0.8);
+    border: 4px solid #ffed4e;
+    animation: bossDefeatedBurst 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), bossDefeatedOut 0.5s ease-in 1.5s forwards;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.boss-defeated-banner .icon {
+    font-size: 56px;
+}
+
+.boss-defeated-banner .count {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation-duration: 0.01ms !important;
         transition-duration: 0.01ms !important;
     }
 }
+
+/* === Accessibility Improvements === */
+button:focus-visible,a:focus-visible,input:focus-visible,[role="button"]:focus-visible{outline:3px solid #667eea;outline-offset:2px;}
+button,a[href],input[type="button"],input[type="submit"],[role="button"]{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;}
+.skip-link{position:absolute;top:-40px;left:0;background:#667eea;color:white;padding:8px;text-decoration:none;z-index:100;}
+.skip-link:focus{top:0;}
+[role="dialog"]{z-index:1000;}
+@media (prefers-contrast: more){button{border:2px solid #667eea;}}
+.rec-card:focus-visible{outline:3px solid #667eea;outline-offset:4px;}

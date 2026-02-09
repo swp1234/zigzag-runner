@@ -62,7 +62,8 @@ class ZigzagRunner {
             maxScore: 0,
             totalGames: 0,
             totalCoins: 0,
-            totalDistance: 0
+            totalDistance: 0,
+            maxBossesDefeated: 0
         };
         this.currentTheme = 'classic';
         this.currentSkin = 'default';
@@ -71,6 +72,14 @@ class ZigzagRunner {
 
         // ad timing
         this.reviveUsed = false;
+
+        // boss system
+        this.isBossPhase = false;
+        this.bossStartScore = 0;
+        this.bossesDefeated = 0;
+        this.bossTier = 1; // 1st boss = 1.3x, 2nd = 1.5x, 3rd = 1.7x, 4th+ = 2x
+        this.bossWarningStartTime = 0;
+        this.bossPhaseEndScore = 0;
 
         this.init();
     }
@@ -123,6 +132,7 @@ class ZigzagRunner {
                 this.currentSkin = d.skin || 'default';
                 this.unlockedThemes = d.unlockedThemes || ['classic'];
                 this.unlockedSkins = d.unlockedSkins || ['default'];
+                if (!this.stats.maxBossesDefeated) this.stats.maxBossesDefeated = 0;
             }
         } catch (e) {}
     }
@@ -297,6 +307,12 @@ class ZigzagRunner {
         this.consecutiveTiles = 0; // Reset consecutive tiles
         this.currentStage = 1;
         this.lastStageShowTime = 0;
+        this.isBossPhase = false;
+        this.bossStartScore = 0;
+        this.bossesDefeated = 0;
+        this.bossTier = 1;
+        this.bossWarningStartTime = 0;
+        this.bossPhaseEndScore = 0;
         this.initBgParticles();
         this.generatePath();
 
@@ -353,6 +369,12 @@ class ZigzagRunner {
         this.score += 3;
         this.consecutiveTiles++;
 
+        // Check for boss defeat during boss phase
+        if (this.isBossPhase && this.score >= this.bossPhaseEndScore) {
+            this.defeatedBoss();
+            return;
+        }
+
         if (this.coinTiles.has(this.currentTileIndex)) {
             this.coins++;
             this.totalCoins++;
@@ -372,7 +394,7 @@ class ZigzagRunner {
                 this.score += 30;
                 this.triggerScreenShake(200);
                 this.spawnConfetti(this.ballX, this.ballY, 10);
-                this.showComboIndicator(this.ballX, this.ballY, '5타일 보너스 +30');
+                this.showComboIndicator(this.ballX, this.ballY, i18n.t('boss.tileBonus5'));
                 this.consecutiveTiles = 0;
             }
 
@@ -381,7 +403,7 @@ class ZigzagRunner {
                 this.score += 80;
                 this.triggerScreenShake(300);
                 this.spawnConfetti(this.ballX, this.ballY, 16);
-                this.showComboIndicator(this.ballX, this.ballY, '10타일 보너스 +80');
+                this.showComboIndicator(this.ballX, this.ballY, i18n.t('boss.tileBonus10'));
                 this.consecutiveTiles = 0;
             }
 
@@ -390,13 +412,13 @@ class ZigzagRunner {
                 this.score += this.currentCombo;
                 this.triggerScreenShake(250);
                 this.spawnConfetti(this.ballX, this.ballY, 12);
-                this.showComboIndicator(this.ballX, this.ballY, `코인 x${this.currentCombo} 보너스 +${this.currentCombo}`);
+                this.showComboIndicator(this.ballX, this.ballY, `${i18n.t('boss.coinBonus')} x${this.currentCombo} +${this.currentCombo}`);
             }
 
             // Milestone every 20 coins
             if (Math.floor(this.coins / 20) > Math.floor((this.coins - 1) / 20)) {
                 const milestone = Math.floor(this.coins / 20) * 20;
-                this.showMilestoneBanner(`코인 ${milestone}개`);
+                this.showMilestoneBanner(`${i18n.t('boss.coins')} ${milestone}`);
                 this.triggerScreenFlash('flash-success', 150);
             }
         }
@@ -404,9 +426,53 @@ class ZigzagRunner {
         // NEW: Stage progression
         this.updateStage();
 
+        // Check for boss phase entry
+        this.checkBossEntry();
+
         if (this.currentTileIndex > this.tiles.length - 25) {
             this.extendPath(30);
         }
+        this.updateHUD();
+    }
+
+    checkBossEntry() {
+        // Boss appears every 50 points (50, 100, 150, 200, ...)
+        const targetScore = Math.ceil(this.score / 50) * 50;
+        if (!this.isBossPhase && this.score === targetScore && targetScore > 0) {
+            this.startBossPhase(targetScore);
+        }
+    }
+
+    startBossPhase(triggerScore) {
+        this.isBossPhase = true;
+        this.bossStartScore = triggerScore;
+        this.bossPhaseEndScore = triggerScore + 15; // Boss phase lasts about 15 points
+        this.bossesDefeated++;
+        this.bossTier = Math.min(4, this.bossesDefeated); // Cap at tier 4 (2x speed)
+        this.bossWarningStartTime = Date.now();
+
+        // Show boss warning
+        this.showBossWarning();
+        if (window.sfx) window.sfx.explosion();
+    }
+
+    defeatedBoss() {
+        this.isBossPhase = false;
+        this.score += 20; // Boss defeat bonus
+        if (this.bossesDefeated > this.stats.maxBossesDefeated) {
+            this.stats.maxBossesDefeated = this.bossesDefeated;
+        }
+
+        // Boss defeated effects
+        this.triggerScreenShake(500);
+        this.triggerScreenFlash('flash-success', 300);
+        this.spawnConfetti(this.ballX, this.ballY, 24);
+
+        // Show victory message
+        this.showBossDefeatedBanner();
+        if (window.sfx) window.sfx.coin();
+        if (window.sfx) window.sfx.coin();
+
         this.updateHUD();
     }
 
@@ -454,6 +520,14 @@ class ZigzagRunner {
             } else {
                 speed = Math.min(0.15, 0.075 + (0.00005) * (this.score - 600));  // IMPROVED: Cap at 0.15
             }
+
+            // Apply boss speed multiplier
+            if (this.isBossPhase) {
+                const bossDifficulty = [1.3, 1.5, 1.7, 2.0];
+                const multiplier = bossDifficulty[Math.min(3, this.bossTier - 1)] || 2.0;
+                speed *= multiplier;
+            }
+
             this.ballSpeed = speed;
             this.moveProgress += this.ballSpeed * (dt / 16);
 
@@ -487,6 +561,11 @@ class ZigzagRunner {
                     this.consecutiveTiles++;
 
                     // collect coins
+                    // Check for boss defeat during boss phase
+                    if (this.isBossPhase && this.score >= this.bossPhaseEndScore) {
+                        this.defeatedBoss();
+                    }
+
                     if (this.coinTiles.has(this.currentTileIndex)) {
                         this.coins++;
                         this.totalCoins++;
@@ -510,6 +589,9 @@ class ZigzagRunner {
 
                     // NEW: Stage progression
                     this.updateStage();
+
+                    // Check for boss entry
+                    this.checkBossEntry();
 
                     // extend path
                     if (this.currentTileIndex > this.tiles.length - 25) {
@@ -718,8 +800,12 @@ class ZigzagRunner {
         let bgColor0 = theme.bgGradient[0];
         let bgColor1 = theme.bgGradient[1];
 
-        // Interpolate colors based on score for visual progression
-        if (this.score > 0 && this.currentTheme !== 'gold') {
+        // Boss phase: darken background to dark red
+        if (this.isBossPhase) {
+            bgColor0 = '#2d0a0a';
+            bgColor1 = '#4d1a1a';
+        } else if (this.score > 0 && this.currentTheme !== 'gold') {
+            // Interpolate colors based on score for visual progression
             const scoreProgress = Math.min(1, (this.score % 100) / 100);
             const nextThemeIndex = (THEMES_DATA.findIndex(t => t.id === this.currentTheme) + 1) % THEMES_DATA.length;
             const nextTheme = THEMES_DATA[nextThemeIndex];
@@ -1100,11 +1186,17 @@ class ZigzagRunner {
         // NEW: Update Stage display
         const stageEl = document.getElementById('hudStage');
         if (stageEl) {
-            stageEl.textContent = `Stage ${this.currentStage}`;
+            let stageText = `Stage ${this.currentStage}`;
+            if (this.isBossPhase) {
+                stageText = `⚠️ BOSS! (${this.bossesDefeated})`;
+            }
+            stageEl.textContent = stageText;
             const progressEl = document.getElementById('stageProgress');
             if (progressEl) {
                 let progress = 0;
-                if (this.currentStage === 1) {
+                if (this.isBossPhase) {
+                    progress = ((this.score - this.bossStartScore) / (this.bossPhaseEndScore - this.bossStartScore)) * 100;
+                } else if (this.currentStage === 1) {
                     progress = (this.score / 100) * 100;
                 } else if (this.currentStage === 2) {
                     progress = ((this.score - 100) / 200) * 100;
@@ -1196,6 +1288,7 @@ class ZigzagRunner {
             <div class="stat-row"><span data-i18n="stats.totalGames">${i18n.t('stats.totalGames')}</span><span>${this.stats.totalGames}</span></div>
             <div class="stat-row"><span data-i18n="stats.totalDistance">${i18n.t('stats.totalDistance')}</span><span>${this.stats.totalDistance}</span></div>
             <div class="stat-row"><span data-i18n="stats.totalCoins">${i18n.t('stats.totalCoins')}</span><span>${this.stats.totalCoins}</span></div>
+            <div class="stat-row"><span data-i18n="boss.maxDefeated">${i18n.t('boss.maxDefeated')}</span><span>${this.stats.maxBossesDefeated}</span></div>
             <div class="stat-row"><span data-i18n="stats.unlockedThemes">${i18n.t('stats.unlockedThemes')}</span><span>${this.unlockedThemes.length}/${THEMES_DATA.length}</span></div>
             <div class="stat-row"><span data-i18n="stats.unlockedSkins">${i18n.t('stats.unlockedSkins')}</span><span>${this.unlockedSkins.length}/${SKINS_DATA.length}</span></div>
         `;
@@ -1303,6 +1396,33 @@ class ZigzagRunner {
         banner.innerHTML = `
             <span class="icon">🎉</span>
             <div>${text}</div>
+        `;
+        document.body.appendChild(banner);
+        setTimeout(() => banner.remove(), 2000);
+    }
+
+    showBossWarning() {
+        const banner = document.createElement('div');
+        banner.className = 'boss-warning-banner';
+        const tier = this.bossTier;
+        const tierNames = [i18n.t('boss.tier1'), i18n.t('boss.tier2'), i18n.t('boss.tier3'), i18n.t('boss.tier4')];
+        const tierName = tierNames[Math.min(3, tier - 1)] || tierNames[3];
+        banner.innerHTML = `
+            <span class="icon">⚠️</span>
+            <div>${i18n.t('boss.warning')}</div>
+            <span class="tier">${tierName}</span>
+        `;
+        document.body.appendChild(banner);
+        setTimeout(() => banner.remove(), 1500);
+    }
+
+    showBossDefeatedBanner() {
+        const banner = document.createElement('div');
+        banner.className = 'boss-defeated-banner';
+        banner.innerHTML = `
+            <span class="icon">⚡</span>
+            <div>${i18n.t('boss.defeated')}</div>
+            <span class="count">+20 ${i18n.t('boss.points')}</span>
         `;
         document.body.appendChild(banner);
         setTimeout(() => banner.remove(), 2000);

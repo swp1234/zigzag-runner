@@ -63,5 +63,19 @@
   },
   "ad": {
     "label": "Cargando anuncio..."
+  },
+  "boss": {
+    "warning": "⚠️ ¡JEFE!",
+    "tier1": "Nivel 1 (1.3x)",
+    "tier2": "Nivel 2 (1.5x)",
+    "tier3": "Nivel 3 (1.7x)",
+    "tier4": "Nivel 4 (2.0x)",
+    "defeated": "¡JEFE DERROTADO!",
+    "points": "pts",
+    "maxDefeated": "Máximo Jefes Derrotados",
+    "coinBonus": "Bonificación Moneda",
+    "coins": "Monedas",
+    "tileBonus5": "Bonificación 5 Fichas +30",
+    "tileBonus10": "Bonificación 10 Fichas +80"
   }
 }

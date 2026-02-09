@@ -63,5 +63,19 @@
   },
   "ad": {
     "label": "Memuat iklan..."
+  },
+  "boss": {
+    "warning": "⚠️ BOSS!",
+    "tier1": "Tingkat 1 (1.3x)",
+    "tier2": "Tingkat 2 (1.5x)",
+    "tier3": "Tingkat 3 (1.7x)",
+    "tier4": "Tingkat 4 (2.0x)",
+    "defeated": "BOSS DIKALAHKAN!",
+    "points": "poin",
+    "maxDefeated": "Maksimum Boss Dikalahkan",
+    "coinBonus": "Bonus Koin",
+    "coins": "Koin",
+    "tileBonus5": "5 Bonus Ubin +30",
+    "tileBonus10": "10 Bonus Ubin +80"
   }
 }

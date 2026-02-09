@@ -63,5 +63,19 @@
   },
   "ad": {
     "label": "Anzeige wird geladen..."
+  },
+  "boss": {
+    "warning": "⚠️ BOSS!",
+    "tier1": "Stufe 1 (1.3x)",
+    "tier2": "Stufe 2 (1.5x)",
+    "tier3": "Stufe 3 (1.7x)",
+    "tier4": "Stufe 4 (2.0x)",
+    "defeated": "BOSS BESIEGT!",
+    "points": "Punkte",
+    "maxDefeated": "Maximum Bosse besiegt",
+    "coinBonus": "Münzbonus",
+    "coins": "Münzen",
+    "tileBonus5": "5 Kachel Bonus +30",
+    "tileBonus10": "10 Kachel Bonus +80"
   }
 }

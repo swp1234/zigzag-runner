@@ -63,5 +63,19 @@
   },
   "ad": {
     "label": "Chargement de l'annonce..."
+  },
+  "boss": {
+    "warning": "⚠️ BOSS!",
+    "tier1": "Niveau 1 (1.3x)",
+    "tier2": "Niveau 2 (1.5x)",
+    "tier3": "Niveau 3 (1.7x)",
+    "tier4": "Niveau 4 (2.0x)",
+    "defeated": "BOSS VAINCU!",
+    "points": "points",
+    "maxDefeated": "Maximum Boss vaincus",
+    "coinBonus": "Bonus Pièces",
+    "coins": "Pièces",
+    "tileBonus5": "5 Tuiles Bonus +30",
+    "tileBonus10": "10 Tuiles Bonus +80"
   }
 }
