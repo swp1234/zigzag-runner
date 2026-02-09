@@ -78,6 +78,9 @@ class ZigzagRunner {
         this.bossStartScore = 0;
         this.bossesDefeated = 0;
         this.bossTier = 1; // 1st boss = 1.3x, 2nd = 1.5x, 3rd = 1.7x, 4th+ = 2x
+
+        // Leaderboard system
+        this.leaderboard = new LeaderboardManager('zigzag-runner', 10);
         this.bossWarningStartTime = 0;
         this.bossPhaseEndScore = 0;
 
@@ -660,6 +663,12 @@ class ZigzagRunner {
         this.stats.totalCoins += this.coins;
         this.stats.totalDistance += this.score;
 
+        // Add score to leaderboard
+        const leaderboardResult = this.leaderboard.addScore(this.score, {
+            coins: this.coins,
+            bossesDefeated: this.bossesDefeated
+        });
+
         this.checkUnlocks();
         this.saveData();
 
@@ -676,6 +685,9 @@ class ZigzagRunner {
         const reviveBtn = document.getElementById('btnRevive');
         if (reviveBtn) reviveBtn.style.display = this.reviveUsed ? 'none' : 'flex';
 
+        // Display leaderboard
+        this.displayGameOverLeaderboard(leaderboardResult);
+
         if (this.gameCount % 3 === 0) {
             this.showInterstitialAd(() => {
                 document.getElementById('screen-gameover').classList.add('active');
@@ -683,6 +695,37 @@ class ZigzagRunner {
         } else {
             document.getElementById('screen-gameover').classList.add('active');
         }
+    }
+
+    displayGameOverLeaderboard(leaderboardResult) {
+        const gameoverScreen = document.getElementById('screen-gameover');
+        let leaderboardContainer = gameoverScreen.querySelector('.leaderboard-section');
+        if (!leaderboardContainer) {
+            leaderboardContainer = document.createElement('div');
+            leaderboardContainer.className = 'leaderboard-section';
+            gameoverScreen.appendChild(leaderboardContainer);
+        }
+
+        const topScores = this.leaderboard.getTopScores(5);
+        let html = '<div class="leaderboard-title">🏆 Top 5 Scores</div>';
+        html += '<div class="leaderboard-list">';
+
+        topScores.forEach((entry, index) => {
+            const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
+            const isCurrentScore = entry.score === this.score && leaderboardResult.isNewRecord;
+            const classes = isCurrentScore ? 'leaderboard-item highlight' : 'leaderboard-item';
+
+            html += `
+                <div class="${classes}">
+                    <span class="medal">${medals[index] || (index + 1) + '.'}</span>
+                    <span class="score-value">${entry.score}</span>
+                    <span class="score-date">${entry.date}</span>
+                </div>
+            `;
+        });
+
+        html += '</div>';
+        leaderboardContainer.innerHTML = html;
     }
 
     revive() {
