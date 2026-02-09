@@ -50,6 +50,10 @@ class ZigzagRunner {
         this.screenShake = 0;
         this.screenFlash = 0;
 
+        // dopamine enhancements
+        this.currentCombo = 0;
+        this.lastCoinScore = 0;
+
         // stats & progression
         this.stats = {
             maxScore: 0,
@@ -286,6 +290,7 @@ class ZigzagRunner {
         this.fallVelX = 0;
         this.fallVelY = 0;
         this.fallRotation = 0;
+        this.currentCombo = 0; // Reset combo at game start
         this.initBgParticles();
         this.generatePath();
 
@@ -343,9 +348,29 @@ class ZigzagRunner {
             this.coins++;
             this.totalCoins++;
             this.score += 5;
+            this.currentCombo++;
+            this.lastCoinScore = 5;
             this.coinTiles.delete(this.currentTileIndex);
             if (window.sfx) window.sfx.coin();
             this.spawnParticles(this.ballX, this.ballY - 12, this.getTheme().coinColor, 8);
+
+            // Dopamine effects on coin
+            this.spawnCoinPopup(this.ballX, this.ballY);
+
+            // Combo bonus every 5 coins
+            if (this.currentCombo % 5 === 0 && this.currentCombo > 0) {
+                this.score += this.currentCombo;
+                this.triggerScreenShake(250);
+                this.spawnConfetti(this.ballX, this.ballY, 12);
+                this.showComboIndicator(this.ballX, this.ballY, this.currentCombo);
+            }
+
+            // Milestone every 20 coins
+            if (Math.floor(this.coins / 20) > Math.floor((this.coins - 1) / 20)) {
+                const milestone = Math.floor(this.coins / 20) * 20;
+                this.showMilestoneBanner(`코인 ${milestone}개`);
+                this.triggerScreenFlash('flash-success', 150);
+            }
         }
         if (this.currentTileIndex > this.tiles.length - 25) {
             this.extendPath(30);
@@ -481,6 +506,11 @@ class ZigzagRunner {
         this.state = 'gameover';
         this.gameCount++;
         document.getElementById('hud').style.display = 'none';
+
+        // Dopamine effects on game over
+        this.triggerScreenShake(500);
+        this.triggerScreenFlash('flash-danger', 300);
+        this.currentCombo = 0; // Reset combo on game over
 
         if (this.score > this.stats.maxScore) this.stats.maxScore = this.score;
         this.stats.totalGames++;
@@ -1087,6 +1117,80 @@ class ZigzagRunner {
             <div class="stat-row"><span data-i18n="stats.unlockedThemes">${i18n.t('stats.unlockedThemes')}</span><span>${this.unlockedThemes.length}/${THEMES_DATA.length}</span></div>
             <div class="stat-row"><span data-i18n="stats.unlockedSkins">${i18n.t('stats.unlockedSkins')}</span><span>${this.unlockedSkins.length}/${SKINS_DATA.length}</span></div>
         `;
+    }
+
+    // === DOPAMINE EFFECT FUNCTIONS ===
+    triggerScreenShake(duration = 300) {
+        const wrap = document.querySelector('.game-canvas-wrap');
+        if (!wrap) return;
+        wrap.classList.add('shake');
+        setTimeout(() => wrap.classList.remove('shake'), duration);
+    }
+
+    triggerScreenFlash(color = 'flash', duration = 200) {
+        const wrap = document.querySelector('.game-canvas-wrap');
+        if (!wrap) return;
+        wrap.classList.add(color);
+        setTimeout(() => wrap.classList.remove(color), duration);
+    }
+
+    spawnCoinPopup(x, y) {
+        const popup = document.createElement('div');
+        popup.className = 'coin-popup';
+        popup.textContent = '🪙';
+        popup.style.left = x + 'px';
+        popup.style.top = y + 'px';
+        const wrap = document.querySelector('.game-canvas-wrap');
+        if (wrap) wrap.appendChild(popup);
+        setTimeout(() => popup.remove(), 800);
+    }
+
+    showComboIndicator(x, y, comboCount) {
+        const indicator = document.createElement('div');
+        indicator.className = 'combo-indicator';
+        indicator.style.left = x + 'px';
+        indicator.style.top = y + 'px';
+
+        const text = document.createElement('div');
+        text.className = 'combo-text';
+        text.textContent = `COMBO x${comboCount}!`;
+        indicator.appendChild(text);
+
+        const wrap = document.querySelector('.game-canvas-wrap');
+        if (wrap) wrap.appendChild(indicator);
+        setTimeout(() => indicator.remove(), 600);
+    }
+
+    spawnConfetti(x, y, count = 12) {
+        const wrap = document.querySelector('.game-canvas-wrap');
+        if (!wrap) return;
+
+        for (let i = 0; i < count; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = `confetti type-${(i % 3) + 1}`;
+            confetti.style.left = x + 'px';
+            confetti.style.top = y + 'px';
+            confetti.style.transform = `translate(${(Math.random() - 0.5) * 200}px, 0) rotateZ(${Math.random() * 360}deg)`;
+
+            wrap.appendChild(confetti);
+
+            // Animate confetti fall
+            const duration = 800 + Math.random() * 400;
+            confetti.style.animation = `confetti-fall ${duration}ms linear forwards`;
+
+            setTimeout(() => confetti.remove(), duration);
+        }
+    }
+
+    showMilestoneBanner(text) {
+        const banner = document.createElement('div');
+        banner.className = 'milestone-banner';
+        banner.innerHTML = `
+            <span class="icon">🎉</span>
+            <div>${text}</div>
+        `;
+        document.body.appendChild(banner);
+        setTimeout(() => banner.remove(), 2000);
     }
 
     // --- Share ---
