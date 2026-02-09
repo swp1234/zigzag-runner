@@ -37,7 +37,9 @@
     "emojiMerge": "Emoji Merge",
     "emojiMergeDesc": "Gabungkan emoji untuk berkembang!",
     "pastLife": "Tes Pekerjaan Kehidupan Sebelumnya",
-    "pastLifeDesc": "Apa profesi Anda di kehidupan sebelumnya?"
+    "pastLifeDesc": "Apa profesi Anda di kehidupan sebelumnya?",
+    "colorMemory": "색상 기억력",
+    "colorMemoryDesc": "기억력 도전 게임"
   },
   "screens": {
     "theme": "🎨 Tema",

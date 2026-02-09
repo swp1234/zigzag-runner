@@ -37,7 +37,9 @@
     "emojiMerge": "絵文字マージ",
     "emojiMergeDesc": "絵文字をマージして進化させましょう!",
     "pastLife": "前世職業テスト",
-    "pastLifeDesc": "あなたの前世の職業は何ですか?"
+    "pastLifeDesc": "あなたの前世の職業は何ですか?",
+    "colorMemory": "색상 기억력",
+    "colorMemoryDesc": "기억력 도전 게임"
   },
   "screens": {
     "theme": "🎨 テーマ",

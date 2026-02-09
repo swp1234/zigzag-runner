@@ -37,7 +37,9 @@
     "emojiMerge": "Emoji Merge",
     "emojiMergeDesc": "Verschmelze Emojis und lass sie sich weiterentwickeln!",
     "pastLife": "Beruf aus früheren Leben Test",
-    "pastLifeDesc": "Was war dein Beruf in einem früheren Leben?"
+    "pastLifeDesc": "Was war dein Beruf in einem früheren Leben?",
+    "colorMemory": "색상 기억력",
+    "colorMemoryDesc": "기억력 도전 게임"
   },
   "screens": {
     "theme": "🎨 Designs",

@@ -37,7 +37,9 @@
     "emojiMerge": "Emoji Merge",
     "emojiMergeDesc": "Emojileri birleştirerek evrim ver!",
     "pastLife": "Eski Yaşam Meslek Testi",
-    "pastLifeDesc": "Geçmiş yaşamında mesleğin neydi?"
+    "pastLifeDesc": "Geçmiş yaşamında mesleğin neydi?",
+    "colorMemory": "색상 기억력",
+    "colorMemoryDesc": "기억력 도전 게임"
   },
   "screens": {
     "theme": "🎨 Temalar",
