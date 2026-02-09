@@ -1,19 +1,51 @@
 {
-    "name": "Zigzag Runner - 지그재그 러너",
-    "short_name": "지그재그러너",
-    "description": "탭 한 번으로 방향 전환! 끝없는 지그재그 길 위에서 최고 점수에 도전하세요.",
-    "start_url": "index.html",
-    "scope": "/zigzag-runner/",
-    "display": "standalone",
-    "orientation": "portrait-primary",
-    "theme_color": "#0f0c29",
-    "background_color": "#0f0c29",
-    "icons": [
-        { "src": "icon-192.svg", "sizes": "192x192", "type": "image/svg+xml", "purpose": "any maskable" },
-        { "src": "icon-512.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "any maskable" }
-    ],
-    "categories": ["games", "entertainment"],
-    "shortcuts": [
-        { "name": "게임 시작", "url": "index.html?mode=game", "icons": [{ "src": "icon-192.svg", "sizes": "192x192" }] }
-    ]
+  "name": "Zigzag Runner - 지그재그 러너",
+  "short_name": "지그재그러너",
+  "description": "탭 한 번으로 방향 전환! 끝없는 지그재그 길 위에서 최고 점수에 도전하세요.",
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#ffb81c",
+  "background_color": "#0f0c29",
+  "lang": "ko",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["games", "entertainment"],
+  "shortcuts": [
+    {
+      "name": "게임 시작",
+      "url": "index.html?mode=game",
+      "icons": [
+        {
+          "src": "icon-192.svg",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
 }
