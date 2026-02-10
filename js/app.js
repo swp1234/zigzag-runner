@@ -1523,40 +1523,41 @@ class ZigzagRunner {
 
 // Start
 window.addEventListener('DOMContentLoaded', async () => {
-    // Initialize language support
-    await i18n.loadTranslations(i18n.currentLang);
-    i18n.updateUI();
+    try {
+        // Initialize language support
+        await i18n.loadTranslations(i18n.currentLang);
+        i18n.updateUI();
 
-    const langBtn = document.getElementById('langBtn');
-    const langMenu = document.getElementById('langMenu');
+        const langBtn = document.getElementById('langBtn');
+        const langMenu = document.getElementById('langMenu');
 
-    if (langBtn && langMenu) {
-        // Populate language options
-        langMenu.innerHTML = '';
-        i18n.supportedLanguages.forEach(lang => {
-            const btn = document.createElement('button');
-            btn.className = `lang-option ${lang === i18n.currentLang ? 'active' : ''}`;
-            btn.textContent = i18n.getLanguageName(lang);
-            btn.addEventListener('click', async () => {
-                await i18n.setLanguage(lang);
-                document.querySelectorAll('.lang-option').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                langMenu.classList.add('hidden');
+        if (langBtn && langMenu) {
+            langMenu.innerHTML = '';
+            i18n.supportedLanguages.forEach(lang => {
+                const btn = document.createElement('button');
+                btn.className = `lang-option ${lang === i18n.currentLang ? 'active' : ''}`;
+                btn.textContent = i18n.getLanguageName(lang);
+                btn.addEventListener('click', async () => {
+                    await i18n.setLanguage(lang);
+                    document.querySelectorAll('.lang-option').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    langMenu.classList.add('hidden');
+                });
+                langMenu.appendChild(btn);
             });
-            langMenu.appendChild(btn);
-        });
 
-        // Toggle menu
-        langBtn.addEventListener('click', () => {
-            langMenu.classList.toggle('hidden');
-        });
+            langBtn.addEventListener('click', () => {
+                langMenu.classList.toggle('hidden');
+            });
 
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.language-selector')) {
-                langMenu.classList.add('hidden');
-            }
-        });
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.language-selector')) {
+                    langMenu.classList.add('hidden');
+                }
+            });
+        }
+    } catch (e) {
+        console.warn('i18n init failed:', e);
     }
 
     new ZigzagRunner();
