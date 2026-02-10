@@ -28,6 +28,10 @@
     "share": "📤 공유",
     "home": "🏠 홈"
   },
+  "shareResult": {
+    "text": "{emoji} Zigzag Runner\n점수: {score} | 코인: {coins}\n칭호: {title}\n\n나의 지그재그 실력을 확인해보세요!",
+    "copied": "복사됨!"
+  },
   "recommendations": {
     "title": "이것도 해보세요",
     "skyRunner": "Sky Runner",

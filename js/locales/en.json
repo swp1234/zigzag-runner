@@ -28,6 +28,10 @@
     "share": "📤 Share",
     "home": "🏠 Home"
   },
+  "shareResult": {
+    "text": "{emoji} Zigzag Runner\nScore: {score} | Coins: {coins}\nTitle: {title}\n\nTry the zigzag challenge!",
+    "copied": "Copied!"
+  },
   "recommendations": {
     "title": "Try These Too",
     "skyRunner": "Sky Runner",

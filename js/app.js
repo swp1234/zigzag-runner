@@ -1474,7 +1474,8 @@ class ZigzagRunner {
     // --- Share ---
     shareResult() {
         const title = this.getTitle(this.score);
-        const text = `${title.emoji} Zigzag Runner\n점수: ${this.score} | 코인: ${this.coins}\n칭호: ${title.name}\n\n나의 지그재그 실력을 확인해보세요!`;
+        const shareTemplate = window.i18n?.t('shareResult.text') || '{emoji} Zigzag Runner\nScore: {score} | Coins: {coins}\nTitle: {title}\n\nTry the zigzag challenge!';
+        const text = shareTemplate.replace('{emoji}', title.emoji).replace('{score}', this.score).replace('{coins}', this.coins).replace('{title}', title.name);
         const url = 'https://dopabrain.com/zigzag-runner/';
 
         if (navigator.share) {
@@ -1484,7 +1485,7 @@ class ZigzagRunner {
                 const btn = document.getElementById('btnShare');
                 if (btn) {
                     const orig = btn.textContent;
-                    btn.textContent = '복사됨!';
+                    btn.textContent = window.i18n?.t('shareResult.copied') || 'Copied!';
                     setTimeout(() => btn.textContent = orig, 1500);
                 }
             }).catch(() => {});
