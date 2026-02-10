@@ -13,6 +13,10 @@
     "stats": "📊 Statistik",
     "home": "DopaBrain Startseite"
   },
+  "shareResult": {
+    "text": "{emoji} Zigzag Runner\nPunktzahl: {score} | Münzen: {coins}\nTitel: {title}\n\nVersuch die Zickzack-Herausforderung!",
+    "copied": "Kopiert!"
+  },
   "game": {
     "tapToStart": "Tippe zum Starten",
     "score": "Punktzahl",

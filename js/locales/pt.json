@@ -13,6 +13,10 @@
     "stats": "📊 Estatísticas",
     "home": "DopaBrain Início"
   },
+  "shareResult": {
+    "text": "{emoji} Zigzag Runner\nPontuação: {score} | Moedas: {coins}\nTítulo: {title}\n\nTente o desafio em zigue-zague!",
+    "copied": "Copiado!"
+  },
   "game": {
     "tapToStart": "Toque para começar",
     "score": "Pontuação",

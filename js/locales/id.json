@@ -13,6 +13,10 @@
     "stats": "📊 Statistik",
     "home": "DopaBrain Beranda"
   },
+  "shareResult": {
+    "text": "{emoji} Zigzag Runner\nSkor: {score} | Koin: {coins}\nJudul: {title}\n\nCoba tantangan zigzag!",
+    "copied": "Disalin!"
+  },
   "game": {
     "tapToStart": "Ketuk untuk memulai",
     "score": "Skor",

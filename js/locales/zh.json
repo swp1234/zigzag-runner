@@ -13,6 +13,10 @@
     "stats": "📊 统计",
     "home": "DopaBrain 首页"
   },
+  "shareResult": {
+    "text": "{emoji} Zigzag Runner\n分数: {score} | 硬币: {coins}\n称号: {title}\n\n尝试锯齿形挑战!",
+    "copied": "已复制!"
+  },
   "game": {
     "tapToStart": "点击开始",
     "score": "分数",

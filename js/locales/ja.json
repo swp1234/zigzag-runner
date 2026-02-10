@@ -13,6 +13,10 @@
     "stats": "📊 統計",
     "home": "DopaBrain ホーム"
   },
+  "shareResult": {
+    "text": "{emoji} ジグザグランナー\nスコア: {score} | コイン: {coins}\nタイトル: {title}\n\nジグザグチャレンジに挑戦してください!",
+    "copied": "コピーしました!"
+  },
   "game": {
     "tapToStart": "タップで開始",
     "score": "スコア",

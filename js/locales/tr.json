@@ -13,6 +13,10 @@
     "stats": "📊 İstatistikler",
     "home": "DopaBrain Ana Sayfa"
   },
+  "shareResult": {
+    "text": "{emoji} Zigzag Runner\nPuan: {score} | Paralar: {coins}\nUnvan: {title}\n\nZigzag mücadelesini dene!",
+    "copied": "Kopyalandı!"
+  },
   "game": {
     "tapToStart": "Başlamak için tap et",
     "score": "Puan",
