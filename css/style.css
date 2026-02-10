@@ -695,214 +695,128 @@ body {
 .confetti.type-2 { background: linear-gradient(135deg, #ffd700, #ffed4e); }
 .confetti.type-3 { background: linear-gradient(135deg, #ff8c42, #ffb347); }
 
-/* Milestone Banner */
-@keyframes milestoneIn {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px) scale(0.9);
-    }
-    50% {
-        opacity: 1;
-        transform: translateY(0) scale(1.05);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+/* === In-game Toast Notifications (non-blocking, compact top bar) === */
+@keyframes toastSlideIn {
+    0% { opacity: 0; transform: translateX(-50%) translateY(-16px) scale(0.9); }
+    100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
 }
-
-@keyframes milestoneOut {
-    0% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(-30px) scale(0.8);
-    }
+@keyframes toastSlideOut {
+    0% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-16px) scale(0.9); }
 }
 
 .milestone-banner {
     position: fixed;
-    top: 50%;
+    top: 6px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     background: linear-gradient(135deg, var(--primary) 0%, #ff8c42 100%);
     color: white;
-    padding: 20px 40px;
-    border-radius: 50px;
-    font-size: 24px;
-    font-weight: 900;
+    padding: 4px 14px;
+    border-radius: 14px;
+    font-size: 11px;
+    font-weight: 800;
     text-align: center;
     pointer-events: none;
     z-index: 150;
-    box-shadow: 0 10px 40px rgba(255, 99, 72, 0.5);
-    animation: milestoneIn 0.5s ease-out, milestoneOut 0.5s ease-in 1.5s forwards;
+    opacity: 0.85;
+    box-shadow: 0 2px 8px rgba(255, 99, 72, 0.3);
+    animation: toastSlideIn 0.2s ease-out, toastSlideOut 0.2s ease-in 0.6s forwards;
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .milestone-banner .icon {
-    font-size: 32px;
-    display: block;
-    margin-bottom: 8px;
+    font-size: 13px;
+    display: inline;
+    margin-bottom: 0;
 }
 
-/* Stage Banner */
-@keyframes stageBannerIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.5) rotateZ(-180deg);
-    }
-    60% {
-        opacity: 1;
-        transform: scale(1.1);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1) rotateZ(0deg);
-    }
-}
-
-@keyframes stageBannerOut {
-    0% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    100% {
-        opacity: 0;
-        transform: scale(0.8) translateY(-30px);
-    }
-}
-
+/* Stage Banner - compact top toast, never blocks gameplay */
 .stage-banner {
     position: fixed;
-    top: 50%;
+    top: 6px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    padding: 24px 48px;
-    border-radius: 50px;
-    font-size: 32px;
-    font-weight: 900;
+    padding: 4px 16px;
+    border-radius: 14px;
+    font-size: 12px;
+    font-weight: 800;
     text-align: center;
     pointer-events: none;
     z-index: 150;
-    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.6);
-    animation: stageBannerIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), stageBannerOut 0.4s ease-in 1.1s forwards;
+    opacity: 0.85;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+    animation: toastSlideIn 0.2s ease-out, toastSlideOut 0.2s ease-in 0.6s forwards;
 }
 
-/* Boss Warning Banner */
-@keyframes bossWarningPulse {
-    0%, 100% {
-        opacity: 1;
-        transform: scale(1) rotateZ(0deg);
-    }
-    50% {
-        opacity: 0.8;
-        transform: scale(1.05) rotateZ(-2deg);
-    }
-}
-
-@keyframes bossWarningOut {
-    0% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    100% {
-        opacity: 0;
-        transform: scale(0.9) translateY(-30px);
-    }
-}
-
+/* Boss Warning Banner - compact top toast, never blocks gameplay */
 .boss-warning-banner {
     position: fixed;
-    top: 50%;
+    top: 6px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     background: linear-gradient(135deg, #d32f2f 0%, #ff6f00 100%);
     color: white;
-    padding: 24px 48px;
-    border-radius: 50px;
-    font-size: 28px;
-    font-weight: 900;
+    padding: 4px 14px;
+    border-radius: 14px;
+    font-size: 11px;
+    font-weight: 800;
     text-align: center;
     pointer-events: none;
     z-index: 150;
-    box-shadow: 0 20px 60px rgba(211, 47, 47, 0.7);
-    border: 3px solid #ff1744;
-    animation: bossWarningPulse 0.3s ease-in-out 3, bossWarningOut 0.4s ease-in 1.1s forwards;
+    opacity: 0.85;
+    box-shadow: 0 2px 8px rgba(211, 47, 47, 0.4);
+    border: 1px solid #ff1744;
+    animation: toastSlideIn 0.2s ease-out, toastSlideOut 0.2s ease-in 0.6s forwards;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
 }
 
 .boss-warning-banner .icon {
-    font-size: 48px;
-    animation: pulse 0.3s infinite;
+    font-size: 13px;
+    animation: none;
 }
 
 .boss-warning-banner .tier {
-    font-size: 14px;
+    font-size: 10px;
     opacity: 0.9;
 }
 
-/* Boss Defeated Banner */
-@keyframes bossDefeatedBurst {
-    0% {
-        opacity: 0;
-        transform: scale(0) rotateZ(180deg);
-    }
-    60% {
-        opacity: 1;
-        transform: scale(1.15);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1) rotateZ(0deg);
-    }
-}
-
-@keyframes bossDefeatedOut {
-    0% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    100% {
-        opacity: 0;
-        transform: scale(0.8) translateY(-40px);
-    }
-}
-
+/* Boss Defeated Banner - compact top toast, never blocks gameplay */
 .boss-defeated-banner {
     position: fixed;
-    top: 50%;
+    top: 6px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
     color: #1a1a2e;
-    padding: 28px 52px;
-    border-radius: 50px;
-    font-size: 36px;
-    font-weight: 900;
+    padding: 4px 14px;
+    border-radius: 14px;
+    font-size: 11px;
+    font-weight: 800;
     text-align: center;
     pointer-events: none;
     z-index: 150;
-    box-shadow: 0 30px 80px rgba(255, 215, 0, 0.8);
-    border: 4px solid #ffed4e;
-    animation: bossDefeatedBurst 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), bossDefeatedOut 0.5s ease-in 1.5s forwards;
+    opacity: 0.85;
+    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+    border: 1px solid #ffed4e;
+    animation: toastSlideIn 0.2s ease-out, toastSlideOut 0.2s ease-in 0.8s forwards;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
 }
 
 .boss-defeated-banner .icon {
-    font-size: 56px;
+    font-size: 13px;
 }
 
 .boss-defeated-banner .count {
-    font-size: 16px;
+    font-size: 10px;
     opacity: 0.9;
 }
 

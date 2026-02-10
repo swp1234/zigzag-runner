@@ -1351,8 +1351,8 @@ class ZigzagRunner {
         if (newStage !== this.currentStage) {
             this.currentStage = newStage;
             this.lastStageShowTime = Date.now();
-            this.triggerScreenShake(300);
-            this.triggerScreenFlash('flash-success', 200);
+            this.triggerScreenShake(150);
+            this.triggerScreenFlash('flash-success', 100);
             this.showStageBanner(`Stage ${newStage}!`);
         }
     }
@@ -1362,7 +1362,7 @@ class ZigzagRunner {
         banner.className = 'stage-banner';
         banner.textContent = text;
         document.body.appendChild(banner);
-        setTimeout(() => banner.remove(), 1500);
+        setTimeout(() => banner.remove(), 900);
     }
 
     // === DOPAMINE EFFECT FUNCTIONS ===
@@ -1441,7 +1441,7 @@ class ZigzagRunner {
             <div>${text}</div>
         `;
         document.body.appendChild(banner);
-        setTimeout(() => banner.remove(), 2000);
+        setTimeout(() => banner.remove(), 900);
     }
 
     showBossWarning() {
@@ -1456,7 +1456,7 @@ class ZigzagRunner {
             <span class="tier">${tierName}</span>
         `;
         document.body.appendChild(banner);
-        setTimeout(() => banner.remove(), 1500);
+        setTimeout(() => banner.remove(), 900);
     }
 
     showBossDefeatedBanner() {
@@ -1468,7 +1468,7 @@ class ZigzagRunner {
             <span class="count">+20 ${i18n.t('boss.points')}</span>
         `;
         document.body.appendChild(banner);
-        setTimeout(() => banner.remove(), 2000);
+        setTimeout(() => banner.remove(), 1100);
     }
 
     // --- Share ---
