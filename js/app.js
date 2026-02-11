@@ -1560,6 +1560,21 @@ window.addEventListener('DOMContentLoaded', async () => {
         console.warn('i18n init failed:', e);
     }
 
+    // Theme toggle (dark/light mode)
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        const savedTheme = localStorage.getItem('app-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggle.textContent = savedTheme === 'light' ? '\u{1F319}' : '\u{2600}\u{FE0F}';
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme') || 'dark';
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('app-theme', next);
+            themeToggle.textContent = next === 'light' ? '\u{1F319}' : '\u{2600}\u{FE0F}';
+        });
+    }
+
     new ZigzagRunner();
 
     // Hide app loader
