@@ -11,6 +11,107 @@
     --radius: 16px;
 }
 
+/* Light mode overrides */
+[data-theme="light"] {
+    --bg: #f0eff5;
+    --surface: rgba(255, 99, 72, 0.06);
+    --surface-hover: rgba(255, 99, 72, 0.12);
+    --text: #1a1428;
+    --text-dim: rgba(26, 20, 40, 0.5);
+}
+[data-theme="light"] body {
+    background: var(--bg);
+    color: var(--text);
+}
+[data-theme="light"] .app-loader {
+    background: var(--bg);
+}
+[data-theme="light"] #screen-main,
+[data-theme="light"] #screen-theme,
+[data-theme="light"] #screen-skin,
+[data-theme="light"] #screen-stats {
+    background: var(--bg);
+}
+[data-theme="light"] .hud-item {
+    background: rgba(255, 99, 72, 0.06);
+    border-color: rgba(255, 99, 72, 0.12);
+    color: var(--text);
+}
+[data-theme="light"] .stage-info {
+    background: rgba(255, 99, 72, 0.06);
+    border-color: rgba(255, 99, 72, 0.12);
+}
+[data-theme="light"] .item-card {
+    background: rgba(255, 99, 72, 0.05);
+    border-color: rgba(255, 99, 72, 0.12);
+    box-shadow: 0 2px 8px rgba(255, 99, 72, 0.05);
+}
+[data-theme="light"] .item-card.selected {
+    border-color: var(--primary);
+    background: rgba(255, 99, 72, 0.1);
+}
+[data-theme="light"] .stat-row {
+    background: rgba(255, 99, 72, 0.04);
+    border-color: rgba(255, 99, 72, 0.08);
+}
+[data-theme="light"] .btn-secondary {
+    background: rgba(255, 99, 72, 0.08);
+    border-color: rgba(255, 99, 72, 0.2);
+    color: var(--text);
+}
+[data-theme="light"] #screen-gameover {
+    background: rgba(240, 239, 245, 0.95);
+}
+[data-theme="light"] .rec-card {
+    background: rgba(255, 99, 72, 0.05);
+    border-color: rgba(255, 99, 72, 0.12);
+}
+[data-theme="light"] .rec-name {
+    color: var(--text);
+}
+[data-theme="light"] .rec-desc {
+    color: var(--text-dim);
+}
+[data-theme="light"] .home-link {
+    color: var(--primary);
+}
+[data-theme="light"] .lang-btn {
+    background: rgba(255, 99, 72, 0.08);
+    color: var(--text);
+    border-color: rgba(255, 99, 72, 0.18);
+}
+[data-theme="light"] .lang-menu {
+    background: rgba(240, 239, 245, 0.95);
+    border-color: rgba(255, 99, 72, 0.18);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+[data-theme="light"] .lang-option {
+    color: #5a4a60;
+}
+[data-theme="light"] .lang-option:hover {
+    background: rgba(255, 99, 72, 0.1);
+    color: var(--text);
+}
+[data-theme="light"] .lang-option.active {
+    background: rgba(255, 99, 72, 0.15);
+    color: var(--text);
+}
+[data-theme="light"] .loader-spinner {
+    border-color: rgba(255, 99, 72, 0.12);
+    border-top-color: var(--primary);
+}
+/* Light mode: rec-card text and hover */
+[data-theme="light"] .rec-card {
+    color: var(--text);
+}
+[data-theme="light"] .rec-card:hover,
+[data-theme="light"] .rec-card:active {
+    background: rgba(255, 99, 72, 0.1);
+}
+[data-theme="light"] .rec-title {
+    color: var(--text-dim);
+}
+
 * {
     margin: 0;
     padding: 0;
