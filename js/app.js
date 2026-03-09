@@ -677,6 +677,13 @@ class ZigzagRunner {
 
         if (typeof DailyStreak !== 'undefined') DailyStreak.report(this.score);
 
+        GameAchievements.report({
+          maxScore: this.stats.maxScore,
+          totalGames: this.stats.totalGames,
+          totalCoins: this.stats.totalCoins,
+          maxBossesDefeated: this.stats.maxBossesDefeated
+        });
+
         const title = this.getTitle(this.score);
         document.getElementById('goScore').textContent = this.score;
         document.getElementById('goCoins').textContent = this.coins;
@@ -1582,6 +1589,21 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     const game = new ZigzagRunner();
     DailyStreak.init({ gameId: 'zigzag-runner', bestScoreKey: 'zigzagRunner_bestScore', minTarget: 5 });
+
+    GameAchievements.init({
+      gameId: 'zigzag-runner',
+      defs: [
+        { id: 'score_20', stat: 'maxScore', target: 20, icon: '\u26A1', name: 'Runner' },
+        { id: 'score_50', stat: 'maxScore', target: 50, icon: '\u26A1', name: 'Sprinter' },
+        { id: 'score_100', stat: 'maxScore', target: 100, icon: '\u26A1', name: 'Champion' },
+        { id: 'games_10', stat: 'totalGames', target: 10, icon: '\uD83C\uDFAE', name: 'Regular' },
+        { id: 'games_50', stat: 'totalGames', target: 50, icon: '\uD83C\uDFAE', name: 'Dedicated' },
+        { id: 'coins_100', stat: 'totalCoins', target: 100, icon: '\uD83E\uDE99', name: 'Coin Hunter' },
+        { id: 'coins_500', stat: 'totalCoins', target: 500, icon: '\uD83E\uDE99', name: 'Treasure Hunter' },
+        { id: 'boss_1', stat: 'maxBossesDefeated', target: 1, icon: '\uD83D\uDC79', name: 'Boss Slayer' },
+        { id: 'boss_5', stat: 'maxBossesDefeated', target: 5, icon: '\uD83D\uDC79', name: 'Boss Master' },
+      ]
+    });
 
     // Hide app loader
     const loader = document.getElementById('app-loader');
