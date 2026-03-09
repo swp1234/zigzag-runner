@@ -148,6 +148,7 @@ class ZigzagRunner {
             unlockedThemes: this.unlockedThemes,
             unlockedSkins: this.unlockedSkins
         }));
+        localStorage.setItem('zigzagRunner_bestScore', String(this.stats.maxScore));
     }
 
     getTheme() {
@@ -671,6 +672,8 @@ class ZigzagRunner {
 
         this.checkUnlocks();
         this.saveData();
+
+        if (typeof DailyStreak !== 'undefined') DailyStreak.report(this.score);
 
         const title = this.getTitle(this.score);
         document.getElementById('goScore').textContent = this.score;
@@ -1575,7 +1578,8 @@ window.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    new ZigzagRunner();
+    const game = new ZigzagRunner();
+    DailyStreak.init({ gameId: 'zigzag-runner', bestScoreKey: 'zigzagRunner_bestScore', minTarget: 5 });
 
     // Hide app loader
     const loader = document.getElementById('app-loader');
