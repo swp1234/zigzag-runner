@@ -700,10 +700,10 @@ class ZigzagRunner {
         // Display leaderboard
         this.displayGameOverLeaderboard(leaderboardResult);
 
-        if (this.gameCount % 3 === 0) {
-            this.showInterstitialAd(() => {
+        if (typeof GameAds !== 'undefined') {
+            GameAds.showInterstitial({ onComplete: () => {
                 document.getElementById('screen-gameover').classList.add('active');
-            });
+            } });
         } else {
             document.getElementById('screen-gameover').classList.add('active');
         }
@@ -1589,6 +1589,8 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     const game = new ZigzagRunner();
     DailyStreak.init({ gameId: 'zigzag-runner', bestScoreKey: 'zigzagRunner_bestScore', minTarget: 5 });
+
+    if (typeof GameAds !== 'undefined') GameAds.init();
 
     GameAchievements.init({
       gameId: 'zigzag-runner',
