@@ -742,7 +742,7 @@ class ZigzagRunner {
 
     revive() {
         if (this.reviveUsed) return;
-        this.showInterstitialAd(() => {
+        const doRevive = () => {
             this.reviveUsed = true;
             this.state = 'playing';
             this.moveProgress = 0;
@@ -764,7 +764,16 @@ class ZigzagRunner {
             document.getElementById('hud').style.display = 'flex';
             const reviveBtn = document.getElementById('btnRevive');
             if (reviveBtn) reviveBtn.style.display = 'none';
-        });
+        };
+
+        if (typeof GameAds !== 'undefined') {
+            GameAds.showRewarded({
+                onReward: doRevive,
+                onSkip: () => {} // user declined
+            });
+        } else {
+            this.showInterstitialAd(doRevive);
+        }
     }
 
     checkUnlocks() {
