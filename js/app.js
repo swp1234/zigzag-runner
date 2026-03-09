@@ -342,6 +342,7 @@ class ZigzagRunner {
     changeDirection() {
         const newDir = this.direction === 0 ? 1 : 0;
         this.direction = newDir;
+        if (typeof Haptic !== 'undefined') Haptic.light();
         if (window.sfx) window.sfx.click();
 
         // Early turn forgiveness: if ball is visually close to next tile
@@ -657,6 +658,7 @@ class ZigzagRunner {
         // Dopamine effects on game over
         this.triggerScreenShake(500);
         this.triggerScreenFlash('flash-danger', 300);
+        if (typeof Haptic !== 'undefined') Haptic.heavy();
         this.currentCombo = 0; // Reset combo on game over
 
         if (this.score > this.stats.maxScore) this.stats.maxScore = this.score;
