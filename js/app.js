@@ -677,7 +677,7 @@ class ZigzagRunner {
 
         if (typeof DailyStreak !== 'undefined') DailyStreak.report(this.score);
 
-        GameAchievements.report({
+        if (typeof GameAchievements !== 'undefined') GameAchievements.report({
           maxScore: this.stats.maxScore,
           totalGames: this.stats.totalGames,
           totalCoins: this.stats.totalCoins,
@@ -1597,11 +1597,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
 
     const game = new ZigzagRunner();
-    DailyStreak.init({ gameId: 'zigzag-runner', bestScoreKey: 'zigzagRunner_bestScore', minTarget: 5 });
+    if (typeof DailyStreak !== 'undefined') DailyStreak.init({ gameId: 'zigzag-runner', bestScoreKey: 'zigzagRunner_bestScore', minTarget: 5 });
 
     if (typeof GameAds !== 'undefined') GameAds.init();
 
-    GameAchievements.init({
+    if (typeof GameAchievements !== 'undefined') GameAchievements.init({
       gameId: 'zigzag-runner',
       defs: [
         { id: 'score_20', stat: 'maxScore', target: 20, icon: '\u26A1', name: 'Runner' },
