@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zigzag-runner-v1';
+const CACHE_NAME = 'zigzag-runner-v2';
 const urlsToCache = [
     '/',
     '/index.html',
