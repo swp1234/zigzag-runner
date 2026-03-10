@@ -11,7 +11,8 @@
     "theme": "🎨 主题",
     "skin": "🎱 皮肤",
     "stats": "📊 统计",
-    "home": "DopaBrain 首页"
+    "home": "DopaBrain 首页",
+    "objective": "留在路上！点击改变方向"
   },
   "shareResult": {
     "text": "{emoji} Zigzag Runner\n分数: {score} | 硬币: {coins}\n称号: {title}\n\n尝试锯齿形挑战!",

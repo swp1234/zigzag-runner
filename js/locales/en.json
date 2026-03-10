@@ -11,7 +11,8 @@
     "theme": "🎨 Themes",
     "skin": "🎱 Skins",
     "stats": "📊 Stats",
-    "home": "DopaBrain Home"
+    "home": "DopaBrain Home",
+    "objective": "Stay on the path! Tap to change direction"
   },
   "game": {
     "tapToStart": "Tap to start",

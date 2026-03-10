@@ -11,7 +11,8 @@
     "theme": "🎨 Temalar",
     "skin": "🎱 Kozmetik",
     "stats": "📊 İstatistikler",
-    "home": "DopaBrain Ana Sayfa"
+    "home": "DopaBrain Ana Sayfa",
+    "objective": "Yolda kalın! Yön değiştirmek için dokunun"
   },
   "shareResult": {
     "text": "{emoji} Zigzag Runner\nPuan: {score} | Paralar: {coins}\nUnvan: {title}\n\nZigzag mücadelesini dene!",

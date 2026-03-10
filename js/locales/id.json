@@ -11,7 +11,8 @@
     "theme": "🎨 Tema",
     "skin": "🎱 Kulit",
     "stats": "📊 Statistik",
-    "home": "DopaBrain Beranda"
+    "home": "DopaBrain Beranda",
+    "objective": "Tetap di jalur! Ketuk untuk mengubah arah"
   },
   "shareResult": {
     "text": "{emoji} Zigzag Runner\nSkor: {score} | Koin: {coins}\nJudul: {title}\n\nCoba tantangan zigzag!",

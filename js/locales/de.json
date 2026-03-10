@@ -11,7 +11,8 @@
     "theme": "🎨 Designs",
     "skin": "🎱 Designs",
     "stats": "📊 Statistik",
-    "home": "DopaBrain Startseite"
+    "home": "DopaBrain Startseite",
+    "objective": "Bleib auf dem Weg! Tippe um die Richtung zu ändern"
   },
   "shareResult": {
     "text": "{emoji} Zigzag Runner\nPunktzahl: {score} | Münzen: {coins}\nTitel: {title}\n\nVersuch die Zickzack-Herausforderung!",

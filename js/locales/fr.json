@@ -11,7 +11,8 @@
     "theme": "🎨 Thèmes",
     "skin": "🎱 Skins",
     "stats": "📊 Statistiques",
-    "home": "DopaBrain Accueil"
+    "home": "DopaBrain Accueil",
+    "objective": "Restez sur le chemin ! Appuyez pour changer de direction"
   },
   "shareResult": {
     "text": "{emoji} Zigzag Runner\nScore: {score} | Pièces: {coins}\nTitre: {title}\n\nEssaie le défi en zigzag!",

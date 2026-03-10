@@ -11,7 +11,8 @@
     "theme": "🎨 थीम्स",
     "skin": "🎱 स्किन्स",
     "stats": "📊 आंकड़े",
-    "home": "DopaBrain होम"
+    "home": "DopaBrain होम",
+    "objective": "रास्ते पर रहें! दिशा बदलने के लिए टैप करें"
   },
   "shareResult": {
     "text": "{emoji} Zigzag Runner\nस्कोर: {score} | सिक्के: {coins}\nशीर्षक: {title}\n\nजिगजैग चैलेंज आजमाएं!",
