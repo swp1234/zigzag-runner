@@ -44,6 +44,12 @@ class ZigzagRunner {
         // particles
         this.particles = [];
         this.bgParticles = [];
+        this.speedLines = [];
+
+        // tile effects
+        this.tilePassedTime = {}; // index → timestamp when passed
+        this.tilePulse = {}; // index → pulse intensity (0-1)
+        this.crumblePieces = []; // falling tile fragments
 
         // visual
         this.trailPoints = [];
@@ -317,6 +323,10 @@ class ZigzagRunner {
         this.bossTier = 1;
         this.bossWarningStartTime = 0;
         this.bossPhaseEndScore = 0;
+        this.tilePassedTime = {};
+        this.tilePulse = {};
+        this.crumblePieces = [];
+        this.speedLines = [];
         this.initBgParticles();
         this.generatePath();
 
@@ -367,8 +377,15 @@ class ZigzagRunner {
         const iso = this.toIso(next.x, next.y);
         this.ballX = iso.x;
         this.ballY = iso.y;
+
+        // Mark previous tile as passed for crumble effect
+        this.tilePassedTime[this.currentTileIndex] = Date.now();
+
         this.currentTileIndex++;
         this.moveProgress = 0;
+
+        // Landing pulse on the new tile
+        this.tilePulse[this.currentTileIndex] = 1.0;
 
         // IMPROVED: Tile passing now gives +3 points (was +1)
         this.score += 3;
@@ -509,6 +526,68 @@ class ZigzagRunner {
         if (this.screenShake > 0) this.screenShake *= 0.9;
         if (this.screenFlash > 0) this.screenFlash *= 0.85;
 
+        // Update tile pulses (decay)
+        for (const idx in this.tilePulse) {
+            this.tilePulse[idx] *= 0.88;
+            if (this.tilePulse[idx] < 0.01) delete this.tilePulse[idx];
+        }
+
+        // Spawn crumble pieces from old passed tiles
+        const now = Date.now();
+        for (const idx in this.tilePassedTime) {
+            const elapsed = now - this.tilePassedTime[idx];
+            if (elapsed > 600 && parseInt(idx) < this.currentTileIndex - 2) {
+                const tile = this.tiles[idx];
+                if (tile) {
+                    const iso = this.toIso(tile.x, tile.y);
+                    const theme = this.getTheme();
+                    for (let j = 0; j < 4; j++) {
+                        this.crumblePieces.push({
+                            x: iso.x + (Math.random() - 0.5) * this.tileW * 0.6,
+                            y: iso.y + (Math.random() - 0.5) * this.tileH * 0.6,
+                            vx: (Math.random() - 0.5) * 2,
+                            vy: Math.random() * 1.5 + 0.5,
+                            size: 3 + Math.random() * 5,
+                            life: 1,
+                            color: theme.tileColor,
+                            rotation: Math.random() * Math.PI * 2,
+                            rotSpeed: (Math.random() - 0.5) * 0.2
+                        });
+                    }
+                }
+                delete this.tilePassedTime[idx];
+            }
+        }
+
+        // Update crumble pieces
+        this.crumblePieces = this.crumblePieces.filter(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.12;
+            p.rotation += p.rotSpeed;
+            p.life -= 0.025;
+            return p.life > 0;
+        });
+
+        // Speed lines at high speed
+        if (this.state === 'playing' && this.ballSpeed > 0.05) {
+            const intensity = Math.min(1, (this.ballSpeed - 0.05) / 0.1);
+            if (Math.random() < intensity * 0.4) {
+                const angle = this.direction === 0 ? -0.4 : 0.4;
+                this.speedLines.push({
+                    x: this.ballX + (Math.random() - 0.5) * 60,
+                    y: this.ballY - 30 + (Math.random() - 0.5) * 40,
+                    len: 15 + Math.random() * 25,
+                    life: 1,
+                    angle: angle
+                });
+            }
+        }
+        this.speedLines = this.speedLines.filter(l => {
+            l.life -= 0.06;
+            return l.life > 0;
+        });
+
         if (this.state === 'playing') {
             // IMPROVED: Continuous gradual speed increase based on score
             // Stage 1 (0-100): 0.035
@@ -560,7 +639,10 @@ class ZigzagRunner {
                 // reached next tile
                 if (this.moveProgress >= 1) {
                     this.moveProgress = 0;
+                    // Mark previous tile for crumble + landing pulse
+                    this.tilePassedTime[this.currentTileIndex] = Date.now();
                     this.currentTileIndex++;
+                    this.tilePulse[this.currentTileIndex] = 1.0;
                     // IMPROVED: Tile passing now gives +3 points (was +1)
                     this.score += 3;
                     this.consecutiveTiles++;
@@ -946,7 +1028,12 @@ class ZigzagRunner {
         for (let i = startIdx; i < endIdx; i++) {
             const tile = this.tiles[i];
             const iso = this.toIso(tile.x, tile.y);
-            this.drawTile(ctx, iso.x, iso.y, theme, i < this.currentTileIndex);
+
+            // Skip tiles that have crumbled away
+            if (this.tilePassedTime[i] === undefined && i < this.currentTileIndex - 3) continue;
+
+            const pulse = this.tilePulse[i] || 0;
+            this.drawTile(ctx, iso.x, iso.y, theme, i < this.currentTileIndex, pulse);
         }
 
         // draw coins
@@ -983,6 +1070,34 @@ class ZigzagRunner {
             ctx.fill();
         }
         ctx.globalAlpha = 1;
+
+        // crumble pieces
+        for (const p of this.crumblePieces) {
+            ctx.save();
+            ctx.globalAlpha = p.life * 0.7;
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rotation);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+            ctx.restore();
+        }
+
+        // speed lines
+        if (this.speedLines.length > 0) {
+            const skin = this.getSkin();
+            let lineColor = skin.color || theme.ballColor;
+            if (lineColor === 'rainbow') lineColor = `hsl(${Date.now() / 10 % 360}, 80%, 60%)`;
+            for (const l of this.speedLines) {
+                ctx.globalAlpha = l.life * 0.3;
+                ctx.strokeStyle = lineColor;
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(l.x, l.y);
+                ctx.lineTo(l.x + Math.cos(l.angle) * l.len, l.y + Math.sin(l.angle) * l.len);
+                ctx.stroke();
+            }
+            ctx.globalAlpha = 1;
+        }
 
         // screen flash effect on death
         if (this.screenFlash > 0) {
@@ -1027,11 +1142,34 @@ class ZigzagRunner {
         return `rgb(${r},${g},${b})`;
     }
 
-    drawTile(ctx, x, y, theme, passed) {
+    drawTile(ctx, x, y, theme, passed, pulse) {
         const tw = this.tileW;
         const th = this.tileH;
 
         ctx.globalAlpha = passed ? 0.35 : 1;
+
+        // Landing pulse: glow ring
+        if (pulse > 0.05) {
+            ctx.save();
+            ctx.globalAlpha = pulse * 0.5;
+            const pulseScale = 1 + pulse * 0.3;
+            ctx.translate(x, y);
+            ctx.scale(pulseScale, pulseScale);
+            ctx.translate(-x, -y);
+            ctx.fillStyle = theme.tileHighlight;
+            ctx.shadowColor = theme.tileHighlight;
+            ctx.shadowBlur = 15 * pulse;
+            ctx.beginPath();
+            ctx.moveTo(x, y - th / 2);
+            ctx.lineTo(x + tw / 2, y);
+            ctx.lineTo(x, y + th / 2);
+            ctx.lineTo(x - tw / 2, y);
+            ctx.closePath();
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            ctx.restore();
+            ctx.globalAlpha = passed ? 0.35 : 1;
+        }
 
         // top face with gradient
         const grad = ctx.createLinearGradient(x - tw / 2, y - th / 2, x + tw / 2, y + th / 2);
