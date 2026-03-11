@@ -239,6 +239,17 @@ body {
     touch-action: manipulation;
 }
 
+/* Background image overlay */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: url('../assets/bg-opt.png') center / cover no-repeat;
+    opacity: 0.1;
+    pointer-events: none;
+}
+
 /* Layout */
 .app-container {
     width: 100%;
