@@ -777,7 +777,7 @@ class ZigzagRunner {
             const format = i18n.t('gameover.best');
             goBestEl.textContent = format.includes('0') ? format.replace('0', this.stats.maxScore) : `${this.stats.maxScore} ${format}`;
         }
-        document.getElementById('goTitle').textContent = `${title.emoji} ${title.name}`;
+        document.getElementById('goTitle').textContent = `${title.emoji} ${window.i18n?.t(title.nameKey) || title.name}`;
 
         const reviveBtn = document.getElementById('btnRevive');
         if (reviveBtn) reviveBtn.style.display = this.reviveUsed ? 'none' : 'flex';
@@ -1441,7 +1441,7 @@ class ZigzagRunner {
             bestEl.textContent = format.includes('0') ? format.replace('0', this.stats.maxScore) : `${this.stats.maxScore} ${format}`;
         }
         const titleEl = document.getElementById('mainTitle');
-        if (titleEl) titleEl.textContent = `${title.emoji} ${title.name}`;
+        if (titleEl) titleEl.textContent = `${title.emoji} ${window.i18n?.t(title.nameKey) || title.name}`;
     }
 
     renderThemeList() {
@@ -1454,10 +1454,10 @@ class ZigzagRunner {
             const active = this.currentTheme === t.id;
             const div = document.createElement('div');
             div.className = `item-card ${active ? 'active' : ''} ${unlocked ? '' : 'locked'}`;
-            const statusText = unlocked ? (active ? i18n.t('skins.inUse') : i18n.t('skins.select')) : t.description;
+            const statusText = unlocked ? (active ? i18n.t('skins.inUse') : i18n.t('skins.select')) : (window.i18n?.t(t.descKey) || t.description);
             div.innerHTML = `
                 <span class="item-emoji">${t.emoji}</span>
-                <span class="item-name">${t.name}</span>
+                <span class="item-name">${window.i18n?.t(t.nameKey) || t.name}</span>
                 <span class="item-desc">${statusText}</span>
             `;
             if (unlocked) {
@@ -1486,7 +1486,7 @@ class ZigzagRunner {
             div.className = `item-card ${active ? 'active' : ''} ${unlocked ? '' : 'locked'}`;
             div.innerHTML = `
                 <span class="item-emoji">${s.emoji}</span>
-                <span class="item-name">${s.name}</span>
+                <span class="item-name">${window.i18n?.t(s.nameKey) || s.name}</span>
                 <span class="item-desc">${desc}</span>
             `;
             if (unlocked) {
@@ -1506,7 +1506,7 @@ class ZigzagRunner {
         const title = this.getTitle(this.stats.maxScore);
         el.innerHTML = `
             <div class="stat-row"><span data-i18n="stats.bestScore">${i18n.t('stats.bestScore')}</span><span>${this.stats.maxScore}</span></div>
-            <div class="stat-row"><span data-i18n="stats.currentTitle">${i18n.t('stats.currentTitle')}</span><span>${title.emoji} ${title.name}</span></div>
+            <div class="stat-row"><span data-i18n="stats.currentTitle">${i18n.t('stats.currentTitle')}</span><span>${title.emoji} ${window.i18n?.t(title.nameKey) || title.name}</span></div>
             <div class="stat-row"><span data-i18n="stats.totalGames">${i18n.t('stats.totalGames')}</span><span>${this.stats.totalGames}</span></div>
             <div class="stat-row"><span data-i18n="stats.totalDistance">${i18n.t('stats.totalDistance')}</span><span>${this.stats.totalDistance}</span></div>
             <div class="stat-row"><span data-i18n="stats.totalCoins">${i18n.t('stats.totalCoins')}</span><span>${this.stats.totalCoins}</span></div>
@@ -1654,7 +1654,7 @@ class ZigzagRunner {
     shareResult() {
         const title = this.getTitle(this.score);
         const shareTemplate = window.i18n?.t('shareResult.text') || '{emoji} Zigzag Runner\nScore: {score} | Coins: {coins}\nTitle: {title}\n\nTry the zigzag challenge!';
-        const text = shareTemplate.replace('{emoji}', title.emoji).replace('{score}', this.score).replace('{coins}', this.coins).replace('{title}', title.name);
+        const text = shareTemplate.replace('{emoji}', title.emoji).replace('{score}', this.score).replace('{coins}', this.coins).replace('{title}', window.i18n?.t(title.nameKey) || title.name);
         const url = 'https://dopabrain.com/zigzag-runner/';
 
         if (navigator.share) {
