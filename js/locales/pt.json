@@ -85,5 +85,13 @@
     "coins": "Moedas",
     "tileBonus5": "Bônus 5 Peças +30",
     "tileBonus10": "Bônus 10 Peças +80"
+  },
+  "error": {
+    "storage": "Algumas funções podem ser limitadas no modo privado.",
+    "data": "Erro ao carregar dados. Atualize a página.",
+    "canvas": "Problema de renderização. Tente novamente.",
+    "audio": "Áudio indisponível. Você pode continuar.",
+    "network": "Verifique sua conexão e tente novamente.",
+    "general": "Algo deu errado. Atualize ou tente novamente."
   }
 }

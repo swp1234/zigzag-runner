@@ -85,5 +85,13 @@
     "coins": "Monedas",
     "tileBonus5": "Bonificación 5 Fichas +30",
     "tileBonus10": "Bonificación 10 Fichas +80"
+  },
+  "error": {
+    "storage": "Algunas funciones pueden estar limitadas en modo privado.",
+    "data": "Error al cargar datos. Actualice la página.",
+    "canvas": "Problema de renderizado. Inténtelo de nuevo.",
+    "audio": "Audio no disponible. Puede continuar.",
+    "network": "Verifique su conexión e inténtelo de nuevo.",
+    "general": "Algo salió mal. Actualice o inténtelo de nuevo."
   }
 }
