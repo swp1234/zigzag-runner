@@ -19,17 +19,29 @@
     "score": "Score",
     "coins": "Coins",
     "nearMiss": "CLOSE!",
-    "moreGames": "More Games"
+    "moreGames": "More Games",
+    "speed": "SPEED"
   },
   "gameover": {
     "label": "GAME OVER",
     "score": "Score",
     "coins": "Coins",
     "best": "Best 0 points",
+    "you": "YOU",
+    "tapRetry": "Tap anywhere to retry",
+    "sessionGames": "Games this session:",
     "revive": "🎬 Watch Ad & Revive",
     "replay": "🔄 Try Again",
     "share": "📤 Share",
     "home": "🏠 Home"
+  },
+  "challenge": {
+    "newRecord": "NEW RECORD!",
+    "almostBest": "{n} more to beat your record!",
+    "closeToBest": "{n} points away from your best!",
+    "greatRun": "Great run! Try again?",
+    "warmingUp": "Warming up! Keep going!",
+    "tryAgain": "One more try!"
   },
   "shareResult": {
     "text": "{emoji} Zigzag Runner\nScore: {score} | Coins: {coins}\nTitle: {title}\n\nTry the zigzag challenge!",

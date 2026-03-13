@@ -77,6 +77,12 @@ class ZigzagRunner {
         this.unlockedThemes = ['classic'];
         this.unlockedSkins = ['default'];
 
+        // session stats
+        this.sessionGameCount = 0;
+        this.deathTileIndex = -1; // for death recap marker
+        this.deathBallX = 0;
+        this.deathBallY = 0;
+
         // ad timing
         this.reviveUsed = false;
 
@@ -288,6 +294,19 @@ class ZigzagRunner {
         });
         document.getElementById('btnShare')?.addEventListener('click', () => this.shareResult());
         document.getElementById('btnRevive')?.addEventListener('click', () => this.revive());
+
+        // Instant retry: tap anywhere on game over screen (outside buttons) to restart
+        const goScreen = document.getElementById('screen-gameover');
+        if (goScreen) {
+            goScreen.addEventListener('pointerdown', (e) => {
+                // Ignore taps on buttons/links
+                if (e.target.closest('button') || e.target.closest('a')) return;
+                if (this.state === 'gameover') {
+                    this.showScreen('game');
+                    this.resetGame();
+                }
+            });
+        }
     }
 
     showScreen(name) {
@@ -754,11 +773,16 @@ class ZigzagRunner {
         this.spawnParticles(this.ballX, this.ballY, '#ff4444', 20);
         // Brief screen flash for death effect
         this.screenFlash = 0.3;
+        // Save death position for death recap
+        this.deathBallX = this.ballX;
+        this.deathBallY = this.ballY;
+        this.deathTileIndex = this.currentTileIndex;
     }
 
     triggerGameOver() {
         this.state = 'gameover';
         this.gameCount++;
+        this.sessionGameCount++;
         document.getElementById('hud').style.display = 'none';
 
         // Dopamine effects on game over
@@ -767,7 +791,8 @@ class ZigzagRunner {
         if (typeof Haptic !== 'undefined') Haptic.heavy();
         this.currentCombo = 0; // Reset combo on game over
 
-        if (this.score > this.stats.maxScore) {
+        const isNewBest = this.score > this.stats.maxScore;
+        if (isNewBest) {
             this.stats.maxScore = this.score;
             this.showNewBest();
         }
@@ -796,18 +821,26 @@ class ZigzagRunner {
         const title = this.getTitle(this.score);
         document.getElementById('goScore').textContent = this.score;
         document.getElementById('goCoins').textContent = this.coins;
-        const goBestEl = document.getElementById('goBest');
-        if (goBestEl) {
-            const format = i18n.t('gameover.best');
-            goBestEl.textContent = format.includes('0') ? format.replace('0', this.stats.maxScore) : `${this.stats.maxScore} ${format}`;
-        }
         document.getElementById('goTitle').textContent = `${title.emoji} ${window.i18n?.t(title.nameKey) || title.name}`;
 
         const reviveBtn = document.getElementById('btnRevive');
         if (reviveBtn) reviveBtn.style.display = this.reviveUsed ? 'none' : 'flex';
 
+        // Score comparison bar chart
+        this.updateScoreComparison(this.score, this.stats.maxScore);
+
+        // Challenge prompt
+        this.updateChallengePrompt(this.score, this.stats.maxScore, isNewBest);
+
+        // Session stats
+        const sessionCountEl = document.getElementById('sessionGameCount');
+        if (sessionCountEl) sessionCountEl.textContent = this.sessionGameCount;
+
         // Display leaderboard
         this.displayGameOverLeaderboard(leaderboardResult);
+
+        // Death recap: show marker on canvas briefly
+        this.showDeathRecap();
 
         if (typeof GameAds !== 'undefined') {
             GameAds.showInterstitial({ onComplete: () => {
@@ -1429,7 +1462,7 @@ class ZigzagRunner {
         const ce = document.getElementById('hudCoins');
         if (ce) ce.textContent = this.coins;
 
-        // NEW: Update Stage display
+        // Update Stage display
         const stageEl = document.getElementById('hudStage');
         if (stageEl) {
             let stageText = `Stage ${this.currentStage}`;
@@ -1454,6 +1487,14 @@ class ZigzagRunner {
                 progress = Math.min(100, progress);
                 progressEl.style.width = progress + '%';
             }
+        }
+
+        // Speed indicator: map ballSpeed to 0-100%
+        const speedFill = document.getElementById('speedBarFill');
+        if (speedFill) {
+            // Speed range: 0.035 (min) to 0.15 (max cap)
+            const pct = Math.min(100, ((this.ballSpeed - 0.035) / (0.15 - 0.035)) * 100);
+            speedFill.style.width = Math.max(0, pct) + '%';
         }
     }
 
@@ -1688,6 +1729,84 @@ class ZigzagRunner {
         `;
         document.body.appendChild(banner);
         setTimeout(() => banner.remove(), 1100);
+    }
+
+    // --- Score Comparison Bar ---
+    updateScoreComparison(currentScore, bestScore) {
+        const maxVal = Math.max(currentScore, bestScore, 1);
+        const currentPct = (currentScore / maxVal) * 100;
+        const bestPct = (bestScore / maxVal) * 100;
+
+        const currentBar = document.getElementById('scoreBarCurrent');
+        const bestBar = document.getElementById('scoreBarBest');
+        const currentVal = document.getElementById('scoreBarCurrentVal');
+        const bestVal = document.getElementById('scoreBarBestVal');
+
+        if (currentBar) {
+            // Animate after a small delay for visual effect
+            currentBar.style.width = '0%';
+            setTimeout(() => { currentBar.style.width = currentPct + '%'; }, 100);
+        }
+        if (bestBar) {
+            bestBar.style.width = '0%';
+            setTimeout(() => { bestBar.style.width = bestPct + '%'; }, 100);
+        }
+        if (currentVal) currentVal.textContent = currentScore;
+        if (bestVal) bestVal.textContent = bestScore;
+    }
+
+    // --- Challenge Prompt ---
+    updateChallengePrompt(score, bestScore, isNewBest) {
+        const el = document.getElementById('challengePrompt');
+        if (!el) return;
+
+        if (isNewBest) {
+            el.textContent = i18n.t('challenge.newRecord') || 'NEW RECORD!';
+            el.style.color = '#fbbf24';
+        } else {
+            const diff = bestScore - score;
+            if (diff <= 10) {
+                const msg = (i18n.t('challenge.almostBest') || '{n} more to beat your record!').replace('{n}', diff);
+                el.textContent = msg;
+                el.style.color = '#fbbf24';
+            } else if (diff <= 50) {
+                const msg = (i18n.t('challenge.closeToBest') || '{n} points away from your best!').replace('{n}', diff);
+                el.textContent = msg;
+                el.style.color = '#f59e0b';
+            } else if (score >= 100) {
+                el.textContent = i18n.t('challenge.greatRun') || 'Great run! Try again?';
+                el.style.color = '#10b981';
+            } else if (this.sessionGameCount >= 3) {
+                el.textContent = i18n.t('challenge.warmingUp') || 'Warming up! Keep going!';
+                el.style.color = '#60a5fa';
+            } else {
+                el.textContent = i18n.t('challenge.tryAgain') || 'One more try!';
+                el.style.color = '#a78bfa';
+            }
+        }
+    }
+
+    // --- Death Recap ---
+    showDeathRecap() {
+        // Draw a death marker on canvas at the death location
+        if (this.deathTileIndex < 0) return;
+
+        // Render a pulsing X marker at the death position on the canvas
+        // This is done by adding a temporary canvas overlay effect
+        const wrap = document.querySelector('.game-canvas-wrap');
+        if (!wrap) return;
+
+        const marker = document.createElement('div');
+        marker.className = 'death-marker';
+        marker.textContent = '\u274C'; // X mark
+        marker.style.cssText = `
+            font-size: 32px;
+            left: 50%;
+            top: 40%;
+            transform-origin: center;
+        `;
+        wrap.appendChild(marker);
+        setTimeout(() => marker.remove(), 700);
     }
 
     // --- Share ---

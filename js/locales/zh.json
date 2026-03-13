@@ -23,17 +23,29 @@
     "score": "分数",
     "coins": "硬币",
     "nearMiss": "好险!",
-    "moreGames": "更多游戏"
+    "moreGames": "更多游戏",
+    "speed": "速度"
   },
   "gameover": {
     "label": "游戏结束",
     "score": "分数",
     "coins": "硬币",
     "best": "最高 0 分",
+    "you": "你",
+    "tapRetry": "点击任意处重试",
+    "sessionGames": "本次游戏次数:",
     "revive": "🎬 看广告并复活",
     "replay": "🔄 重试",
     "share": "📤 分享",
     "home": "🏠 首页"
+  },
+  "challenge": {
+    "newRecord": "新纪录!",
+    "almostBest": "再得{n}分就破纪录!",
+    "closeToBest": "距离最高分还差{n}分!",
+    "greatRun": "跑得真好! 再来一次?",
+    "warmingUp": "热身中! 继续加油!",
+    "tryAgain": "再来一次!"
   },
   "recommendations": {
     "title": "也试试这些",

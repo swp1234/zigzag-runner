@@ -23,17 +23,29 @@
     "score": "Punktzahl",
     "coins": "Münzen",
     "nearMiss": "KNAPP!",
-    "moreGames": "Mehr Spiele"
+    "moreGames": "Mehr Spiele",
+    "speed": "TEMPO"
   },
   "gameover": {
     "label": "SPIEL VORBEI",
     "score": "Punktzahl",
     "coins": "Münzen",
     "best": "Beste 0 Punkte",
+    "you": "DU",
+    "tapRetry": "Tippe irgendwo zum Wiederholen",
+    "sessionGames": "Spiele diese Sitzung:",
     "revive": "🎬 Anzeige ansehen & Wiederbelebung",
     "replay": "🔄 Nochmal versuchen",
     "share": "📤 Teilen",
     "home": "🏠 Startseite"
+  },
+  "challenge": {
+    "newRecord": "NEUER REKORD!",
+    "almostBest": "Noch {n} zum neuen Rekord!",
+    "closeToBest": "{n} Punkte bis zu deinem Besten!",
+    "greatRun": "Toller Lauf! Nochmal?",
+    "warmingUp": "Aufwärmen! Weiter so!",
+    "tryAgain": "Noch ein Versuch!"
   },
   "recommendations": {
     "title": "Probiere auch diese",

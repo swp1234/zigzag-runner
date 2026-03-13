@@ -23,17 +23,29 @@
     "score": "Puan",
     "coins": "Paralar",
     "nearMiss": "YAKIN!",
-    "moreGames": "Daha fazla oyun"
+    "moreGames": "Daha fazla oyun",
+    "speed": "HIZ"
   },
   "gameover": {
     "label": "OYUN BİTTİ",
     "score": "Puan",
     "coins": "Paralar",
     "best": "En İyi 0 puan",
+    "you": "SEN",
+    "tapRetry": "Tekrar denemek için herhangi bir yere dokun",
+    "sessionGames": "Bu oturumdaki oyunlar:",
     "revive": "🎬 Reklam İzle & Dirilt",
     "replay": "🔄 Tekrar Dene",
     "share": "📤 Paylaş",
     "home": "🏠 Ana Sayfa"
+  },
+  "challenge": {
+    "newRecord": "YENİ REKOR!",
+    "almostBest": "Rekorunu kırmak için {n} puan daha!",
+    "closeToBest": "En iyine {n} puan kaldı!",
+    "greatRun": "Harika koşu! Tekrar dene?",
+    "warmingUp": "Isınıyorsun! Devam et!",
+    "tryAgain": "Bir kez daha!"
   },
   "recommendations": {
     "title": "Bunları da Dene",

@@ -160,6 +160,12 @@
                 </div>
                 <div class="hud-item" id="hudScore">0</div>
                 <div class="hud-item hud-coins">🪙 <span id="hudCoins">0</span></div>
+                <div class="hud-speed-indicator" id="hudSpeed">
+                    <div class="speed-label" data-i18n="game.speed">SPEED</div>
+                    <div class="speed-bar-track">
+                        <div class="speed-bar-fill" id="speedBarFill"></div>
+                    </div>
+                </div>
             </div>
 
             <div id="tapHint" style="display:none" data-i18n="game.tapToStart">탭하여 시작</div>
@@ -226,7 +232,30 @@
                         <div class="go-stat-label" data-i18n="gameover.coins">코인</div>
                     </div>
                 </div>
-                <div id="goBest" data-i18n="gameover.best">최고 0점</div>
+                <!-- Score comparison bar -->
+                <div class="score-comparison" id="scoreComparison">
+                    <div class="score-bar-wrap">
+                        <div class="score-bar-label" data-i18n="gameover.you">YOU</div>
+                        <div class="score-bar-track">
+                            <div class="score-bar-fill score-bar-current" id="scoreBarCurrent"></div>
+                        </div>
+                        <span class="score-bar-val" id="scoreBarCurrentVal">0</span>
+                    </div>
+                    <div class="score-bar-wrap">
+                        <div class="score-bar-label" data-i18n="gameover.best">BEST</div>
+                        <div class="score-bar-track">
+                            <div class="score-bar-fill score-bar-best" id="scoreBarBest"></div>
+                        </div>
+                        <span class="score-bar-val" id="scoreBarBestVal">0</span>
+                    </div>
+                </div>
+                <!-- Challenge prompt -->
+                <div class="challenge-prompt" id="challengePrompt"></div>
+                <!-- Session stats -->
+                <div class="session-stats" id="sessionStats">
+                    <span data-i18n="gameover.sessionGames">Games this session:</span>
+                    <span id="sessionGameCount">0</span>
+                </div>
                 <div class="go-buttons">
                     <button class="btn btn-revive" id="btnRevive" data-i18n="gameover.revive">🎬 광고 보고 부활</button>
                     <button class="btn btn-primary" id="btnReplay" data-i18n="gameover.replay">🔄 다시 하기</button>
@@ -235,6 +264,8 @@
                         <button class="btn btn-secondary" id="btnHome" data-i18n="gameover.home">🏠 홈</button>
                     </div>
                 </div>
+                <!-- Tap to retry hint -->
+                <div class="tap-retry-hint" id="tapRetryHint" data-i18n="gameover.tapRetry">Tap anywhere to retry</div>
 
                 <div class="related-tests">
                   <h3 data-i18n="game.moreGames">More Games</h3>

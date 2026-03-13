@@ -19,17 +19,29 @@
     "score": "점수",
     "coins": "코인",
     "nearMiss": "아슬아슬!",
-    "moreGames": "더 많은 게임"
+    "moreGames": "더 많은 게임",
+    "speed": "속도"
   },
   "gameover": {
     "label": "GAME OVER",
     "score": "점수",
     "coins": "코인",
     "best": "최고 0점",
+    "you": "나",
+    "tapRetry": "아무 곳이나 탭하여 재시작",
+    "sessionGames": "이번 세션 게임:",
     "revive": "🎬 광고 보고 부활",
     "replay": "🔄 다시 하기",
     "share": "📤 공유",
     "home": "🏠 홈"
+  },
+  "challenge": {
+    "newRecord": "신기록!",
+    "almostBest": "최고 기록까지 {n}점!",
+    "closeToBest": "최고 기록까지 {n}점 남았어요!",
+    "greatRun": "멋진 달리기! 다시 도전?",
+    "warmingUp": "몸풀기 중! 계속 가세요!",
+    "tryAgain": "한 번 더!"
   },
   "shareResult": {
     "text": "{emoji} Zigzag Runner\n점수: {score} | 코인: {coins}\n칭호: {title}\n\n나의 지그재그 실력을 확인해보세요!",

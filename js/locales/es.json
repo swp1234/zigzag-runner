@@ -23,17 +23,29 @@
     "score": "Puntuación",
     "coins": "Monedas",
     "nearMiss": "¡CERCA!",
-    "moreGames": "Más juegos"
+    "moreGames": "Más juegos",
+    "speed": "VELOCIDAD"
   },
   "gameover": {
     "label": "FIN DEL JUEGO",
     "score": "Puntuación",
     "coins": "Monedas",
     "best": "Mejor 0 puntos",
+    "you": "TU",
+    "tapRetry": "Toca en cualquier lugar para reintentar",
+    "sessionGames": "Juegos esta sesión:",
     "revive": "🎬 Ver Anuncio y Revivir",
     "replay": "🔄 Intentar de Nuevo",
     "share": "📤 Compartir",
     "home": "🏠 Inicio"
+  },
+  "challenge": {
+    "newRecord": "¡NUEVO RÉCORD!",
+    "almostBest": "¡{n} más para batir tu récord!",
+    "closeToBest": "¡A {n} puntos de tu mejor!",
+    "greatRun": "¡Gran carrera! ¿Otra vez?",
+    "warmingUp": "¡Calentando! ¡Sigue así!",
+    "tryAgain": "¡Un intento más!"
   },
   "recommendations": {
     "title": "Prueba Estos También",

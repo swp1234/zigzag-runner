@@ -23,17 +23,29 @@
     "score": "スコア",
     "coins": "コイン",
     "nearMiss": "ギリギリ!",
-    "moreGames": "もっとゲーム"
+    "moreGames": "もっとゲーム",
+    "speed": "速度"
   },
   "gameover": {
     "label": "ゲームオーバー",
     "score": "スコア",
     "coins": "コイン",
     "best": "ベスト 0ポイント",
+    "you": "あなた",
+    "tapRetry": "どこでもタップでリトライ",
+    "sessionGames": "今回のゲーム数:",
     "revive": "🎬 広告を見て復活",
     "replay": "🔄 もう一度試す",
     "share": "📤 シェアする",
     "home": "🏠 ホーム"
+  },
+  "challenge": {
+    "newRecord": "新記録!",
+    "almostBest": "あと{n}点で記録更新!",
+    "closeToBest": "ベストまであと{n}点!",
+    "greatRun": "素晴らしい走り! もう一度?",
+    "warmingUp": "ウォームアップ中! 続けて!",
+    "tryAgain": "もう一回!"
   },
   "recommendations": {
     "title": "こちらも試してみてください",

@@ -23,17 +23,29 @@
     "score": "Skor",
     "coins": "Koin",
     "nearMiss": "HAMPIR!",
-    "moreGames": "Game lainnya"
+    "moreGames": "Game lainnya",
+    "speed": "KECEPATAN"
   },
   "gameover": {
     "label": "GAME OVER",
     "score": "Skor",
     "coins": "Koin",
     "best": "Terbaik 0 poin",
+    "you": "KAMU",
+    "tapRetry": "Ketuk di mana saja untuk coba lagi",
+    "sessionGames": "Game sesi ini:",
     "revive": "🎬 Tonton Iklan & Hidup Kembali",
     "replay": "🔄 Coba Lagi",
     "share": "📤 Bagikan",
     "home": "🏠 Beranda"
+  },
+  "challenge": {
+    "newRecord": "REKOR BARU!",
+    "almostBest": "{n} lagi untuk pecahkan rekor!",
+    "closeToBest": "{n} poin dari skor terbaik!",
+    "greatRun": "Lari hebat! Coba lagi?",
+    "warmingUp": "Pemanasan! Terus semangat!",
+    "tryAgain": "Satu kali lagi!"
   },
   "recommendations": {
     "title": "Coba Juga",
