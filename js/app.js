@@ -1853,8 +1853,12 @@ class ZigzagRunner {
     loop(ts) {
         const dt = Math.min(32, ts - (this._lastTs || ts));
         this._lastTs = ts;
-        this.update(dt || 16);
-        this.render();
+        try {
+            this.update(dt || 16);
+            this.render();
+        } catch (e) {
+            console.error('Game loop error:', e);
+        }
         requestAnimationFrame((t) => this.loop(t));
     }
 }
