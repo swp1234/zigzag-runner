@@ -17,7 +17,8 @@
   "game": {
     "tapToStart": "탭하여 시작",
     "score": "점수",
-    "coins": "코인"
+    "coins": "코인",
+    "nearMiss": "아슬아슬!"
   },
   "gameover": {
     "label": "GAME OVER",

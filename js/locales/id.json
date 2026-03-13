@@ -21,7 +21,8 @@
   "game": {
     "tapToStart": "Ketuk untuk memulai",
     "score": "Skor",
-    "coins": "Koin"
+    "coins": "Koin",
+    "nearMiss": "HAMPIR!"
   },
   "gameover": {
     "label": "GAME OVER",

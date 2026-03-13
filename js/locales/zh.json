@@ -21,7 +21,8 @@
   "game": {
     "tapToStart": "点击开始",
     "score": "分数",
-    "coins": "硬币"
+    "coins": "硬币",
+    "nearMiss": "好险!"
   },
   "gameover": {
     "label": "游戏结束",

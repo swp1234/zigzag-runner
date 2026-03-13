@@ -17,7 +17,8 @@
   "game": {
     "tapToStart": "Tap to start",
     "score": "Score",
-    "coins": "Coins"
+    "coins": "Coins",
+    "nearMiss": "CLOSE!"
   },
   "gameover": {
     "label": "GAME OVER",

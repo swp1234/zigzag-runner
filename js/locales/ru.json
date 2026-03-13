@@ -21,7 +21,8 @@
   "game": {
     "tapToStart": "Нажмите для начала",
     "score": "Счет",
-    "coins": "Монеты"
+    "coins": "Монеты",
+    "nearMiss": "ОПАСНО!"
   },
   "gameover": {
     "label": "ИГРА ОКОНЧЕНА",

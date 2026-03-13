@@ -21,7 +21,8 @@
   "game": {
     "tapToStart": "タップで開始",
     "score": "スコア",
-    "coins": "コイン"
+    "coins": "コイン",
+    "nearMiss": "ギリギリ!"
   },
   "gameover": {
     "label": "ゲームオーバー",

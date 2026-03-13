@@ -350,10 +350,29 @@ class ZigzagRunner {
     }
 
     changeDirection() {
-        const newDir = this.direction === 0 ? 1 : 0;
+        const oldDir = this.direction;
+        const newDir = oldDir === 0 ? 1 : 0;
         this.direction = newDir;
         if (typeof Haptic !== 'undefined') Haptic.light();
         if (window.sfx) window.sfx.click();
+
+        // Near-miss detection: player was going wrong direction at high progress
+        if (this.state === 'playing' && this.moveProgress >= 0.45) {
+            const cur = this.tiles[this.currentTileIndex];
+            const next = this.tiles[this.currentTileIndex + 1];
+            if (cur && next) {
+                const pathDir = next.x > cur.x ? 0 : 1;
+                // Was going wrong way, now correcting
+                if (oldDir !== pathDir && newDir === pathDir && this.moveProgress >= 0.55) {
+                    const nearMissBonus = this.moveProgress >= 0.7 ? 5 : 2;
+                    this.score += nearMissBonus;
+                    this.showComboIndicator(this.ballX, this.ballY - 20,
+                        `${i18n.t('game.nearMiss') || 'CLOSE!'} +${nearMissBonus}`);
+                    this.spawnParticles(this.ballX, this.ballY, '#fbbf24', 4);
+                    if (this.moveProgress >= 0.7 && typeof Haptic !== 'undefined') Haptic.medium();
+                }
+            }
+        }
 
         // Early turn forgiveness: if ball is visually close to next tile
         // and new direction matches the UPCOMING path segment, snap forward

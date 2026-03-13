@@ -21,7 +21,8 @@
   "game": {
     "tapToStart": "शुरू करने के लिए टैप करें",
     "score": "स्कोर",
-    "coins": "सिक्के"
+    "coins": "सिक्के",
+    "nearMiss": "करीब!"
   },
   "gameover": {
     "label": "गेम खत्म",

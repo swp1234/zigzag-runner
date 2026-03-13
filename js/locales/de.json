@@ -21,7 +21,8 @@
   "game": {
     "tapToStart": "Tippe zum Starten",
     "score": "Punktzahl",
-    "coins": "Münzen"
+    "coins": "Münzen",
+    "nearMiss": "KNAPP!"
   },
   "gameover": {
     "label": "SPIEL VORBEI",

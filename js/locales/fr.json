@@ -21,7 +21,8 @@
   "game": {
     "tapToStart": "Tape pour commencer",
     "score": "Score",
-    "coins": "Pièces"
+    "coins": "Pièces",
+    "nearMiss": "JUSTE!"
   },
   "gameover": {
     "label": "FIN DE PARTIE",

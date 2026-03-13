@@ -21,7 +21,8 @@
   "game": {
     "tapToStart": "Toque para começar",
     "score": "Pontuação",
-    "coins": "Moedas"
+    "coins": "Moedas",
+    "nearMiss": "QUASE!"
   },
   "gameover": {
     "label": "FIM DE JOGO",

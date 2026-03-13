@@ -21,7 +21,8 @@
   "game": {
     "tapToStart": "Başlamak için tap et",
     "score": "Puan",
-    "coins": "Paralar"
+    "coins": "Paralar",
+    "nearMiss": "YAKIN!"
   },
   "gameover": {
     "label": "OYUN BİTTİ",
