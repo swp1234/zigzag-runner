@@ -62,6 +62,7 @@ class ZigzagRunner {
         this.consecutiveTiles = 0; // Track consecutive tiles for combo bonus
         this.currentStage = 1;
         this.lastStageShowTime = 0;
+        this.scoreMilestonesReached = new Set();
 
         // stats & progression
         this.stats = {
@@ -315,6 +316,7 @@ class ZigzagRunner {
         this.fallRotation = 0;
         this.currentCombo = 0; // Reset combo at game start
         this.consecutiveTiles = 0; // Reset consecutive tiles
+        this.scoreMilestonesReached = new Set();
         this.currentStage = 1;
         this.lastStageShowTime = 0;
         this.isBossPhase = false;
@@ -463,6 +465,9 @@ class ZigzagRunner {
                 this.triggerScreenFlash('flash-success', 150);
             }
         }
+
+        // Score milestones
+        this.checkScoreMilestone();
 
         // NEW: Stage progression
         this.updateStage();
@@ -1628,6 +1633,22 @@ class ZigzagRunner {
             confetti.style.animation = `confetti-fall ${duration}ms linear forwards`;
 
             setTimeout(() => confetti.remove(), duration);
+        }
+    }
+
+    checkScoreMilestone() {
+        const milestones = [50, 100, 200, 300, 500, 750, 1000, 1500, 2000];
+        for (const m of milestones) {
+            if (this.score >= m && !this.scoreMilestonesReached.has(m)) {
+                this.scoreMilestonesReached.add(m);
+                const emoji = m >= 1000 ? '👑' : m >= 500 ? '🏆' : m >= 200 ? '💎' : '⭐';
+                this.showMilestoneBanner(`${emoji} ${m} ${i18n.t('boss.points')}!`);
+                this.triggerScreenFlash('flash-success', 200);
+                this.spawnConfetti(this.W / 2, this.H / 3, m >= 500 ? 20 : 12);
+                this.triggerScreenShake(m >= 500 ? 400 : 250);
+                if (window.sfx) window.sfx.explosion();
+                break; // One milestone at a time
+            }
         }
     }
 
