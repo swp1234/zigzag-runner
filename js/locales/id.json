@@ -22,7 +22,8 @@
     "tapToStart": "Ketuk untuk memulai",
     "score": "Skor",
     "coins": "Koin",
-    "nearMiss": "HAMPIR!"
+    "nearMiss": "HAMPIR!",
+    "moreGames": "Game lainnya"
   },
   "gameover": {
     "label": "GAME OVER",
@@ -138,5 +139,11 @@
     "audio": "Audio tidak tersedia. Anda dapat melanjutkan.",
     "network": "Periksa koneksi Anda dan coba lagi.",
     "general": "Terjadi kesalahan. Muat ulang atau coba lagi."
+  },
+  "related": {
+    "flappyBird": "Flappy Bird",
+    "snakeGame": "Game Ular",
+    "stackTower": "Menara Tumpuk",
+    "blockPuzzle": "Teka-teki Blok"
   }
 }

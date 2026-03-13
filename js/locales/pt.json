@@ -22,7 +22,8 @@
     "tapToStart": "Toque para começar",
     "score": "Pontuação",
     "coins": "Moedas",
-    "nearMiss": "QUASE!"
+    "nearMiss": "QUASE!",
+    "moreGames": "Mais jogos"
   },
   "gameover": {
     "label": "FIM DE JOGO",
@@ -138,5 +139,11 @@
     "audio": "Áudio indisponível. Você pode continuar.",
     "network": "Verifique sua conexão e tente novamente.",
     "general": "Algo deu errado. Atualize ou tente novamente."
+  },
+  "related": {
+    "flappyBird": "Flappy Bird",
+    "snakeGame": "Jogo da Cobra",
+    "stackTower": "Torre Empilhável",
+    "blockPuzzle": "Puzzle de Blocos"
   }
 }

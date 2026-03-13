@@ -22,7 +22,8 @@
     "tapToStart": "Toca para comenzar",
     "score": "Puntuación",
     "coins": "Monedas",
-    "nearMiss": "¡CERCA!"
+    "nearMiss": "¡CERCA!",
+    "moreGames": "Más juegos"
   },
   "gameover": {
     "label": "FIN DEL JUEGO",
@@ -138,5 +139,11 @@
     "audio": "Audio no disponible. Puede continuar.",
     "network": "Verifique su conexión e inténtelo de nuevo.",
     "general": "Algo salió mal. Actualice o inténtelo de nuevo."
+  },
+  "related": {
+    "flappyBird": "Flappy Bird",
+    "snakeGame": "Juego de Serpiente",
+    "stackTower": "Torre Apilable",
+    "blockPuzzle": "Puzzle de Bloques"
   }
 }

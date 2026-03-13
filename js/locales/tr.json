@@ -22,7 +22,8 @@
     "tapToStart": "Başlamak için tap et",
     "score": "Puan",
     "coins": "Paralar",
-    "nearMiss": "YAKIN!"
+    "nearMiss": "YAKIN!",
+    "moreGames": "Daha fazla oyun"
   },
   "gameover": {
     "label": "OYUN BİTTİ",
@@ -138,5 +139,11 @@
     "audio": "Ses kullanılamıyor. Devam edebilirsiniz.",
     "network": "Bağlantınızı kontrol edip tekrar deneyin.",
     "general": "Bir şeyler ters gitti. Yenileyip tekrar deneyin."
+  },
+  "related": {
+    "flappyBird": "Flappy Bird",
+    "snakeGame": "Yılan Oyunu",
+    "stackTower": "Yığın Kule",
+    "blockPuzzle": "Blok Bulmaca"
   }
 }

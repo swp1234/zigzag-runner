@@ -22,7 +22,8 @@
     "tapToStart": "点击开始",
     "score": "分数",
     "coins": "硬币",
-    "nearMiss": "好险!"
+    "nearMiss": "好险!",
+    "moreGames": "更多游戏"
   },
   "gameover": {
     "label": "游戏结束",
@@ -138,5 +139,11 @@
     "audio": "音频不可用，可继续使用。",
     "network": "请检查网络连接后重试。",
     "general": "出现问题，请刷新或重试。"
+  },
+  "related": {
+    "flappyBird": "飞翔的小鸟",
+    "snakeGame": "贪吃蛇",
+    "stackTower": "叠叠塔",
+    "blockPuzzle": "方块拼图"
   }
 }

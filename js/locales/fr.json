@@ -22,7 +22,8 @@
     "tapToStart": "Tape pour commencer",
     "score": "Score",
     "coins": "Pièces",
-    "nearMiss": "JUSTE!"
+    "nearMiss": "JUSTE!",
+    "moreGames": "Plus de jeux"
   },
   "gameover": {
     "label": "FIN DE PARTIE",
@@ -138,5 +139,11 @@
     "audio": "Audio indisponible. Vous pouvez continuer.",
     "network": "Vérifiez votre connexion et réessayez.",
     "general": "Un problème est survenu. Rafraîchissez ou réessayez."
+  },
+  "related": {
+    "flappyBird": "Flappy Bird",
+    "snakeGame": "Jeu du Serpent",
+    "stackTower": "Tour Empilable",
+    "blockPuzzle": "Puzzle de Blocs"
   }
 }

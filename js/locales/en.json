@@ -18,7 +18,8 @@
     "tapToStart": "Tap to start",
     "score": "Score",
     "coins": "Coins",
-    "nearMiss": "CLOSE!"
+    "nearMiss": "CLOSE!",
+    "moreGames": "More Games"
   },
   "gameover": {
     "label": "GAME OVER",
@@ -138,5 +139,11 @@
     "audio": "Audio unavailable. You can still continue.",
     "network": "Please check your connection and try again.",
     "general": "Something went wrong. Please refresh or try again."
+  },
+  "related": {
+    "flappyBird": "Flappy Bird",
+    "snakeGame": "Snake Game",
+    "stackTower": "Stack Tower",
+    "blockPuzzle": "Block Puzzle"
   }
 }

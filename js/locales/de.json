@@ -22,7 +22,8 @@
     "tapToStart": "Tippe zum Starten",
     "score": "Punktzahl",
     "coins": "Münzen",
-    "nearMiss": "KNAPP!"
+    "nearMiss": "KNAPP!",
+    "moreGames": "Mehr Spiele"
   },
   "gameover": {
     "label": "SPIEL VORBEI",
@@ -138,5 +139,11 @@
     "audio": "Audio nicht verfügbar. Sie können fortfahren.",
     "network": "Bitte Verbindung prüfen und erneut versuchen.",
     "general": "Etwas ist schiefgelaufen. Bitte aktualisieren oder erneut versuchen."
+  },
+  "related": {
+    "flappyBird": "Flappy Bird",
+    "snakeGame": "Schlangenspiel",
+    "stackTower": "Stapelturm",
+    "blockPuzzle": "Block-Puzzle"
   }
 }

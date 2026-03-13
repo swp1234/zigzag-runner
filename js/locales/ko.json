@@ -18,7 +18,8 @@
     "tapToStart": "탭하여 시작",
     "score": "점수",
     "coins": "코인",
-    "nearMiss": "아슬아슬!"
+    "nearMiss": "아슬아슬!",
+    "moreGames": "더 많은 게임"
   },
   "gameover": {
     "label": "GAME OVER",
@@ -138,5 +139,11 @@
     "audio": "음성 기능을 사용할 수 없습니다. 계속 진행하실 수 있습니다.",
     "network": "네트워크 연결을 확인해주세요.",
     "general": "문제가 발생했습니다. 새로고침하거나 다시 시도해주세요."
+  },
+  "related": {
+    "flappyBird": "플래피 버드",
+    "snakeGame": "스네이크 게임",
+    "stackTower": "스택 타워",
+    "blockPuzzle": "블록 퍼즐"
   }
 }

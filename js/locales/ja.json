@@ -22,7 +22,8 @@
     "tapToStart": "タップで開始",
     "score": "スコア",
     "coins": "コイン",
-    "nearMiss": "ギリギリ!"
+    "nearMiss": "ギリギリ!",
+    "moreGames": "もっとゲーム"
   },
   "gameover": {
     "label": "ゲームオーバー",
@@ -138,5 +139,11 @@
     "audio": "音声が利用できません。続行できます。",
     "network": "接続を確認して再試行してください。",
     "general": "問題が発生しました。更新するか再試行してください。"
+  },
+  "related": {
+    "flappyBird": "フラッピーバード",
+    "snakeGame": "スネークゲーム",
+    "stackTower": "スタックタワー",
+    "blockPuzzle": "ブロックパズル"
   }
 }
