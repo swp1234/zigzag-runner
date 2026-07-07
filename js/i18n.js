@@ -3,11 +3,19 @@ class I18n {
         this.translations = {};
         this.supportedLanguages = ['ko', 'en', 'ja', 'es', 'pt', 'zh', 'id', 'tr', 'de', 'fr', 'hi', 'ru'];
         this.currentLang = this.detectLanguage();
+        document.documentElement.lang = this.currentLang;
     }
 
     detectLanguage() {
-        const savedLang = localStorage.getItem('app_language');
-        if (savedLang && this.supportedLanguages.includes(savedLang)) return savedLang;
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const urlLang = params.get('lang');
+            if (urlLang && this.supportedLanguages.includes(urlLang)) return urlLang;
+        } catch (e) {}
+        try {
+            const savedLang = localStorage.getItem('app_language');
+            if (savedLang && this.supportedLanguages.includes(savedLang)) return savedLang;
+        } catch (e) {}
         const browserLang = (navigator.language || navigator.userLanguage).split('-')[0];
         if (this.supportedLanguages.includes(browserLang)) return browserLang;
         return 'en';
@@ -39,13 +47,16 @@ class I18n {
         if (!this.supportedLanguages.includes(lang)) return false;
         if (!this.translations[lang]) await this.loadTranslations(lang);
         this.currentLang = lang;
-        localStorage.setItem('app_language', lang);
+        try {
+            localStorage.setItem('app_language', lang);
+        } catch (e) {}
         document.documentElement.lang = lang;
         this.updateUI();
         return true;
     }
 
     updateUI() {
+        document.documentElement.lang = this.currentLang;
         document.querySelectorAll('[data-i18n]').forEach(el => {
             el.textContent = this.t(el.getAttribute('data-i18n'));
         });
