@@ -14,10 +14,6 @@
     "home": "DopaBrain 首页",
     "objective": "留在路上！点击改变方向"
   },
-  "shareResult": {
-    "text": "{emoji} Zigzag Runner\n分数: {score} | 硬币: {coins}\n称号: {title}\n\n尝试锯齿形挑战!",
-    "copied": "已复制!"
-  },
   "game": {
     "tapToStart": "点击开始",
     "score": "分数",
@@ -34,7 +30,6 @@
     "you": "你",
     "tapRetry": "点击任意处重试",
     "sessionGames": "本次游戏次数:",
-    "revive": "🎬 看广告并复活",
     "replay": "🔄 重试",
     "share": "📤 分享",
     "home": "🏠 首页"
@@ -46,19 +41,6 @@
     "greatRun": "跑得真好! 再来一次?",
     "warmingUp": "热身中! 继续加油!",
     "tryAgain": "再来一次!"
-  },
-  "recommendations": {
-    "title": "也试试这些",
-    "skyRunner": "Sky Runner",
-    "skyRunnerDesc": "太空飞行街机游戏!",
-    "stackTower": "Stack Tower",
-    "stackTowerDesc": "完美的时机堆积方块!",
-    "emojiMerge": "表情符号合并",
-    "emojiMergeDesc": "合并表情符号进化!",
-    "pastLife": "前世职业测试",
-    "pastLifeDesc": "你前世的职业是什么?",
-    "colorMemory": "색상 기억력",
-    "colorMemoryDesc": "기억력 도전 게임"
   },
   "screens": {
     "theme": "🎨 主题",
@@ -81,10 +63,6 @@
     "totalCoins": "总硬币数",
     "unlockedThemes": "解锁的主题",
     "unlockedSkins": "解锁的皮肤"
-  },
-  "ad": {
-    "banner": "广告",
-    "label": "正在加载广告..."
   },
   "boss": {
     "warning": "⚠️ 老板!",

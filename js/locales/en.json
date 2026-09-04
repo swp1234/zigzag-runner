@@ -30,7 +30,6 @@
     "you": "YOU",
     "tapRetry": "Tap anywhere to retry",
     "sessionGames": "Games this session:",
-    "revive": "🎬 Watch Ad & Revive",
     "replay": "🔄 Try Again",
     "share": "📤 Share",
     "home": "🏠 Home"
@@ -42,23 +41,6 @@
     "greatRun": "Great run! Try again?",
     "warmingUp": "Warming up! Keep going!",
     "tryAgain": "One more try!"
-  },
-  "shareResult": {
-    "text": "{emoji} Zigzag Runner\nScore: {score} | Coins: {coins}\nTitle: {title}\n\nTry the zigzag challenge!",
-    "copied": "Copied!"
-  },
-  "recommendations": {
-    "title": "Try These Too",
-    "skyRunner": "Sky Runner",
-    "skyRunnerDesc": "Space flight arcade game!",
-    "stackTower": "Stack Tower",
-    "stackTowerDesc": "Stack blocks with perfect timing!",
-    "emojiMerge": "Emoji Merge",
-    "emojiMergeDesc": "Merge emojis to evolve!",
-    "pastLife": "Past Life Job Test",
-    "pastLifeDesc": "What was your job in a past life?",
-    "colorMemory": "색상 기억력",
-    "colorMemoryDesc": "기억력 도전 게임"
   },
   "screens": {
     "theme": "🎨 Themes",
@@ -81,10 +63,6 @@
     "totalCoins": "Total Coins",
     "unlockedThemes": "Unlocked Themes",
     "unlockedSkins": "Unlocked Skins"
-  },
-  "ad": {
-    "banner": "Ad",
-    "label": "Loading ad..."
   },
   "boss": {
     "warning": "⚠️ BOSS!",

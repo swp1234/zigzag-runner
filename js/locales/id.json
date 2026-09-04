@@ -14,10 +14,6 @@
     "home": "DopaBrain Beranda",
     "objective": "Tetap di jalur! Ketuk untuk mengubah arah"
   },
-  "shareResult": {
-    "text": "{emoji} Zigzag Runner\nSkor: {score} | Koin: {coins}\nJudul: {title}\n\nCoba tantangan zigzag!",
-    "copied": "Disalin!"
-  },
   "game": {
     "tapToStart": "Ketuk untuk memulai",
     "score": "Skor",
@@ -34,7 +30,6 @@
     "you": "KAMU",
     "tapRetry": "Ketuk di mana saja untuk coba lagi",
     "sessionGames": "Game sesi ini:",
-    "revive": "🎬 Tonton Iklan & Hidup Kembali",
     "replay": "🔄 Coba Lagi",
     "share": "📤 Bagikan",
     "home": "🏠 Beranda"
@@ -46,19 +41,6 @@
     "greatRun": "Lari hebat! Coba lagi?",
     "warmingUp": "Pemanasan! Terus semangat!",
     "tryAgain": "Satu kali lagi!"
-  },
-  "recommendations": {
-    "title": "Coba Juga",
-    "skyRunner": "Sky Runner",
-    "skyRunnerDesc": "Permainan arcade penerbangan luar angkasa!",
-    "stackTower": "Stack Tower",
-    "stackTowerDesc": "Tumpuk blok dengan timing sempurna!",
-    "emojiMerge": "Emoji Merge",
-    "emojiMergeDesc": "Gabungkan emoji untuk berkembang!",
-    "pastLife": "Tes Pekerjaan Kehidupan Sebelumnya",
-    "pastLifeDesc": "Apa profesi Anda di kehidupan sebelumnya?",
-    "colorMemory": "색상 기억력",
-    "colorMemoryDesc": "기억력 도전 게임"
   },
   "screens": {
     "theme": "🎨 Tema",
@@ -81,10 +63,6 @@
     "totalCoins": "Total Koin",
     "unlockedThemes": "Tema Terbuka",
     "unlockedSkins": "Kulit Terbuka"
-  },
-  "ad": {
-    "banner": "Iklan",
-    "label": "Memuat iklan..."
   },
   "boss": {
     "warning": "⚠️ BOSS!",

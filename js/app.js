@@ -1,4 +1,16 @@
 // Zigzag Runner - Main Game
+const zigzagRunnerStages = new Set();
+
+function trackZigzagRunnerStage(name) {
+    if (zigzagRunnerStages.has(name) || typeof window.gtag !== 'function') return;
+    zigzagRunnerStages.add(name);
+    window.gtag('event', name, {
+        app_name: 'zigzag-runner',
+        event_category: 'game_stage',
+        transport_type: 'beacon'
+    });
+}
+
 class ZigzagRunner {
     constructor() {
         this.canvas = document.getElementById('gameCanvas');
@@ -83,9 +95,6 @@ class ZigzagRunner {
         this.deathBallX = 0;
         this.deathBallY = 0;
 
-        // ad timing
-        this.reviveUsed = false;
-
         // boss system
         this.isBossPhase = false;
         this.bossStartScore = 0;
@@ -107,6 +116,7 @@ class ZigzagRunner {
         this.updateMainUI();
         this.showScreen('main');
         this.loop(0);
+        trackZigzagRunnerStage('zigzag_runner_view');
     }
 
     setupCanvas() {
@@ -293,7 +303,9 @@ class ZigzagRunner {
             this.updateMainUI();
         });
         document.getElementById('btnShare')?.addEventListener('click', () => this.shareResult());
-        document.getElementById('btnRevive')?.addEventListener('click', () => this.revive());
+        document.querySelector('.related-grid')?.addEventListener('click', (event) => {
+            if (event.target.closest('.related-card')) trackZigzagRunnerStage('zigzag_runner_related_click');
+        });
 
         // Instant retry: tap anywhere on game over screen (outside buttons) to restart
         const goScreen = document.getElementById('screen-gameover');
@@ -327,7 +339,6 @@ class ZigzagRunner {
         this.ballSpeed = 0.035;
         this.particles = [];
         this.trailPoints = [];
-        this.reviveUsed = false;
         this.screenShake = 0;
         this.screenFlash = 0;
         this.fallVelX = 0;
@@ -368,9 +379,11 @@ class ZigzagRunner {
     startGame() {
         this.state = 'playing';
         document.getElementById('tapHint').style.display = 'none';
+        trackZigzagRunnerStage('zigzag_runner_start');
     }
 
     changeDirection() {
+        trackZigzagRunnerStage('zigzag_runner_progress');
         const oldDir = this.direction;
         const newDir = oldDir === 0 ? 1 : 0;
         this.direction = newDir;
@@ -781,6 +794,7 @@ class ZigzagRunner {
 
     triggerGameOver() {
         this.state = 'gameover';
+        trackZigzagRunnerStage('zigzag_runner_complete');
         this.gameCount++;
         this.sessionGameCount++;
         document.getElementById('hud').style.display = 'none';
@@ -809,22 +823,10 @@ class ZigzagRunner {
         this.checkUnlocks();
         this.saveData();
 
-        if (typeof DailyStreak !== 'undefined') DailyStreak.report(this.score);
-
-        if (typeof GameAchievements !== 'undefined') GameAchievements.report({
-          maxScore: this.stats.maxScore,
-          totalGames: this.stats.totalGames,
-          totalCoins: this.stats.totalCoins,
-          maxBossesDefeated: this.stats.maxBossesDefeated
-        });
-
         const title = this.getTitle(this.score);
         document.getElementById('goScore').textContent = this.score;
         document.getElementById('goCoins').textContent = this.coins;
         document.getElementById('goTitle').textContent = `${title.emoji} ${window.i18n?.t(title.nameKey) || title.name}`;
-
-        const reviveBtn = document.getElementById('btnRevive');
-        if (reviveBtn) reviveBtn.style.display = this.reviveUsed ? 'none' : 'flex';
 
         // Score comparison bar chart
         this.updateScoreComparison(this.score, this.stats.maxScore);
@@ -842,13 +844,7 @@ class ZigzagRunner {
         // Death recap: show marker on canvas briefly
         this.showDeathRecap();
 
-        if (typeof GameAds !== 'undefined') {
-            GameAds.showInterstitial({ onComplete: () => {
-                document.getElementById('screen-gameover').classList.add('active');
-            } });
-        } else {
-            document.getElementById('screen-gameover').classList.add('active');
-        }
+        document.getElementById('screen-gameover').classList.add('active');
     }
 
     displayGameOverLeaderboard(leaderboardResult) {
@@ -880,42 +876,6 @@ class ZigzagRunner {
 
         html += '</div>';
         leaderboardContainer.innerHTML = html;
-    }
-
-    revive() {
-        if (this.reviveUsed) return;
-        const doRevive = () => {
-            this.reviveUsed = true;
-            this.state = 'playing';
-            this.moveProgress = 0;
-            this.fallVelX = 0;
-            this.fallVelY = 0;
-            this.fallRotation = 0;
-
-            // align direction to path
-            const cur = this.tiles[this.currentTileIndex];
-            const next = this.tiles[this.currentTileIndex + 1];
-            if (cur && next) {
-                this.direction = next.x > cur.x ? 0 : 1;
-                const iso = this.toIso(cur.x, cur.y);
-                this.ballX = iso.x;
-                this.ballY = iso.y;
-            }
-
-            document.getElementById('screen-gameover').classList.remove('active');
-            document.getElementById('hud').style.display = 'flex';
-            const reviveBtn = document.getElementById('btnRevive');
-            if (reviveBtn) reviveBtn.style.display = 'none';
-        };
-
-        if (typeof GameAds !== 'undefined') {
-            GameAds.showRewarded({
-                onReward: doRevive,
-                onSkip: () => {} // user declined
-            });
-        } else {
-            this.showInterstitialAd(doRevive);
-        }
     }
 
     checkUnlocks() {
@@ -1810,43 +1770,18 @@ class ZigzagRunner {
     }
 
     // --- Share ---
-    shareResult() {
-        const title = this.getTitle(this.score);
-        const shareTemplate = window.i18n?.t('shareResult.text') || '{emoji} Zigzag Runner\nScore: {score} | Coins: {coins}\nTitle: {title}\n\nTry the zigzag challenge!';
-        const text = shareTemplate.replace('{emoji}', title.emoji).replace('{score}', this.score).replace('{coins}', this.coins).replace('{title}', window.i18n?.t(title.nameKey) || title.name);
+    async shareResult() {
+        const text = 'I played Zigzag Runner on DopaBrain.';
         const url = 'https://dopabrain.com/zigzag-runner/';
 
-        if (navigator.share) {
-            navigator.share({ title: 'Zigzag Runner', text, url }).catch(() => {});
-        } else {
-            navigator.clipboard.writeText(text + '\n' + url).then(() => {
-                const btn = document.getElementById('btnShare');
-                if (btn) {
-                    const orig = btn.textContent;
-                    btn.textContent = window.i18n?.t('shareResult.copied') || 'Copied!';
-                    setTimeout(() => btn.textContent = orig, 1500);
-                }
-            }).catch(() => {});
-        }
-    }
-
-    // --- Ads ---
-    showInterstitialAd(callback) {
-        const overlay = document.getElementById('adOverlay');
-        if (!overlay) { callback(); return; }
-        overlay.style.display = 'flex';
-        let sec = 5;
-        const countEl = document.getElementById('adCountdown');
-        if (countEl) countEl.textContent = sec;
-        const timer = setInterval(() => {
-            sec--;
-            if (countEl) countEl.textContent = sec;
-            if (sec <= 0) {
-                clearInterval(timer);
-                overlay.style.display = 'none';
-                callback();
+        try {
+            if (navigator.share) {
+                await navigator.share({ title: 'Zigzag Runner', text, url });
+            } else {
+                await navigator.clipboard.writeText(`${text} ${url}`);
             }
-        }, 1000);
+            trackZigzagRunnerStage('zigzag_runner_share');
+        } catch (_) {}
     }
 
     // --- Game Loop ---
@@ -1917,25 +1852,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    const game = new ZigzagRunner();
-    if (typeof DailyStreak !== 'undefined') DailyStreak.init({ gameId: 'zigzag-runner', bestScoreKey: 'zigzagRunner_bestScore', minTarget: 5 });
-
-    if (typeof GameAds !== 'undefined') GameAds.init();
-
-    if (typeof GameAchievements !== 'undefined') GameAchievements.init({
-      gameId: 'zigzag-runner',
-      defs: [
-        { id: 'score_20', stat: 'maxScore', target: 20, icon: '\u26A1', name: 'Runner' },
-        { id: 'score_50', stat: 'maxScore', target: 50, icon: '\u26A1', name: 'Sprinter' },
-        { id: 'score_100', stat: 'maxScore', target: 100, icon: '\u26A1', name: 'Champion' },
-        { id: 'games_10', stat: 'totalGames', target: 10, icon: '\uD83C\uDFAE', name: 'Regular' },
-        { id: 'games_50', stat: 'totalGames', target: 50, icon: '\uD83C\uDFAE', name: 'Dedicated' },
-        { id: 'coins_100', stat: 'totalCoins', target: 100, icon: '\uD83E\uDE99', name: 'Coin Hunter' },
-        { id: 'coins_500', stat: 'totalCoins', target: 500, icon: '\uD83E\uDE99', name: 'Treasure Hunter' },
-        { id: 'boss_1', stat: 'maxBossesDefeated', target: 1, icon: '\uD83D\uDC79', name: 'Boss Slayer' },
-        { id: 'boss_5', stat: 'maxBossesDefeated', target: 5, icon: '\uD83D\uDC79', name: 'Boss Master' },
-      ]
-    });
+    window.game = new ZigzagRunner();
 
     // Hide app loader
     const loader = document.getElementById('app-loader');

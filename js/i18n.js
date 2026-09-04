@@ -91,4 +91,5 @@ class I18n {
     }
 }
 
-const i18n = new I18n();
+window.i18n = new I18n();
+const i18n = window.i18n;

@@ -14,10 +14,6 @@
     "home": "DopaBrain Ana Sayfa",
     "objective": "Yolda kalın! Yön değiştirmek için dokunun"
   },
-  "shareResult": {
-    "text": "{emoji} Zigzag Runner\nPuan: {score} | Paralar: {coins}\nUnvan: {title}\n\nZigzag mücadelesini dene!",
-    "copied": "Kopyalandı!"
-  },
   "game": {
     "tapToStart": "Başlamak için tap et",
     "score": "Puan",
@@ -34,7 +30,6 @@
     "you": "SEN",
     "tapRetry": "Tekrar denemek için herhangi bir yere dokun",
     "sessionGames": "Bu oturumdaki oyunlar:",
-    "revive": "🎬 Reklam İzle & Dirilt",
     "replay": "🔄 Tekrar Dene",
     "share": "📤 Paylaş",
     "home": "🏠 Ana Sayfa"
@@ -46,19 +41,6 @@
     "greatRun": "Harika koşu! Tekrar dene?",
     "warmingUp": "Isınıyorsun! Devam et!",
     "tryAgain": "Bir kez daha!"
-  },
-  "recommendations": {
-    "title": "Bunları da Dene",
-    "skyRunner": "Sky Runner",
-    "skyRunnerDesc": "Uzay uçuşu arcade oyunu!",
-    "stackTower": "Stack Tower",
-    "stackTowerDesc": "Mükemmel zamanlama ile blokları yığın!",
-    "emojiMerge": "Emoji Merge",
-    "emojiMergeDesc": "Emojileri birleştirerek evrim ver!",
-    "pastLife": "Eski Yaşam Meslek Testi",
-    "pastLifeDesc": "Geçmiş yaşamında mesleğin neydi?",
-    "colorMemory": "색상 기억력",
-    "colorMemoryDesc": "기억력 도전 게임"
   },
   "screens": {
     "theme": "🎨 Temalar",
@@ -81,10 +63,6 @@
     "totalCoins": "Toplam Para",
     "unlockedThemes": "Kilidini Açılmış Temalar",
     "unlockedSkins": "Kilidini Açılmış Kozmetikler"
-  },
-  "ad": {
-    "banner": "Reklam",
-    "label": "Reklam yükleniyor..."
   },
   "boss": {
     "warning": "⚠️ BOSS!",

@@ -2,18 +2,15 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Zigzag Runner - Free Online Endless Runner Game | DopaBrain</title>
 
     <!-- Preconnect to external services for performance -->
     <link rel="preconnect" href="https://www.googletagmanager.com">
-    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="dns-prefetch" href="https://www.google-analytics.com">
 
-    <!-- AdSense Script (loaded once in head) -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
-    <meta name="description" content="Tap to switch direction on an endless zigzag path. Collect coins, beat your high score. Addictive one-tap arcade game. Play free!">
-    <meta name="dateModified" content="2026-07-07">
+    <meta name="description" content="Tap to switch direction on an endless zigzag path, collect coins, and improve your local high score.">
+    <meta name="dateModified" content="2026-09-05">
     <meta name="keywords" content="지그재그, 러너, 게임, 아케이드, 캐주얼 게임, 모바일 게임, 원탭 게임, zigzag runner, 방향 전환 게임">
     <meta name="theme-color" content="#3498db">
     <meta name="mobile-web-app-capable" content="yes">
@@ -91,64 +88,7 @@
             "priceCurrency": "USD",
             "availability": "https://schema.org/InStock"
         },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.3",
-            "ratingCount": "1920",
-            "bestRating": "5",
-            "worstRating": "1"
-        },
         "featureList": "Tap-based direction switching, endless gameplay, coin collection, power-up items, stage progression, score system, high score saving, multilingual support"
-    }
-    </script>
-
-    <!-- FAQPage Schema -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "What is Zigzag Runner?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Zigzag Runner is a free online endless arcade game where you tap to switch direction on a zigzag path. Stay on the path, collect coins, and use power-ups to beat your high score. The game features stage progression and increasing speed."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "How do I play Zigzag Runner?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Tap the screen or click to change direction. Your character moves forward automatically on a zigzag path — tap at the right moment to turn and stay on the path. Falling off the edge ends the game. Collect coins for bonus points and unlock themes and skins."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Is Zigzag Runner free to play? Do I need to download anything?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Yes, Zigzag Runner is completely free to play in your web browser. No download or sign-up is required. Just open the page and start running instantly on any device."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "How can I get a higher score in Zigzag Runner?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Develop a rhythm for tapping rather than reacting to each turn. Focus slightly ahead of your character to anticipate turns. Collect coins near the edges for bonus points but be careful not to fall. Play in shorter sessions to maintain focus and reaction time."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Can I play Zigzag Runner on mobile devices?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Yes! Zigzag Runner is designed for mobile with simple one-tap controls. It works perfectly on smartphones and tablets. The game is fully responsive and features customizable themes and skins."
-                }
-            }
-        ]
     }
     </script>
 
@@ -177,11 +117,10 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-J8GSWM40TV');
-        setTimeout(function(){gtag('event','page_engage',{event_category:'zigzag_runner',engagement_time_msec:5000})},5000);
     </script>
 
 </head>
-<body>
+<body data-ad-serving="suspended-invalid-traffic-2026-09-03">
 <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Zigzag Runner - Free Online Endless Runner Game</h1>
     <div class="app-loader" id="app-loader">
         <div class="loader-content">
@@ -206,9 +145,6 @@
     </div>
 
     <main id="main-content" class="app-container">
-        <!-- Ad Top -->
-        <div class="ad-banner" id="adTop" data-i18n="ad.banner">광고</div>
-
         <!-- Game Canvas -->
         <div class="game-canvas-wrap">
             <canvas id="gameCanvas"></canvas>
@@ -322,7 +258,6 @@
                     <span id="sessionGameCount">0</span>
                 </div>
                 <div class="go-buttons">
-                    <button class="btn btn-revive" id="btnRevive" data-i18n="gameover.revive">🎬 광고 보고 부활</button>
                     <button class="btn btn-primary" id="btnReplay" data-i18n="gameover.replay">🔄 다시 하기</button>
                     <div class="go-row">
                         <button class="btn btn-share" id="btnShare" data-i18n="gameover.share">📤 공유</button>
@@ -345,14 +280,6 @@
             </div>
         </div>
 
-        <!-- Ad Bottom -->
-        <div class="ad-banner" id="adBottom" data-i18n="ad.banner">광고</div>
-
-        <!-- Ad Overlay -->
-        <div class="ad-overlay" id="adOverlay">
-            <p data-i18n="ad.label">광고 로딩 중...</p>
-            <div class="ad-countdown" id="adCountdown">5</div>
-        </div>
     </main>
 
     <!-- Cross Promotion Recommendations -->
@@ -372,9 +299,6 @@
     <script src="js/data.js"></script>
     <script src="js/sound-engine.js"></script>
     <script src="/portal/js/haptic.js"></script>
-    <script src="/portal/js/daily-streak.js"></script>
-    <script src="/portal/js/achievements.js"></script>
-    <script src="/portal/js/game-ads.js"></script>
     <script src="js/app.js"></script>
 
     <script>
@@ -406,7 +330,5 @@
         .sound-toggle:hover { background: rgba(255,255,255,0.2); }
         .sound-toggle:active { transform: scale(0.95); }
     </style>
-    <script src="/portal/js/cross-promo.js" defer></script>
-    <script src="/portal/js/pwa-install.js" defer></script>
 </body>
 </html>

@@ -14,10 +14,6 @@
     "home": "DopaBrain Inicio",
     "objective": "¡Mantente en el camino! Toca para cambiar de dirección"
   },
-  "shareResult": {
-    "text": "{emoji} Zigzag Runner\nPuntuación: {score} | Monedas: {coins}\nTítulo: {title}\n\n¡Prueba el desafío en zigzag!",
-    "copied": "¡Copiado!"
-  },
   "game": {
     "tapToStart": "Toca para comenzar",
     "score": "Puntuación",
@@ -34,7 +30,6 @@
     "you": "TU",
     "tapRetry": "Toca en cualquier lugar para reintentar",
     "sessionGames": "Juegos esta sesión:",
-    "revive": "🎬 Ver Anuncio y Revivir",
     "replay": "🔄 Intentar de Nuevo",
     "share": "📤 Compartir",
     "home": "🏠 Inicio"
@@ -46,19 +41,6 @@
     "greatRun": "¡Gran carrera! ¿Otra vez?",
     "warmingUp": "¡Calentando! ¡Sigue así!",
     "tryAgain": "¡Un intento más!"
-  },
-  "recommendations": {
-    "title": "Prueba Estos También",
-    "skyRunner": "Sky Runner",
-    "skyRunnerDesc": "¡Juego de arcade de vuelo espacial!",
-    "stackTower": "Stack Tower",
-    "stackTowerDesc": "¡Apila bloques con un timing perfecto!",
-    "emojiMerge": "Emoji Merge",
-    "emojiMergeDesc": "¡Fusiona emojis para evolucionar!",
-    "pastLife": "Prueba de Trabajo en Vidas Pasadas",
-    "pastLifeDesc": "¿Cuál era tu trabajo en una vida pasada?",
-    "colorMemory": "색상 기억력",
-    "colorMemoryDesc": "기억력 도전 게임"
   },
   "screens": {
     "theme": "🎨 Temas",
@@ -81,10 +63,6 @@
     "totalCoins": "Monedas Totales",
     "unlockedThemes": "Temas Desbloqueados",
     "unlockedSkins": "Apariencias Desbloqueadas"
-  },
-  "ad": {
-    "banner": "Anuncio",
-    "label": "Cargando anuncio..."
   },
   "boss": {
     "warning": "⚠️ ¡JEFE!",

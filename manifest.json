@@ -1,13 +1,14 @@
 {
-  "name": "Zigzag Runner - 지그재그 러너",
-  "short_name": "지그재그러너",
-  "description": "탭 한 번으로 방향 전환! 끝없는 지그재그 길 위에서 최고 점수에 도전하세요.",
-  "start_url": ".",
+  "name": "Zigzag Runner",
+  "short_name": "Zigzag Runner",
+  "description": "A one-tap endless runner with local scores, themes, and skins.",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#ffb81c",
   "background_color": "#0f0c29",
-  "lang": "ko",
+  "lang": "en",
   "dir": "ltr",
   "icons": [
     {
@@ -29,8 +30,8 @@
   ],
   "shortcuts": [
     {
-      "name": "게임 시작",
-      "url": "index.html?mode=game",
+      "name": "Start game",
+      "url": "./?mode=game",
       "icons": [
         {
           "src": "icon-192.svg",

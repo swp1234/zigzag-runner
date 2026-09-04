@@ -14,10 +14,6 @@
     "home": "DopaBrain ホーム",
     "objective": "道から外れないで！タップで方向転換"
   },
-  "shareResult": {
-    "text": "{emoji} ジグザグランナー\nスコア: {score} | コイン: {coins}\nタイトル: {title}\n\nジグザグチャレンジに挑戦してください!",
-    "copied": "コピーしました!"
-  },
   "game": {
     "tapToStart": "タップで開始",
     "score": "スコア",
@@ -34,7 +30,6 @@
     "you": "あなた",
     "tapRetry": "どこでもタップでリトライ",
     "sessionGames": "今回のゲーム数:",
-    "revive": "🎬 広告を見て復活",
     "replay": "🔄 もう一度試す",
     "share": "📤 シェアする",
     "home": "🏠 ホーム"
@@ -46,19 +41,6 @@
     "greatRun": "素晴らしい走り! もう一度?",
     "warmingUp": "ウォームアップ中! 続けて!",
     "tryAgain": "もう一回!"
-  },
-  "recommendations": {
-    "title": "こちらも試してみてください",
-    "skyRunner": "Sky Runner",
-    "skyRunnerDesc": "スペースフライトアーケードゲーム!",
-    "stackTower": "Stack Tower",
-    "stackTowerDesc": "完璧なタイミングでブロックを積み上げましょう!",
-    "emojiMerge": "絵文字マージ",
-    "emojiMergeDesc": "絵文字をマージして進化させましょう!",
-    "pastLife": "前世職業テスト",
-    "pastLifeDesc": "あなたの前世の職業は何ですか?",
-    "colorMemory": "색상 기억력",
-    "colorMemoryDesc": "기억력 도전 게임"
   },
   "screens": {
     "theme": "🎨 テーマ",
@@ -81,10 +63,6 @@
     "totalCoins": "総コイン",
     "unlockedThemes": "解放テーマ",
     "unlockedSkins": "解放スキン"
-  },
-  "ad": {
-    "banner": "広告",
-    "label": "広告を読み込み中..."
   },
   "boss": {
     "warning": "⚠️ ボス!",

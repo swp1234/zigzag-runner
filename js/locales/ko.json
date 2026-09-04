@@ -30,7 +30,6 @@
     "you": "나",
     "tapRetry": "아무 곳이나 탭하여 재시작",
     "sessionGames": "이번 세션 게임:",
-    "revive": "🎬 광고 보고 부활",
     "replay": "🔄 다시 하기",
     "share": "📤 공유",
     "home": "🏠 홈"
@@ -42,23 +41,6 @@
     "greatRun": "멋진 달리기! 다시 도전?",
     "warmingUp": "몸풀기 중! 계속 가세요!",
     "tryAgain": "한 번 더!"
-  },
-  "shareResult": {
-    "text": "{emoji} Zigzag Runner\n점수: {score} | 코인: {coins}\n칭호: {title}\n\n나의 지그재그 실력을 확인해보세요!",
-    "copied": "복사됨!"
-  },
-  "recommendations": {
-    "title": "이것도 해보세요",
-    "skyRunner": "Sky Runner",
-    "skyRunnerDesc": "우주 비행 아케이드 게임!",
-    "stackTower": "Stack Tower",
-    "stackTowerDesc": "타이밍에 맞춰 블록을 쌓아라!",
-    "emojiMerge": "이모지 머지",
-    "emojiMergeDesc": "이모지 합쳐 진화시키기!",
-    "pastLife": "전생 직업 테스트",
-    "pastLifeDesc": "나의 전생은 어떤 직업?",
-    "colorMemory": "색상 기억력",
-    "colorMemoryDesc": "기억력 도전 게임"
   },
   "screens": {
     "theme": "🎨 테마",
@@ -81,10 +63,6 @@
     "totalCoins": "총 코인",
     "unlockedThemes": "해금 테마",
     "unlockedSkins": "해금 스킨"
-  },
-  "ad": {
-    "banner": "광고",
-    "label": "광고 로딩 중..."
   },
   "boss": {
     "warning": "⚠️ 보스!",

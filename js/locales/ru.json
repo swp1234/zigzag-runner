@@ -14,10 +14,6 @@
     "home": "DopaBrain Главная",
     "objective": "Держитесь на пути! Нажмите, чтобы сменить направление"
   },
-  "shareResult": {
-    "text": "{emoji} Zigzag Runner\nСчет: {score} | Монеты: {coins}\nНазвание: {title}\n\nПопробуйте зигзагообразный вызов!",
-    "copied": "Скопировано!"
-  },
   "game": {
     "tapToStart": "Нажмите для начала",
     "score": "Счет",
@@ -34,7 +30,6 @@
     "you": "ВЫ",
     "tapRetry": "Нажмите в любом месте для повтора",
     "sessionGames": "Игр за сеанс:",
-    "revive": "🎬 Посмотрите объявление и возродитесь",
     "replay": "🔄 Попробовать еще раз",
     "share": "📤 Поделиться",
     "home": "🏠 Главное меню"
@@ -46,19 +41,6 @@
     "greatRun": "Отличный забег! Ещё раз?",
     "warmingUp": "Разминка! Продолжайте!",
     "tryAgain": "Ещё одна попытка!"
-  },
-  "recommendations": {
-    "title": "Попробуйте это тоже",
-    "skyRunner": "Sky Runner",
-    "skyRunnerDesc": "Аркадная игра космического полета!",
-    "stackTower": "Stack Tower",
-    "stackTowerDesc": "Складывайте блоки с идеальным временем!",
-    "emojiMerge": "Emoji Merge",
-    "emojiMergeDesc": "Объединяйте эмодзи для эволюции!",
-    "pastLife": "Тест профессии прошлой жизни",
-    "pastLifeDesc": "Какая была ваша профессия в прошлой жизни?",
-    "colorMemory": "색상 기억력",
-    "colorMemoryDesc": "기억력 도전 게임"
   },
   "screens": {
     "theme": "🎨 Темы",
@@ -81,10 +63,6 @@
     "totalCoins": "Всего монет",
     "unlockedThemes": "Разблокированные темы",
     "unlockedSkins": "Разблокированные скины"
-  },
-  "ad": {
-    "banner": "Объявление",
-    "label": "Загрузка объявления..."
   },
   "boss": {
     "warning": "⚠️ БОСС!",

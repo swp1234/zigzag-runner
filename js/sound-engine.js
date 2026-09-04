@@ -41,6 +41,7 @@ class SoundEngine {
         if (!this.ctx || !this.enabled) return;
 
         const now = this.ctx.currentTime;
+        const safeDuration = Math.max(0.01, Number(duration) || 0);
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
 
@@ -50,25 +51,29 @@ class SoundEngine {
         osc.connect(gain);
 
         // Default envelope
-        const attackTime = envelope.attack || 0.01;
-        const decayTime = envelope.decay || duration * 0.5;
-        const sustain = envelope.sustain || 0.3;
-        const releaseTime = envelope.release || 0.1;
+        const attackTime = Math.min(Math.max(0, envelope.attack ?? 0.01), safeDuration);
+        const decayTime = Math.min(Math.max(0, envelope.decay ?? safeDuration * 0.5), safeDuration - attackTime);
+        const sustain = envelope.sustain ?? 0.3;
+        const releaseTime = Math.min(Math.max(0, envelope.release ?? 0.1), safeDuration);
+        const decayEnd = now + attackTime + decayTime;
+        const releaseStart = Math.max(decayEnd, now + safeDuration - releaseTime);
 
         gain.gain.setValueAtTime(0, now);
         gain.gain.linearRampToValueAtTime(1, now + attackTime);
-        gain.gain.linearRampToValueAtTime(sustain, now + attackTime + decayTime);
-        gain.gain.linearRampToValueAtTime(0, now + duration - releaseTime);
+        gain.gain.linearRampToValueAtTime(sustain, decayEnd);
+        if (releaseStart > decayEnd) gain.gain.setValueAtTime(sustain, releaseStart);
+        gain.gain.linearRampToValueAtTime(0, now + safeDuration);
 
         osc.start(now);
-        osc.stop(now + duration);
+        osc.stop(now + safeDuration);
     }
 
     playNoise(duration, color = 'white', envelope = {}) {
         if (!this.ctx || !this.enabled) return;
 
         const now = this.ctx.currentTime;
-        const buffer = this.ctx.createBuffer(1, this.ctx.sampleRate * duration, this.ctx.sampleRate);
+        const safeDuration = Math.max(0.01, Number(duration) || 0);
+        const buffer = this.ctx.createBuffer(1, this.ctx.sampleRate * safeDuration, this.ctx.sampleRate);
         const data = buffer.getChannelData(0);
 
         // Generate noise
@@ -95,16 +100,17 @@ class SoundEngine {
         gain.connect(this.masterGain);
 
         // Envelope
-        const attackTime = envelope.attack || 0.01;
-        const decayTime = envelope.decay || duration * 0.3;
-        const releaseTime = envelope.release || 0.1;
+        const attackTime = Math.min(Math.max(0, envelope.attack ?? 0.01), safeDuration);
+        const releaseTime = Math.min(Math.max(0, envelope.release ?? 0.1), safeDuration);
+        const releaseStart = Math.max(now + attackTime, now + safeDuration - releaseTime);
 
         gain.gain.setValueAtTime(0, now);
         gain.gain.linearRampToValueAtTime(1, now + attackTime);
-        gain.gain.linearRampToValueAtTime(0, now + duration - releaseTime);
+        if (releaseStart > now + attackTime) gain.gain.setValueAtTime(1, releaseStart);
+        gain.gain.linearRampToValueAtTime(0, now + safeDuration);
 
         source.start(now);
-        source.stop(now + duration);
+        source.stop(now + safeDuration);
     }
 
     // === Sound Effects ===

@@ -14,10 +14,6 @@
     "home": "DopaBrain होम",
     "objective": "रास्ते पर रहें! दिशा बदलने के लिए टैप करें"
   },
-  "shareResult": {
-    "text": "{emoji} Zigzag Runner\nस्कोर: {score} | सिक्के: {coins}\nशीर्षक: {title}\n\nजिगजैग चैलेंज आजमाएं!",
-    "copied": "कॉपी किया गया!"
-  },
   "game": {
     "tapToStart": "शुरू करने के लिए टैप करें",
     "score": "स्कोर",
@@ -34,7 +30,6 @@
     "you": "आप",
     "tapRetry": "फिर से कोशिश करने के लिए कहीं भी टैप करें",
     "sessionGames": "इस सत्र के गेम:",
-    "revive": "🎬 विज्ञापन देखें और पुनर्जीवित करें",
     "replay": "🔄 फिर से कोशिश करें",
     "share": "📤 साझा करें",
     "home": "🏠 होम"
@@ -46,19 +41,6 @@
     "greatRun": "शानदार दौड़! फिर से कोशिश?",
     "warmingUp": "वॉर्मअप हो रहा है! जारी रखें!",
     "tryAgain": "एक और कोशिश!"
-  },
-  "recommendations": {
-    "title": "ये भी आजमाएं",
-    "skyRunner": "Sky Runner",
-    "skyRunnerDesc": "अंतरिक्ष उड़ान आर्केड गेम!",
-    "stackTower": "Stack Tower",
-    "stackTowerDesc": "सही समय के साथ ब्लॉक को स्टैक करें!",
-    "emojiMerge": "इमोजी मर्ज",
-    "emojiMergeDesc": "इमोजी को विकसित करने के लिए मर्ज करें!",
-    "pastLife": "पिछले जीवन की नौकरी परीक्षा",
-    "pastLifeDesc": "अपने पिछले जीवन में आपका पेशा क्या था?",
-    "colorMemory": "색상 기억력",
-    "colorMemoryDesc": "기억력 도전 게임"
   },
   "screens": {
     "theme": "🎨 थीम्स",
@@ -81,10 +63,6 @@
     "totalCoins": "कुल सिक्के",
     "unlockedThemes": "अनलॉक थीम्स",
     "unlockedSkins": "अनलॉक स्किन्स"
-  },
-  "ad": {
-    "banner": "विज्ञापन",
-    "label": "विज्ञापन लोड हो रहा है..."
   },
   "boss": {
     "warning": "⚠️ बॉस!",
